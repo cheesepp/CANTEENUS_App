@@ -1,46 +1,24 @@
-// const mysql = require('mysql2')
+// config/database.js
+// const { Sequelize } = require('sequelize');
 
-// const pool = mysql.createPool({
-//     host: 'localhost',
-//     user: 'root',
-//     database: 'node-complete',
-//     password: 'Nhattri@123'
-// })
+// const sequelize = new Sequelize(
+//   'canteenus',
+//   'root', 
+//   '123456', {
+//   host: '127.0.0.1',
+//   dialect: 'mysql',
+// });
 
-// module.exports = pool.promise()
+// module.exports = sequelize;
 
-// const Sequelize = require('sequelize')
+const { Sequelize } = require('sequelize');
+require('dotenv').config()
+const sequelize = new Sequelize(
+  process.env.DB_NAME,
+  process.env.DB_USER, 
+  process.env.DB_PASSWORD, {
+  host: process.env.DB_HOST,
+  dialect: 'mysql',
+});
 
-// const sequelize = new Sequelize('node-complete', 'root', 'Nhattri@123', {dialect: 'mysql', host: 'localhost'})
-
-// module.exports = sequelize
-
-const mongodb = require('mongodb')
-
-const MongoClient = mongodb.MongoClient
-
-let _db
-
-const mongoConnect = cb => {
-    MongoClient.connect('mongodb+srv://chip:chip123@cluster0.oafqocm.mongodb.net/shop?retryWrites=true&w=majority')
-    .then(client => {
-        console.log('connected')
-        _db = client.db()
-    })
-    .catch(err => {
-        console.log(err)
-        throw err
-        
-    })
-}
-
-const getDb = () => {
-    if(_db) {
-        return _db
-    }
-
-    throw 'No database found!'
-}
-
-exports.mongoConnect = mongoConnect
-exports.getDb = getDb
+module.exports = sequelize;

@@ -1,66 +1,28 @@
-const path = require('path');
-
+// app.js
 const express = require('express');
 const bodyParser = require('body-parser');
-
-const errorController = require('./controllers/error');
-const mongoConnect = require('./util/database').mongoConnect
-// const sequelize = require('./util/database')
-// const Product = require('./models/index').product
-// const User = require('./models/index').user
-// const Cart = require('./models/index').cart
-
+const sequelize = require('./util/database');
+const authRoutes = require('./routes/authenticate');
+const path = require('path')
+const ErrorHandler = require("./middleware/error");
+require('dotenv').config()
 const app = express();
+const PORT = process.env.PORT || 3000;
+app.use(bodyParser.json());
 
-app.set('view engine', 'ejs');
-app.set('views', 'views');
+// Sync Sequelize Models with Database
+sequelize.sync().then(() => {
+  console.log('Database synchronized');
+}).catch(err => {
+  console.error('Error syncing database:', err);
+});
 
-const adminRoutes = require('./routes/admin');
-// const shopRoutes = require('./routes/shop');
+// Routes
+app.use('/auth', authRoutes);
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, 'public')));
+// it's for errorHandeling
+app.use(ErrorHandler);
 
-app.use((req, res, next) => {
-    // User.findByPk(1).then(user => {
-    //     req.user = user
-    //     next()
-    // }).catch(err => console.log(err))
-    next()
-})
-
-app.use('/admin', adminRoutes);
-// app.use(shopRoutes);
-
-app.use(errorController.get404);
-
-mongoConnect((cb) => {
-    console.log('ok')
-    app.listen(3000)
-})
-
-// // Product.belongsTo(User, {constraints: true, onDelete: 'CASCADE'})
-// // User.hasMany(Product)
-
-// sequelize
-// // .sync({force: true})
-// .sync()
-// .then(result => {
-//     return User.findByPk(1)
-// })
-// .then(user => {
-//     if(!user) {
-//         return User.create({name: 'Max', email: 'test@test.com'})
-//     }
-//     return user
-// })
-// .then(user => {
-//     // console.log(user)
-//     return user.createCart()
-// })
-// .then(cart => {
-//     app.listen(3000)
-// })
-// .catch(err => {
-//     console.log(err)
-// })
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});
