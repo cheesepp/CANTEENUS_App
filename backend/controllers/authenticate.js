@@ -1,6 +1,10 @@
 // controllers/authController.js
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const { 
+    v1: uuidv1,
+    v4: uuidv4,
+  } = require('uuid');
 const User = require('../models/user');
 
 async function register(req, res) {
@@ -13,11 +17,15 @@ async function register(req, res) {
             success: false,
             message: 'Email already in use!' });
         }
+
+        const uid = role.slice(0, 2).toUpperCase() + uuidv1()
         const hashedPassword = await bcrypt.hash(password, 10);
-        const user = await User.create({ email, role, name, phone, password: hashedPassword });
+        const user = await User.create({ id: uid, email, role, name, phone, password: hashedPassword, avatar: req.file ? req.file.path : null  });
+
         res.status(201).json({ 
             success: true,
             message: 'User registered successfully', user: { id: user.id, name: user.name, phone: user.phone, role: user.role } });
+
     } catch (error) {
         console.error(error);
         res.status(500).json({ 
@@ -27,6 +35,7 @@ async function register(req, res) {
 }
 
 async function login(req, res) {
+
     try {
         const { email, password } = req.body;
         const user = await User.findOne({ where: { email } });

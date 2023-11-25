@@ -2,23 +2,23 @@ const path = require('path');
 
 const express = require('express');
 
-const adminController = require('../controllers/admin');
+const adminControllerStaff = require('../controllers/admin/man_staff');
+const { avtUpload } = require('../util/multer');
 
 const router = express.Router();
+const { isAuthenticatedUser } = require("../middleware/auth");
 
-// /admin/add-product => GET
-router.get('/add-product', adminController.getAddProduct);
+// /admin/get-staff => GET
+router.get('/get-staff', isAuthenticatedUser, adminControllerStaff.getStaff);
 
-// /admin/products => GET
-// router.get('/products', adminController.getProducts);
+// /admin/add-staff => POST
+router.post('/add-staff', isAuthenticatedUser, avtUpload.single('image'), adminControllerStaff.addStaff);
 
-// /admin/add-product => POST
-router.post('/add-product', adminController.postAddProduct);
+// /admin/edit-staff => POST
+router.put('/edit-staff/:id', isAuthenticatedUser, adminControllerStaff.editStaff);
 
-// router.get('/edit-product/:productId', adminController.getEditProduct);
+// /admin/delete-staff => POST
+router.delete('/delete-staff/:id', isAuthenticatedUser, adminControllerStaff.deleteStaff);
 
-// router.post('/edit-product', adminController.postEditProduct)
-
-// router.post('/delete-product', adminController.postDeleteProduct)
 
 module.exports = router;
