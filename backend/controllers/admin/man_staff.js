@@ -56,7 +56,7 @@ exports.editStaff = catchAsyncErrors(async (req, res, next) => {
         const { id } = req.params;
         const { name, phone } = req.body;
     
-        const staff = await Staff.findByPk(id);
+        const staff = await User.findByPk(id);
     
         if (!staff) {
             return next(new ErrorHandler('Staff not found!', 404));
@@ -76,7 +76,7 @@ exports.deleteStaff = catchAsyncErrors(async (req, res, next) => {
     try {
         const { id } = req.params;
     
-        const staff = await Staff.findByPk(id);
+        const staff = await User.findByPk(id);
     
         if (!staff) {
             return next(new ErrorHandler('Staff not found!', 404));

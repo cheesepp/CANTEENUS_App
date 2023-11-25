@@ -1,0 +1,100 @@
+// controllers/materialController.js
+const catchAsyncErrors = require('../../middleware/catchAsyncErrors');
+const Material = require('../../models/material');
+
+// Get all materials
+exports.setAllMaterials = catchAsyncErrors(async (req, res) => {
+  try {
+    const materials = await Material.findAll();
+    return res.status(200).json({ success:true,  materials });
+  } catch (error) {
+    console.error(error);
+    return next(new ErrorHandler('Internal server error!', 500));
+  }
+})
+
+// Get a single material by ID
+exports.getMaterialByID = catchAsyncErrors(async (req, res) => {
+  try {
+    const { id } = req.params;
+    const material = await Material.findByPk(id);
+
+    if (!material) {
+      return next(new ErrorHandler('Material not found!', 404));
+    }
+
+    res.json({ material });
+  } catch (error) {
+    console.error(error);
+    return next(new ErrorHandler('Internal server error!', 500));
+  }
+})
+
+// Add a new material
+exports.addMaterial = catchAsyncErrors(async (req, res) => {
+  try {
+    const { category, name, unit, quantity, price, expirationDate } = req.body;
+
+    const material = await Material.create({
+      category,
+      name,
+      unit,
+      quantity,
+      price,
+      expirationDate,
+    });
+
+    return res.status(201).json({ success: true, message: 'Material added successfully', material });
+  } catch (error) {
+    console.error(error);
+    return next(new ErrorHandler('Internal server error!', 500));
+  }
+})
+
+// Update a material by ID
+exports.updateMaterial = catchAsyncErrors( async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { category, name, unit, quantity, price, expirationDate } = req.body;
+
+    const material = await Material.findByPk(id);
+
+    if (!material) {
+      return res.status(404).json({ error: 'Material not found' });
+    }
+
+    await material.update({
+      category,
+      name,
+      unit,
+      quantity,
+      price,
+      expirationDate,
+    });
+
+    return res.json({ success:true, message: 'Material updated successfully', material });
+  } catch (error) {
+    console.error(error);
+    return next(new ErrorHandler('Internal server error!', 500));
+  }
+})
+
+// Delete a material by ID
+exports.deleteMaterial = catchAsyncErrors( async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const material = await Material.findByPk(id);
+
+    if (!material) {
+      return res.status(404).json({ error: 'Material not found' });
+    }
+
+    await material.destroy();
+
+    return res.json({ message: 'Material deleted successfully' });
+  } catch (error) {
+    console.error(error);
+    return next(new ErrorHandler('Internal server error!', 500));
+  }
+})
