@@ -1,12 +1,12 @@
 // controllers/materialController.js
 const catchAsyncErrors = require('../../middleware/catchAsyncErrors');
-const Material = require('../../models/material');
+const { Material } = require('../../models/relationship');
 
 // Get all materials
-exports.setAllMaterials = catchAsyncErrors(async (req, res) => {
+exports.getAllMaterials = catchAsyncErrors(async (req, res) => {
   try {
     const materials = await Material.findAll();
-    return res.status(200).json({ success:true,  materials });
+    res.status(200).json({ success:true,  materials });
   } catch (error) {
     console.error(error);
     return next(new ErrorHandler('Internal server error!', 500));
@@ -23,7 +23,7 @@ exports.getMaterialByID = catchAsyncErrors(async (req, res) => {
       return next(new ErrorHandler('Material not found!', 404));
     }
 
-    res.json({ material });
+    res.json({ success:true, material });
   } catch (error) {
     console.error(error);
     return next(new ErrorHandler('Internal server error!', 500));
@@ -44,7 +44,7 @@ exports.addMaterial = catchAsyncErrors(async (req, res) => {
       expirationDate,
     });
 
-    return res.status(201).json({ success: true, message: 'Material added successfully', material });
+    res.status(201).json({ success: true, message: 'Material added successfully', material });
   } catch (error) {
     console.error(error);
     return next(new ErrorHandler('Internal server error!', 500));
@@ -72,7 +72,7 @@ exports.updateMaterial = catchAsyncErrors( async (req, res) => {
       expirationDate,
     });
 
-    return res.json({ success:true, message: 'Material updated successfully', material });
+    res.json({ success:true, message: 'Material updated successfully', material });
   } catch (error) {
     console.error(error);
     return next(new ErrorHandler('Internal server error!', 500));
@@ -92,7 +92,7 @@ exports.deleteMaterial = catchAsyncErrors( async (req, res) => {
 
     await material.destroy();
 
-    return res.json({ message: 'Material deleted successfully' });
+    res.json({ success:true, message: 'Material deleted successfully' });
   } catch (error) {
     console.error(error);
     return next(new ErrorHandler('Internal server error!', 500));

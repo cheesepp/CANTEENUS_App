@@ -2,12 +2,16 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const sequelize = require('./util/database');
-const authRoutes = require('./routes/authenticate');
 const path = require('path')
 const ErrorHandler = require("./middleware/error");
 require('dotenv').config()
 const app = express();
+
 const PORT = process.env.PORT || 3000;
+
+const authRoutes = require('./routes/authenticate');
+const billRoutes = require('./routes/authenticate');
+
 app.use(bodyParser.json());
 
 // Sync Sequelize Models with Database
@@ -19,6 +23,7 @@ sequelize.sync().then(() => {
 
 // Routes
 app.use('/auth', authRoutes);
+app.use('bill', )
 
 // it's for errorHandeling
 app.use(ErrorHandler);

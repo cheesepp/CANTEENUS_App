@@ -4,7 +4,7 @@ const {
     v1: uuidv1,
     v4: uuidv4,
   } = require('uuid');
-const User = require('../../models/user');
+const { User } = require('../../models/relationship');
 const catchAsyncErrors = require('../../middleware/catchAsyncErrors');
 
 exports.getStaff = catchAsyncErrors(async (req, res, next) => {
@@ -16,7 +16,7 @@ exports.getStaff = catchAsyncErrors(async (req, res, next) => {
               },
             }
         );
-        return res.status(200).json({ success:true, staff: staffList });
+        res.status(200).json({ success:true, staff: staffList });
       } catch (error) {
         console.error(error);
         return next(new ErrorHandler('Internal server error!', 500));
@@ -40,7 +40,7 @@ exports.addStaff = catchAsyncErrors(async (req, res, next) => {
         const hashedPassword = await bcrypt.hash(password, 10);
         const user = await User.create({ id: uid, email, role, name, phone, password: hashedPassword, avatar: req.file ? req.file.path : null  });
 
-        return res.status(201).json({ 
+        res.status(201).json({ 
             success: true,
             message: 'staff registered successfully', user: { id: user.id, name: user.name, phone: user.phone, role: user.role } });
 
@@ -64,7 +64,7 @@ exports.editStaff = catchAsyncErrors(async (req, res, next) => {
         
         await staff.update({ name, phone });
     
-        return res.status(200).json({ success:true, message: 'Staff updated successfully', staff });
+        res.status(200).json({ success:true, message: 'Staff updated successfully', staff });
       } catch (error) {
         console.error(error);
         return next(new ErrorHandler('Internal server error!', 500));
@@ -84,7 +84,7 @@ exports.deleteStaff = catchAsyncErrors(async (req, res, next) => {
     
         await staff.destroy();
     
-        return res.status(200).json({ success:true, message: 'Staff deleted successfully' });
+        res.status(200).json({ success:true, message: 'Staff deleted successfully' });
       } catch (error) {
         console.error(error);
         return next(new ErrorHandler('Internal server error!', 500));

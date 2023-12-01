@@ -20,6 +20,10 @@ const Material = sequelize.define('Material', {
         type: Sequelize.STRING,
         allowNull: false,
     },
+    image: {
+        type: Sequelize.STRING,
+        allowNull: true,
+    },
     quantity: {
         type: DataTypes.INTEGER,
         allowNull: false,
