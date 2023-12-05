@@ -11,6 +11,7 @@ export default function LoginTab() {
     //Hiện tại chưa có xử lý gì cả, chỉ in ra màn hình console thông tin đăng nhập
     const handleLogin = () => {
         console.log('-----------LOGIN-----------');
+        console.log('Login Type: ' + loginType);
         console.log('Email: ' + email);
         console.log('Password: ' + password);
         console.log('---------------------------');
@@ -25,11 +26,12 @@ export default function LoginTab() {
     }
 
     return (
-        <View style = {styles.loginTabContainer}>
+        <View style = {styles.signinContainer}>
+
             <View style={{flex:5, width:260,height:300}}>
 
                 <View style={{flexDirection:'row'}}>
-                    <Text style = {[styles.text,styles.txtLoginType,{marginTop:12}]}>Đối Tượng:</Text>
+                    <Text style = {[styles.text,styles.txtType,{marginTop:12}]}>Đối Tượng:</Text>
                    
                     <Picker
                         selectedValue={loginType}
@@ -81,7 +83,7 @@ export default function LoginTab() {
 }
 
 const styles = StyleSheet.create({
-    loginTabContainer:{
+    signinContainer:{
         backgroundColor:'white',
         borderRadius: 25,
         height: 300,
@@ -94,13 +96,10 @@ const styles = StyleSheet.create({
         color: '#F4F5FB',
         fontFamily: 'Montserrat',
     },
-    txtLoginType:{
+    txtType:{
         color: '#747474',
         fontSize: 20,
         fontWeight: 'bold',
-    },
-    loginTypetxt:{
-
     },
     picker:{ 
         width: 170,
@@ -113,7 +112,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         alignItems: 'center',
         justifyContent: 'center',
-        height: 35,
+        height: 36,
         width: 170,
         alignSelf: 'center',
     },

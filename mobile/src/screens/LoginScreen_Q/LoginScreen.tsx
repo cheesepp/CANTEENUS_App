@@ -3,9 +3,9 @@ import React, {useState} from 'react'
 import TabContainer from './TabContainer';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<'ĐĂNG NHẬP' | 'ĐĂNG KÝ'>('ĐĂNG NHẬP');
+  const [activeTab, setActiveTab] = useState<'signin' | 'signup'>('signin');
 
-  const handleTabPress = (tab: 'ĐĂNG NHẬP' | 'ĐĂNG KÝ') => {
+  const handleTabPress = (tab: 'signin' | 'signup') => {
     setActiveTab(tab);
   };
 

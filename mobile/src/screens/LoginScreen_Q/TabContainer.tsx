@@ -4,26 +4,48 @@ import LoginTab from '../../components/LoginTab';
 import RegisterTab from '../../components/RegisterTab';
 
 type TabContainerProps = {
-  activeTab: 'ĐĂNG NHẬP' | 'ĐĂNG KÝ';
-  onTabPress: (tab: 'ĐĂNG NHẬP' | 'ĐĂNG KÝ') => void;
+  activeTab: 'signin' | 'signup';
+  onTabPress: (tab: 'signin' | 'signup') => void;
 };
 
 const TabContainer: React.FC<TabContainerProps> = ({ activeTab, onTabPress }) => {
   return (
     <View>
-      <TouchableOpacity onPress={() => onTabPress('ĐĂNG NHẬP')}>
-        <Text style={{ color: activeTab === 'ĐĂNG NHẬP' ? 'blue' : 'black' }}>Login</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => onTabPress('ĐĂNG KÝ')}>
-        <Text style={{ color: activeTab === 'ĐĂNG KÝ' ? 'blue' : 'black' }}>Register</Text>
-      </TouchableOpacity>
-      {activeTab === 'ĐĂNG NHẬP' ? <LoginTab /> : <RegisterTab />}
+       <View style={styles.container}>
+        <TouchableOpacity onPress={() => onTabPress('signin')}>
+          <Text style={[styles.text, activeTab === 'signin' ? styles.choosen : null]}>ĐĂNG NHẬP</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => onTabPress('signup')}>
+          <Text style={[styles.text, activeTab === 'signup' ? styles.choosen : null]}>ĐĂNG KÝ</Text>
+        </TouchableOpacity>
+
+        </View>
+        <View>
+          {activeTab === 'signin' ? <LoginTab /> : <RegisterTab />}
+        </View>
     </View>
+   
   );
 };
 
 const styles = StyleSheet.create({
+  container:{
+    flexDirection:'row',
+    justifyContent:'space-evenly',
+    marginBottom:20,
+  },
+ 
+  text:{
+      fontFamily: 'Montserrat',
+      fontSize:20,
+      fontWeight:'bold'
+  },
   
+  choosen:{
+    color:'#279CD2',
+    borderBottomColor: '#279CD2',
+    borderBottomWidth: 1,
+  },
 })
 
 
