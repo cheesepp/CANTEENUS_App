@@ -2,7 +2,13 @@ import { StyleSheet, Text, View, TextInput,Button, Image, TouchableOpacity } fro
 import React, {useState} from 'react'
 import { Picker } from '@react-native-picker/picker'
 
+//file RegisterTab.tsx
+//File này chứa giao diện tab Đăng ký
+
+
 export default function RegisterTab() {
+    //khai báo các state để lưu thông tin người dùng nhập vào
+    //state là một biến đặc biệt, khi giá trị của nó thay đổi thì giao diện sẽ tự động render lại
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [phone, setPhone] = useState('')

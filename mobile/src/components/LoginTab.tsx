@@ -2,8 +2,13 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image} from 'react
 import React, {useState} from 'react'
 import { Picker } from '@react-native-picker/picker'
 
+//File LoginTab.tsx
+//File này chứa giao diện tab Đăng nhập
+//Gồm 2 TextInput: Email và Password
 
 export default function LoginTab() {
+    //khai báo các state để lưu thông tin người dùng nhập vào
+    //state là một biến đặc biệt, khi giá trị của nó thay đổi thì giao diện sẽ tự động render lại
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [loginType, setLoginType] = useState('Khách Hàng') //Loại đăng nhập: ['Sinh viên', 'Giảng viên'

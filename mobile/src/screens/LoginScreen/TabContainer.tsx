@@ -3,6 +3,14 @@ import { View, Text, TouchableOpacity,StyleSheet } from 'react-native';
 import LoginTab from '../../components/LoginTab';
 import RegisterTab from '../../components/RegisterTab';
 
+//File TabContainer.tsx chứa giao diện đăng nhập/đăng ký
+//Gồm 2 tab: Đăng nhập và Đăng ký
+//Mặc định hiển thị tab Đăng nhập
+//Khi người dùng nhấn vào tab Đăng ký thì hiển thị tab Đăng ký
+//Khi người dùng nhấn vào tab Đăng nhập thì hiển thị tab Đăng nhập
+
+//props của TabContainer
+//props là một biến đặc biệt, khi giá trị của nó thay đổi thì giao diện sẽ tự động render lại
 type TabContainerProps = {
   activeTab: 'signin' | 'signup';
   onTabPress: (tab: 'signin' | 'signup') => void;
