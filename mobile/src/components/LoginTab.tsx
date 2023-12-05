@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image} from 'react
 import React, {useState} from 'react'
 import { Picker } from '@react-native-picker/picker'
 
+
 export default function LoginTab() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -26,10 +27,10 @@ export default function LoginTab() {
     }
 
     return (
-        <View style = {styles.signinContainer}>
+        <View style = {styles.signinContainer} >
 
             <View style={{flex:5, width:260,height:300}}>
-
+                
                 <View style={{flexDirection:'row'}}>
                     <Text style = {[styles.text,styles.txtType,{marginTop:12}]}>Đối Tượng:</Text>
                    
