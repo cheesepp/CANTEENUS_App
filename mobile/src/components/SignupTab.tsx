@@ -44,11 +44,14 @@ export default function RegisterTab() {
         <View style = {styles.signupContainer}>
             <View style={{flex:10, width:260,height:500, marginTop:10}}>
 
-                <Image style= {styles.img}source={require('../assets/Images/User_cicrle_duotone.png')}/>
+                <View style={{marginBottom:10, borderBottomColor:'#000', borderBottomWidth:1}}>
+                    <Image style= {styles.img}source={require('../assets/Images/User_cicrle_duotone.png')}/>
 
-                <TouchableOpacity style={[styles.button, {height:20,width:80}]} onPress={handleChooseImage}>
-                    <Text style = {[styles.text,{fontSize:10,fontWeight:'bold'}]}>Chọn Ảnh</Text>
-                </TouchableOpacity>
+                    <TouchableOpacity style={[styles.button, {height:20,width:80, marginBottom:10}]} onPress={handleChooseImage}>
+                        <Text style = {[styles.text,{fontSize:10,fontWeight:'bold'}]}>Chọn Ảnh</Text>
+                    </TouchableOpacity>
+                </View>
+               
 
                 <ScrollView  contentContainerStyle={[styles.scrowView, {height:500}]}>
 
@@ -130,7 +133,7 @@ const styles = StyleSheet.create({
     signupContainer:{
         backgroundColor:'white',
         borderRadius: 25,
-        height: 550,
+        height: 580,
         width: 285,
         alignItems:'center',
         alignSelf: 'center',
