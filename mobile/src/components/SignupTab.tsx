@@ -53,7 +53,7 @@ export default function RegisterTab() {
                 </View>
                
 
-                <ScrollView  contentContainerStyle={[styles.scrowView, {height:500}]}>
+                <ScrollView  contentContainerStyle={[styles.scrowView, {height:550}]}>
 
                     <View style={{flexDirection:'row', justifyContent:'space-between'}}>
                         <Text style = {[styles.text,styles.txtLabel,{marginTop:16}]}>Đối Tượng:</Text>
