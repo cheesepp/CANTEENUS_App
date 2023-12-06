@@ -14,13 +14,13 @@ export default function App() {
   };
 
   return (
-  <View style={{backgroundColor:'#F4F5FB',justifyContent:'space-evenly'}} >
+  <View style={{backgroundColor:'#F4F5FB'}} >
       <View style={styles.title}>
         <Text style={styles.txtTitle}>
           CanteenUS
         </Text>
       </View>
-    <View style={[styles.tabContainer,{height: '100%', marginTop:20}]}>
+    <View style={[styles.tabContainer,{height: '100%', marginTop:10}]}>
       <TabContainer activeTab={activeTab} onTabPress={handleTabPress} />
     </View>
    
@@ -31,7 +31,7 @@ export default function App() {
 const styles = StyleSheet.create({
   title:{
     backgroundColor:'#4554DC',
-    height:50,
+    height:60,
     justifyContent:'center',
     marginBottom:20,
   },

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity,StyleSheet } from 'react-native';
-import LoginTab from '../../components/LoginTab';
-import RegisterTab from '../../components/RegisterTab';
+import LoginTab from '../../components/SigninTab';
+import RegisterTab from '../../components/SignupTab';
 
 //File TabContainer.tsx chứa giao diện đăng nhập/đăng ký
 //Gồm 2 tab: Đăng nhập và Đăng ký
