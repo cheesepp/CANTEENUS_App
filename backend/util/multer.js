@@ -12,7 +12,7 @@ const avtStorage = multer.diskStorage({
 
 const avtUpload = multer({ avtStorage })
 
-const foodStorage = multer.diskStorage({
+const itemStorage = multer.diskStorage({
     destination: (req, file, cb) => {
       cb(null, 'uploads/foods/'); // Set the destination folder for uploaded files
     },
@@ -23,9 +23,9 @@ const foodStorage = multer.diskStorage({
   });
   
 
-const foodUpload = multer({ foodStorage });
+const itemUpload = multer({ itemStorage });
 
-const materialStorage = multer.diskStorage({
+const ingredientStorage = multer.diskStorage({
     destination: (req, file, cb) => {
       cb(null, 'uploads/materials/'); // Set the destination folder for uploaded files
     },
@@ -36,10 +36,10 @@ const materialStorage = multer.diskStorage({
   });
   
 
-const materialUpload = multer({ materialStorage });
+const ingredientUpload = multer({ ingredientStorage });
 
 module.exports = {
     avtUpload,
-    foodUpload,
-    materialUpload
+    itemUpload,
+    ingredientUpload
 };
