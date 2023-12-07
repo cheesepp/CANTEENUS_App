@@ -10,7 +10,8 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 const authRoutes = require('./routes/authenticate');
-const billRoutes = require('./routes/authenticate');
+const adminRoutes = require('./routes/admin')
+const billRoutes = require('./routes/bill');
 
 app.use(bodyParser.json());
 
@@ -23,7 +24,8 @@ sequelize.sync().then(() => {
 
 // Routes
 app.use('/auth', authRoutes);
-app.use('bill', )
+app.use('/admin', adminRoutes)
+app.use('/bill', billRoutes)
 
 // it's for errorHandeling
 app.use(ErrorHandler);

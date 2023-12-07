@@ -2,11 +2,11 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../config/database');
 
-const BillFoods = sequelize.define('BillFoods', {
+const bill_item = sequelize.define('bill_item', {
   quantity: {
     type: Sequelize.INTEGER,
     allowNull: false,
   },
 });
 
-module.exports = BillFoods;
+module.exports = bill_item;

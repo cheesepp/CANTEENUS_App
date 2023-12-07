@@ -2,15 +2,15 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../util/database');
 
-const Material = sequelize.define('Material', {
+const Ingredient = sequelize.define('ingredient', {
     id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
     },
-    category: {
-        type: Sequelize.STRING,
-        allowNull: false,
+    calories: {
+        type: Sequelize.FLOAT,
+        allowNull: true,
     },
     name: {
         type: Sequelize.STRING,
@@ -32,10 +32,10 @@ const Material = sequelize.define('Material', {
         type: DataTypes.FLOAT,
         allowNull: false,
     },
-    expirationDate: {
+    expirationdate: {
         type: DataTypes.DATE,
         allowNull: true,
     },
 });
 
-module.exports = Material;
+module.exports = Ingredient;

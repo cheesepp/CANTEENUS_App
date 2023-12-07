@@ -1,39 +1,42 @@
-const Food = require('./food');
-const Material = require('./material');
-const FoodMaterials = require('./food_material');
-const BillFoods = require('./bill_foods');
-const Bill = require('./bill')
+const Item = require('./item');
+const Ingredient = require('./ingredient');
+const item_ingredient = require('./item_ingredient');
+const Bill = require('./bill');
+const bill_item = require('./bill_item');
 
-Food.belongsToMany(Material, {
-  through: FoodMaterials,
-  as: 'materials',
-  foreignKey: 'foodId',
+Item.belongsToMany(ingredient, {
+  through: item_ingredient,
+  as: 'ingredient',
+  foreignKey: 'item_id',
 });
 
-Material.belongsToMany(Food, {
-  through: FoodMaterials,
-  as: 'foods',
-  foreignKey: 'materialId',
+Ingredient.belongsToMany(Item, {
+  through: item_ingredient,
+  as: 'item',
+  foreignKey: 'ingredient_id',
 });
 
 
-Food.belongsToMany(Bill, {
-  through: BillFoods,
-  foreignKey: 'foodId',
+Item.belongsToMany(Bill, {
+  through: bill_item,
+  as: 'bill',
+  foreignKey: 'item_id',
 });
 
-Bill.belongsToMany(Food, {
-  through: BillFoods,
-  foreignKey: 'billId',
+Bill.belongsToMany(Item, {
+  through: bill_item,
+  as: 'item',
+  foreignKey: 'bill_id',
 });
 
 User.hasMany(Bill, {
-  foreignKey: { name: 'user_id', allowNull:false}
+  foreignKey: { name: 'user_id', allowNull:false }
 })
 
 Bill.belongsTo(User)
+
 module.exports = {
-  Food,
-  Material,
-  FoodMaterials,
+  Item,
+  Ingredient,
+  item_ingredient,
 };

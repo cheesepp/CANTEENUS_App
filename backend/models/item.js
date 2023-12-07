@@ -2,7 +2,7 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../util/database');
 
-const Food = sequelize.define('Food', {
+const Item = sequelize.define('item', {
   id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
@@ -19,7 +19,12 @@ const Food = sequelize.define('Food', {
   },
 
   price: {
-    type: Sequelize.FLOAT,
+    type: Sequelize.INTEGER,
+    allowNull: false,
+  },
+  
+  rating: {
+    type: Sequelize.INTEGER,
     allowNull: false,
   },
 });

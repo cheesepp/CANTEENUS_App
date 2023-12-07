@@ -1,12 +1,12 @@
 const catchAsyncErrors = require('../middleware/catchAsyncErrors');
-const { Bill, BillFoods, Food } = require('../models/relationship')
+const { Bill, bill_item, Item } = require('../models/relationship')
 
 exports.getAllBills = catchAsyncErrors(async (req, res) => {
     try {
       const bills = await Bill.findAll({
         include: [
           {
-            model: Food,
+            model: Item,
             attributes: ['id', 'name', 'price'],
             through: { attributes: ['quantity'] },
           },
@@ -27,7 +27,7 @@ exports.getAllBills = catchAsyncErrors(async (req, res) => {
       const bill = await Bill.findByPk(id, {
         include: [
           {
-            model: Food,
+            model: Item,
             attributes: ['id', 'name', 'price'],
             through: { attributes: ['quantity'] },
           },
@@ -47,21 +47,21 @@ exports.getAllBills = catchAsyncErrors(async (req, res) => {
   
   exports.addBill = catchAsyncErrors(async (req, res) => {
     try {
-      const { foods } = req.body;
+      const { items } = req.body;
   
       // Calculate total price
-      const totalPrice = foods.reduce((acc, food) => acc + food.price * food.quantity, 0);
+      const totalPrice = items.reduce((acc, items) => acc + items.price * items.quantity, 0);
   
       // Create a new bill
       const bill = await Bill.create({ totalPrice });
   
       // Create associations with foods including the quantity
       await Promise.all(
-        foods.map(async (food) => {
-          const { foodId, quantity } = food;
-          await BillFoods.create({
+        foods.map(async (item) => {
+          const { itemId, quantity } = item;
+          await bill_item.create({
             billId: bill.id,
-            foodId,
+            itemId,
             quantity,
           });
         })
@@ -77,10 +77,10 @@ exports.getAllBills = catchAsyncErrors(async (req, res) => {
   exports.updateBill = catchAsyncErrors(async (req, res) => {
     try {
       const { id } = req.params;
-      const { foods } = req.body;
+      const { items } = req.body;
   
       // Calculate total price
-      const totalPrice = foods.reduce((acc, food) => acc + food.price * food.quantity, 0);
+      const totalPrice = items.reduce((acc, item) => acc + item.price * item.quantity, 0);
   
       const bill = await Bill.findByPk(id);
   
@@ -93,14 +93,14 @@ exports.getAllBills = catchAsyncErrors(async (req, res) => {
   
       // Update associations with foods including the quantity
       await Promise.all(
-        foods.map(async (food) => {
-          const { foodId, quantity } = food;
-          const billFood = await BillFoods.findOne({ where: { billId: bill.id, foodId } });
+        items.map(async (item) => {
+          const { itemId, quantity } = item;
+          const billItem = await bill_item.findOne({ where: { billId: bill.id, itemId } });
   
-          if (billFood) {
-            await billFood.update({ quantity });
+          if (billItem) {
+            await billItem.update({ quantity });
           } else {
-            await BillFoods.create({ billId: bill.id, foodId, quantity });
+            await bill_item.create({ billId: bill.id, itemId, quantity });
           }
         })
       );
