@@ -13,6 +13,8 @@ export default function LoginTab() {
     const [password, setPassword] = useState('')
     const [loginType, setLoginType] = useState('Khách Hàng') //Loại đăng nhập: ['Sinh viên', 'Giảng viên'
 
+    
+
     //Hàm xử lý khi người dùng nhấn nút Đăng Nhập
     //Hiện tại chưa có xử lý gì cả, chỉ in ra màn hình console thông tin đăng nhập
     const handleLogin = () => {
@@ -34,9 +36,9 @@ export default function LoginTab() {
     return (
         <View style = {styles.signinContainer} >
 
-            <View style={{flex:5, width:260,height:300}}>
+            <View style={{flex:5, width:'80%',height:300}}>
                 
-                <View style={{flexDirection:'row'}}>
+                <View style={{flexDirection:'row', justifyContent:'space-between', marginTop: 5}}>
                     <Text style = {[styles.text,styles.txtType,{marginTop:12}]}>Đối Tượng:</Text>
                    
                     <Picker
@@ -93,7 +95,7 @@ const styles = StyleSheet.create({
         backgroundColor:'white',
         borderRadius: 25,
         height: 300,
-        width: 285,
+        width: '90%',
         alignItems:'center',
         alignSelf: 'center',
     },
@@ -128,7 +130,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         textDecorationLine: 'underline line-through',
         borderBottomColor: '#747474',
-        borderBottomWidth: 1,
+        borderBottomWidth: 0.5,
     },
     txtInput:{
         color:'#747474',

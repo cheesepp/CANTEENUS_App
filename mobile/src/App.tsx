@@ -7,7 +7,7 @@ import LoginScreen from './screens/LoginScreen/LoginScreen'
 export default function App() {
   return (
     <View >
-      <LoginScreen/>
+      <LoginScreen />
     </View>
   )
 }
