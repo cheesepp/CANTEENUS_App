@@ -5,10 +5,9 @@ import TabContainer from './TabContainer';
 //File LoginScreen.tsx
 //File này gọi đến TabContainer.tsx để hiển thị giao diện đăng nhập/đăng ký
 
-
 export default function App() {
+  //Khai báo state activeTab để xác định đang ở tab nào. Và phương thức handleTabPress để xử lý khi người dùng bấm vào tab nào
   const [activeTab, setActiveTab] = useState<'signin' | 'signup'>('signin');
-
   const handleTabPress = (tab: 'signin' | 'signup') => {
     setActiveTab(tab);
   };

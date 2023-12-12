@@ -11,7 +11,7 @@ export default function LoginTab() {
     //state là một biến đặc biệt, khi giá trị của nó thay đổi thì giao diện sẽ tự động render lại
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [loginType, setLoginType] = useState('Khách Hàng') //Loại đăng nhập: ['Sinh viên', 'Giảng viên'
+    const [loginType, setLoginType] = useState('Khách Hàng') 
 
     
 
