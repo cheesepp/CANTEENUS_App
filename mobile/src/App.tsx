@@ -8,8 +8,8 @@ import ForgetPasswordScreen from './screens/ForgetPasswordScreen/ForgetPasswordS
 export default function App() {
   return (
     <View >
-      {/* <LoginScreen /> */}
-      <ForgetPasswordScreen/>
+      <LoginScreen/>
+      {/* <ForgetPasswordScreen/> */}
     </View>
   )
 }

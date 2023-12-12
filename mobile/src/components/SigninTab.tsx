@@ -1,10 +1,12 @@
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image} from 'react-native'
 import React, {useState} from 'react'
 import { Picker } from '@react-native-picker/picker'
+import ForgetPasswordModal from '../screens/LoginScreen/OTPAuthenticationModal'
 
 //File LoginTab.tsx
 //File này chứa giao diện tab Đăng nhập
 //Gồm 2 TextInput: Email và Password
+//File này có modal được viết ở trong thân code luôn, bấm "Quên mật khẩu" sẽ hiện modal, không thì nó sẽ ẩn. Nhưng cơ bản là nó vẫn ở đó
 
 export default function LoginTab() {
     //khai báo các state để lưu thông tin người dùng nhập vào
@@ -13,7 +15,11 @@ export default function LoginTab() {
     const [password, setPassword] = useState('')
     const [loginType, setLoginType] = useState('Khách Hàng') 
 
+    //Khai báo state modalVisible để xác định modal có hiện hay không
+    const [forgetPasswordModalVisible, setForgetPasswordModalVisible] = useState(false);
     
+    // Biến OTP ko khai báo state toàn cục, vì nó chỉ được dùng trong modal, nên khai báo trong hàm openForgetPasswordModal
+  
 
     //Hàm xử lý khi người dùng nhấn nút Đăng Nhập
     //Hiện tại chưa có xử lý gì cả, chỉ in ra màn hình console thông tin đăng nhập
@@ -25,11 +31,25 @@ export default function LoginTab() {
         console.log('---------------------------');
     }
 
-    //Hàm xử lý khi người dùng nhấn nút Quên mật khẩu
+    //hàm xử lý mở modal
+    const openForgetPasswordModal = () => {
+        setForgetPasswordModalVisible(true);
+    };
+    
+    //hàm xử lý đóng modal
+    const closeForgetPasswordModal = () => {
+        setForgetPasswordModalVisible(false);
+    };
+
+    //Hàm xử lý khi người dùng nhấn nút Ok trên modal ForgetPasswordModal
+    //(Đầu tiên khi bấm vào nút Quên mật khẩu thì modal sẽ hiện lên, sau đó người dùng nhập mã OTP và bấm Ok)
     //Hiện tại chưa có xử lý gì cả, chỉ in ra màn hình console thông tin
-    const handleForgotPassword = () => {
+    const handleForgotPassword = (submittedOTP:string) => {
+        
+        //Những code này chỉ được chạy khi người dùng bấm nút Ok trên modal
         console.log('-----------FORGOT PASSWORD-----------');
         console.log('Email: ' + email);
+        console.log('Submitted OTP: ' + submittedOTP)
         console.log('---------------------------');
     }
 
@@ -71,9 +91,15 @@ export default function LoginTab() {
                         onChangeText={(text) => setPassword(text)}
                     />
                 </View>
+                
+                <ForgetPasswordModal
+                    visible={forgetPasswordModalVisible}
+                    onSubmit={(submittedOTP) => handleForgotPassword(submittedOTP)}
+                    onClose={closeForgetPasswordModal}
+                />
 
                 <View style={styles.forgetPasswordContainer}>
-                    <TouchableOpacity onPress={handleForgotPassword}>
+                    <TouchableOpacity onPress={openForgetPasswordModal}>
                         <Text style={[styles.text,styles.txtForgetPassword]}>Quên mật khẩu</Text>
                     </TouchableOpacity>
                 </View>
