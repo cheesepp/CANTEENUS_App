@@ -2,7 +2,7 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../util/database');
 
-const BusinessTarget = sequelize.define('Bill', {
+const BusinessTarget = sequelize.define('BusinessTarget', {
   id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
@@ -10,6 +10,7 @@ const BusinessTarget = sequelize.define('Bill', {
   },
   date: {
     type: Sequelize.DATE,
+    defaultValue: Sequelize.NOW,
     allowNull: false,
   },
   target: {

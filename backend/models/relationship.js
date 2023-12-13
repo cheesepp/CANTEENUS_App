@@ -34,7 +34,8 @@ User.hasMany(Bill, {
   foreignKey: 
   { 
     name: 'user_id', 
-    allowNull:false 
+    defaultValue:null,
+    allowNull:true 
   }
 })
 

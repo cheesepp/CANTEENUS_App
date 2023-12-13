@@ -5,7 +5,7 @@ const {
   v1: uuidv1,
   v4: uuidv4,
 } = require('uuid');
-
+const ErrorHandler = require('../../util/ErrorHandler')
 // Get all ingredients
 exports.getAllIngredients = catchAsyncErrors(async (req, res) => {
   try {
@@ -24,7 +24,7 @@ exports.getIngredientByID = catchAsyncErrors(async (req, res) => {
     const ingredient = await Ingredient.findByPk(id);
 
     if (!ingredient) {
-      return next(new ErrorHandler('Material not found!', 404));
+      return next(new ErrorHandler('Ingredient not found!', 404));
     }
 
     res.json({ success:true, ingredient });
@@ -34,7 +34,7 @@ exports.getIngredientByID = catchAsyncErrors(async (req, res) => {
   }
 })
 
-// Add a new material
+// Add a new Ingredient
 exports.addIngredient = catchAsyncErrors(async (req, res) => {
   try {
     console.log("add ingredient")
@@ -59,7 +59,7 @@ exports.addIngredient = catchAsyncErrors(async (req, res) => {
 })
 
 // Update a ingredient by ID
-exports.updateIngredient = catchAsyncErrors( async (req, res) => {
+exports.updateIngredient = catchAsyncErrors( async (req, res,next) => {
   try {
     const { id } = req.params;
     const { calories, name, unit, quantity, price, expirationDate } = req.body;
