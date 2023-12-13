@@ -1,7 +1,7 @@
-const ErrorHandler = require("../utils/ErrorHandler.js");
+const ErrorHandler = require("../util/ErrorHandler.js");
 const catchAsyncErrors = require("./catchAsyncErrors.js");
 const jwt = require("jsonwebtoken");
-const User = require("../models/UserModel.js");
+const User = require("../models/user");
 require('dotenv').config()
 
 exports.isAuthenticatedUser = catchAsyncErrors(async (req, res, next) => {

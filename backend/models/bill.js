@@ -1,6 +1,6 @@
 // models/bill.js
 const Sequelize = require('sequelize');
-const sequelize = require('../config/database');
+const sequelize = require('../util/database');
 
 const Bill = sequelize.define('Bill', {
   id: {

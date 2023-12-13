@@ -25,15 +25,15 @@ const Ingredient = sequelize.define('ingredient', {
         allowNull: true,
     },
     quantity: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
     },
     price: {
-        type: DataTypes.FLOAT,
+        type: Sequelize.FLOAT,
         allowNull: false,
     },
     expirationdate: {
-        type: DataTypes.DATE,
+        type: Sequelize.DATE,
         allowNull: true,
     },
 });

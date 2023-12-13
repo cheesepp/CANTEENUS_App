@@ -24,8 +24,8 @@ sequelize.sync().then(() => {
 
 // Routes
 app.use('/auth', authRoutes);
-app.use('/admin', adminRoutes)
-app.use('/bill', billRoutes)
+app.use('/admin', adminRoutes);
+app.use('/bill', billRoutes);
 
 // it's for errorHandeling
 app.use(ErrorHandler);

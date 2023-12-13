@@ -3,8 +3,9 @@ const Ingredient = require('./ingredient');
 const item_ingredient = require('./item_ingredient');
 const Bill = require('./bill');
 const bill_item = require('./bill_item');
+const User = require('./user');
 
-Item.belongsToMany(ingredient, {
+Item.belongsToMany(Ingredient, {
   through: item_ingredient,
   as: 'ingredient',
   foreignKey: 'item_id',

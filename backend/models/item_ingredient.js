@@ -1,6 +1,6 @@
 // models/foodMaterials.js
 const Sequelize = require('sequelize');
-const sequelize = require('../config/database');
+const sequelize = require('../util/database');
 
 const item_ingredient = sequelize.define('item_ingredient', {
   quantity: {

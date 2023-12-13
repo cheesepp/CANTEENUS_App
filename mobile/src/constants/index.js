@@ -27,6 +27,14 @@ export const Fonts = {
   bold: "Montserrat-Regular",
 };
 
-export const Images = {};
+export const Icons = {
+  home: require("../assets/icons/home.png"),
+  bill: require("../assets/icons/bill.png"),
+  chat: require("../assets/icons/chat.png"),
+  profile: require("../assets/icons/profile.png"),
+  revenue: require("../assets/icons/revenue.png"),
+  placeholder: require("../assets/icons/placeholder.png")
+};
 
-export const Icons = {};
+
+export const Images = {};

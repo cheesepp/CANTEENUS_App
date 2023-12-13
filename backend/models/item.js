@@ -29,4 +29,4 @@ const Item = sequelize.define('item', {
   },
 });
 
-module.exports = Food;
+module.exports = Item;
