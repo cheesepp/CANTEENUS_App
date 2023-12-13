@@ -1,22 +1,21 @@
-// models/bill.js
+// models/business_target.js
 const Sequelize = require('sequelize');
 const sequelize = require('../util/database');
 
-const Bill = sequelize.define('Bill', {
+const BusinessTarget = sequelize.define('Bill', {
   id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
     autoIncrement: true,
   },
-  totalPrice: {
-    type: Sequelize.FLOAT,
+  date: {
+    type: Sequelize.DATE,
     allowNull: false,
   },
-  createdAt: {
-    type: Sequelize.DATE,
-    defaultValue: Sequelize.NOW,
+  target: {
+    type: Sequelize.INTEGER,
     allowNull: false,
   },
 });
 
-module.exports = Bill;
+module.exports = BusinessTarget;

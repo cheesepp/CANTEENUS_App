@@ -11,7 +11,8 @@ async function register(req, res) {
     try {
         console.log('vào đây')
         const { email, role, name, phone, password } = req.body;
-        const checkUser = await User.findOne({ where: { email } });
+        
+        const checkUser = await User.findOne({ where: { email: email } });
         if (checkUser) {
            return  res.status(401).json({ 
             success: false,
@@ -20,7 +21,7 @@ async function register(req, res) {
 
         const uid = role.slice(0, 2).toUpperCase() + uuidv1()
         const hashedPassword = await bcrypt.hash(password, 10);
-        const user = await User.create({ id: uid, email, role, name, phone, password: hashedPassword, avatar: req.file ? req.file.path : null  });
+        const user = await User.create({ id: uid, email: email, role: role, name: name, phone: phone, password: hashedPassword, avatar: req.file ? req.file.path : null  });
 
         res.status(201).json({ 
             success: true,
@@ -38,12 +39,12 @@ async function login(req, res) {
 
     try {
         const { email, password } = req.body;
-        const user = await User.findOne({ where: { email } });
+        const user = await User.findOne({ where: { email: email } });
 
         if (!user) {
             return res.status(401).json({ 
                 success: false,
-                message: 'Invalid credentials' });
+                message: 'Invalid credentials - User not exists' });
         }
 
         const passwordMatch = await bcrypt.compare(password, user.password);
@@ -51,7 +52,7 @@ async function login(req, res) {
         if (!passwordMatch) {
             return res.status(401).json({ 
                 success: false,
-                message: 'Invalid credentials' });
+                message: 'Invalid credentials - Password is not correct' });
         }
 
         const token = jwt.sign({ id: user.id }, 'secret_key');
@@ -66,7 +67,19 @@ async function login(req, res) {
     }
 }
 
+const signout = async (req, res) => {
+    try {
+        res.clearCookie('token');
+        res.redirect('/auth/login');
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ 
+            success: false,
+            message: 'Internal Server Error' });
+    }
+}
 module.exports = {
     register,
     login,
+    signout,
 };

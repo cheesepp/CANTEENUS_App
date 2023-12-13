@@ -10,7 +10,7 @@ const avtStorage = multer.diskStorage({
   },
 });
 
-const avtUpload = multer({ avtStorage })
+const avtUpload = multer({ storage: avtStorage })
 
 const itemStorage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -23,7 +23,7 @@ const itemStorage = multer.diskStorage({
   });
   
 
-const itemUpload = multer({ itemStorage });
+const itemUpload = multer({ storage: itemStorage });
 
 const ingredientStorage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -36,7 +36,7 @@ const ingredientStorage = multer.diskStorage({
   });
   
 
-const ingredientUpload = multer({ ingredientStorage });
+const ingredientUpload = multer({ storage: ingredientStorage });
 
 module.exports = {
     avtUpload,

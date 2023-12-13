@@ -3,8 +3,9 @@ const Ingredient = require('./ingredient');
 const item_ingredient = require('./item_ingredient');
 const Bill = require('./bill');
 const bill_item = require('./bill_item');
-
-Item.belongsToMany(ingredient, {
+const User = require('./user')
+const BusinessTarget = require('./business_target')
+Item.belongsToMany(Ingredient, {
   through: item_ingredient,
   as: 'ingredient',
   foreignKey: 'item_id',
@@ -30,13 +31,21 @@ Bill.belongsToMany(Item, {
 });
 
 User.hasMany(Bill, {
-  foreignKey: { name: 'user_id', allowNull:false }
+  foreignKey: 
+  { 
+    name: 'user_id', 
+    allowNull:false 
+  }
 })
 
-Bill.belongsTo(User)
+//Bill.belongsTo(User)
 
 module.exports = {
   Item,
   Ingredient,
+  Bill,
   item_ingredient,
+  bill_item,
+  User,
+  BusinessTarget
 };

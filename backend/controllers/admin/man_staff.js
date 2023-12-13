@@ -4,9 +4,9 @@ const {
     v1: uuidv1,
     v4: uuidv4,
   } = require('uuid');
-const { User } = require('../../models/relationship');
+const User  = require('../../models/user');
 const catchAsyncErrors = require('../../middleware/catchAsyncErrors');
-
+const ErrorHandler = require('../../util/ErrorHandler')
 exports.getStaff = catchAsyncErrors(async (req, res, next) => {
 
     try {
@@ -28,8 +28,11 @@ exports.addStaff = catchAsyncErrors(async (req, res, next) => {
 
     try {
         console.log('add staff')
+        console.log("req.body:", req.body)
+       
         const { email, role, name, phone, password } = req.body;
-        const checkUser = await User.findOne({ where: { email } });
+        console.log(email," - ", role, " - ", name," - ",  phone, " - ", password)
+        const checkUser = await User.findOne({ where: { email: email } });
         if (checkUser) {
            return  res.status(401).json({ 
             success: false,
@@ -53,10 +56,14 @@ exports.addStaff = catchAsyncErrors(async (req, res, next) => {
 
 exports.editStaff = catchAsyncErrors(async (req, res, next) => {
     try {
+      console.log("edit staff")
         const { id } = req.params;
+        console.log("id: ",id)
         const { name, phone } = req.body;
+        
     
         const staff = await User.findByPk(id);
+        console.log("staff: ",staff)
     
         if (!staff) {
             return next(new ErrorHandler('Staff not found!', 404));

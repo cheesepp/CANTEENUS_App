@@ -9,7 +9,7 @@ const adminControllerItem = require('../controllers/admin/man_item')
 const { avtUpload, ingredientUpload, itemUpload } = require('../util/multer');
 
 const router = express.Router();
-const { isAuthenticatedUser } = require("../middleware/auth");
+const  { isAuthenticatedUser } = require("../middleware/auth");
 
 // /admin/get-staff => GET
 router.get('/get-staff', isAuthenticatedUser, adminControllerStaff.getStaff);
@@ -38,6 +38,7 @@ router.put('/edit-ingredient/:id', isAuthenticatedUser, adminControllerIngredien
 
 // Delete a ingredient by ID
 router.delete('/delete-ingredient/:id', isAuthenticatedUser, adminControllerIngredient.deleteIngredient);
+
 
 // Get all item
 router.get('/get-item', isAuthenticatedUser, adminControllerItem.getAllItems);
