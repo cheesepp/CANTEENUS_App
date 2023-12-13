@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {Icons} from '../constants/index'
 import { Image } from 'react-native';
@@ -8,18 +9,33 @@ import { Image } from 'react-native';
 // Screens
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import BillScreen from '../screens/BillScreen/BillScreen';
+import DetailsScreen from '../screens/BillScreen/DetailScreen/DetailScreen';
 import ProfileScreen from '../screens/ProfileScreen/ProfileScreen';
 import RevenueScreen from '../screens/RevenueScreen/RevenueScreen';
 import ChatScreen from '../screens/ChatScreen/ChatScreen';
 
 //Screen names
 const homeName = "Home";
+const billStack = "BillScreen";
 const billName = "Bill";
+const billDetailName = "Detail";
 const profileName = "Profile";
 const chatName = "Chat";
 const revenueName = "Revenue";
 
+const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
+
+function BillStackNavigator() {
+  return (
+    <Stack.Navigator
+    
+    >
+      <Stack.Screen name={billName} component={BillScreen} />
+      <Stack.Screen name={billDetailName} component={DetailsScreen} />
+    </Stack.Navigator>
+  );
+}
 
 function MainContainer() {
     return (
@@ -39,7 +55,7 @@ function MainContainer() {
                 iconName = Icons.home;
                 console.log(iconName)
   
-              } else if (rn === billName) {
+              } else if (rn === billStack) {
                 // iconName = focused ? 'list' : 'list-outline';
                 iconName = Icons.bill;
                 console.log(iconName)
@@ -89,7 +105,7 @@ function MainContainer() {
           >
   
           <Tab.Screen name={homeName} component={HomeScreen} />
-          <Tab.Screen name={billName} component={BillScreen} />
+          <Tab.Screen name={billStack} component={BillStackNavigator} options={{headerShown:false}}/>
           <Tab.Screen name={revenueName} component={RevenueScreen} />
           <Tab.Screen name={chatName} component={ChatScreen} />
           <Tab.Screen name={profileName} component={ProfileScreen} />
