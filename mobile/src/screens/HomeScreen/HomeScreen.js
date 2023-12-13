@@ -17,9 +17,9 @@ import styles from './styles';
 // }
 
 export default function HomeScreen({ navigation }) {
-    const handleButtonPress = (buttonNumber) => {
+    const handleButtonPress = (screenName) => {
         // Handle button press based on buttonNumber
-        console.log(`Button ${buttonNumber} pressed`);
+        navigation.navigate(screenName)
       };
     
       return (
@@ -27,13 +27,13 @@ export default function HomeScreen({ navigation }) {
           <View style={styles.row}>
             <TouchableOpacity
               style={styles.button}
-              onPress={() => handleButtonPress(1)}
+              onPress={() => handleButtonPress('Nhân Viên')}
             >
               <Text style={styles.buttonText}>Nhân viên</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.button}
-              onPress={() => handleButtonPress(2)}
+              onPress={() => handleButtonPress('Menu')}
             >
               <Text style={styles.buttonText}>Menu</Text>
             </TouchableOpacity>
@@ -41,13 +41,13 @@ export default function HomeScreen({ navigation }) {
           <View style={styles.row}>
             <TouchableOpacity
               style={styles.button}
-              onPress={() => handleButtonPress(3)}
+              onPress={() => handleButtonPress('Kho')}
             >
               <Text style={styles.buttonText}>Kho</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.button}
-              onPress={() => handleButtonPress(4)}
+              onPress={() => handleButtonPress('Chỉ tiêu')}
             >
               <Text style={styles.buttonText}>Chỉ tiêu</Text>
             </TouchableOpacity>
