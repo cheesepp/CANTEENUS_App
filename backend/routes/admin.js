@@ -5,11 +5,12 @@ const express = require('express');
 const adminControllerStaff = require('../controllers/admin/man_staff');
 const adminControllerIngredient = require('../controllers/admin/man_ingredients');
 const adminControllerItem = require('../controllers/admin/man_item')
+const adminControllerBusinessTarget = require('../controllers/admin/man_target')
 
 const { avtUpload, ingredientUpload, itemUpload } = require('../util/multer');
 
 const router = express.Router();
-const { isAuthenticatedUser } = require("../middleware/auth");
+const  { isAuthenticatedUser } = require("../middleware/auth");
 
 // /admin/get-staff => GET
 router.get('/get-staff', isAuthenticatedUser, adminControllerStaff.getStaff);
@@ -39,6 +40,7 @@ router.put('/edit-ingredient/:id', isAuthenticatedUser, adminControllerIngredien
 // Delete a ingredient by ID
 router.delete('/delete-ingredient/:id', isAuthenticatedUser, adminControllerIngredient.deleteIngredient);
 
+
 // Get all item
 router.get('/get-item', isAuthenticatedUser, adminControllerItem.getAllItems);
 
@@ -53,5 +55,21 @@ router.put('/update-item/:id', isAuthenticatedUser, adminControllerItem.updateIt
 
 // Delete a food by ID
 router.delete('/delete-item/:id', isAuthenticatedUser, adminControllerItem.deleteItem);
+
+
+// Get all business target
+router.get('/get-target', isAuthenticatedUser, adminControllerBusinessTarget.getAllTarget);
+
+// Get a single business target by ID
+router.get('/get-target/:id', isAuthenticatedUser, adminControllerBusinessTarget.getTargetById);
+
+// Add a new business target
+router.post('/add-target', isAuthenticatedUser, adminControllerBusinessTarget.addTarget);
+
+// Update a business target by ID
+router.put('/edit-target/:id', isAuthenticatedUser, adminControllerBusinessTarget.updateTarget);
+
+// Delete a business target by ID
+router.delete('/delete-target/:id', isAuthenticatedUser, adminControllerBusinessTarget.deleteTarget);
 
 module.exports = router;
