@@ -14,7 +14,7 @@ exports.getAllBills = catchAsyncErrors(async (req, res, next) => {
         ],
       });
   
-      res.json({ bills: bills });
+      res.json({success:true, bills: bills });
     } catch (error) {
       console.error(error);
       return next(new ErrorHandler('Internal server error!', 500));
@@ -40,7 +40,7 @@ exports.getAllBills = catchAsyncErrors(async (req, res, next) => {
         return next(new ErrorHandler('Bill not found!', 404));
       }
   
-      res.json({ bill:bill });
+      res.json({success:true, bill:bill });
     } catch (error) {
       console.error(error);
       return next(new ErrorHandler('Internal server error!', 500));
@@ -80,7 +80,7 @@ exports.getAllBills = catchAsyncErrors(async (req, res, next) => {
         })
       );
   
-      res.status(201).json({ message: 'Bill added successfully', bill:bill });
+      res.status(201).json({success: true, message: 'Bill added successfully', bill:bill });
     } catch (error) {
       console.error(error);
       return next(new ErrorHandler('Internal server error!', 500));
@@ -145,7 +145,7 @@ exports.getAllBills = catchAsyncErrors(async (req, res, next) => {
       //   })
       // );
   
-      res.json({ message: 'Bill updated successfully', bill: bill });
+      res.json({success:true, message: 'Bill updated successfully', bill: bill });
     } catch (error) {
       console.error(error);
       return next(new ErrorHandler('Internal server error!', 500));
@@ -164,7 +164,7 @@ exports.getAllBills = catchAsyncErrors(async (req, res, next) => {
   
       await bill.destroy();
   
-      res.json({ message: 'Bill deleted successfully' });
+      res.json({success: true, message: 'Bill deleted successfully' });
     } catch (error) {
       console.error(error);
       return next(new ErrorHandler('Internal server error!', 500));
