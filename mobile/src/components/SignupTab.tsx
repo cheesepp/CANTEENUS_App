@@ -114,7 +114,7 @@
                 <View style={{flex:10, width:330,height:500, marginTop:10}}>
 
                     <View style={{marginBottom:10, borderBottomColor:'#000', borderBottomWidth:1}}>
-                        <Image style= {styles.img}source={require('../assets/Images/User_cicrle_duotone.png')}/>
+                        <Image style= {styles.img}source={require('../assets/images/User_cicrle_duotone.png')}/>
 
                         <TouchableOpacity style={[styles.button, {height:30,width:100, marginBottom:10}]} onPress={handleChooseImage}>
                             <Text style = {[styles.text,{fontSize:13,fontWeight:'bold'}]}>Chọn Ảnh</Text>
