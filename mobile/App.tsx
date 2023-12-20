@@ -6,25 +6,27 @@ import { StyleSheet, View } from 'react-native'
 import LoginScreen from './src/screens/LoginScreen/LoginScreen'
 import ForgetPasswordScreen from './src/screens/ForgetPasswordScreen/ForgetPasswordScreen'
 
+
+
 //File App.tsx chính của ứng dụng mobile
 //Ở đây chỉ cần gọi màn hình LoginScreen
 
-function App() {
-  return (
-    <View >
-      <LoginScreen/>
-      {/* <ForgetPasswordScreen/> */}
-    </View>
-  )
-}
+// function App() {
+//   return (
+//     <View >
+//       <LoginScreen/>
+//       {/* <ForgetPasswordScreen/> */}
+//     </View>
+//   )
+// }
 
 const styles = StyleSheet.create({})
 
-// function App() {
-//   const Stack = createNativeStackNavigator();
-//   return (
-//     <MainContainer/>
-//   );
-// }
+function App() {
+  const Stack = createNativeStackNavigator();
+  return (
+    <MainContainer/>
+  );
+}
 
 export default App;
