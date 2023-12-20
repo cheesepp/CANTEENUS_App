@@ -9,6 +9,7 @@ exports.getAllItems = catchAsyncErrors(async (req, res) => {
       include: [
         {
           model: Ingredient,
+          as:  "ingredient",
           attributes: ['id', 'name', 'quantity'],
           through: {
             model: item_ingredient,
