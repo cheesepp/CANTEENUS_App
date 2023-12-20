@@ -12,6 +12,11 @@ const Bill = sequelize.define('Bill', {
     type: Sequelize.FLOAT,
     allowNull: false,
   },
+  paymentMethod: {
+    type: Sequelize.STRING,
+    defaultValue: 'Tiền mặt',
+    allowNull: false,
+  },
   createdAt: {
     type: Sequelize.DATE,
     defaultValue: Sequelize.NOW,

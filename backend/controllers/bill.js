@@ -49,7 +49,7 @@ exports.getAllBills = catchAsyncErrors(async (req, res, next) => {
   
   exports.addBill = catchAsyncErrors(async (req, res,next) => {
     try {
-      const { items } = req.body;
+      const { items, payment } = req.body;
   
       // Calculate total price
       const totalPrice = items.reduce((acc, items) => {
@@ -66,7 +66,7 @@ exports.getAllBills = catchAsyncErrors(async (req, res, next) => {
       }
 
       // Create a new bill
-      const bill = await Bill.create({ totalPrice: totalPrice,user_id: bill_user });
+      const bill = await Bill.create({ totalPrice: totalPrice,user_id: bill_user, paymentMethod: payment });
   
       // Create associations with foods including the quantity
       await Promise.all(
