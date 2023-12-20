@@ -7,12 +7,9 @@ export default function ObjectiveScreen({ navigation }) {
 
     const api ='http://localhost:3000/test/get-target'
     
-
-    const items =[
-        {date:'18/12/2023', number:18},
-        {date:'19/12/2023', number:19},
-        {date:'20/12/2023', number:20},
-        {date:'21/12/2023', number:21},
+    const objectItems =[
+        {id:4, date:'2024-12-13 16:48:44', target:50},
+        {id:5, date:'2024-11-13 16:48:44', target:90},
     ]
 
     const renderItem = ({ item }) => {
@@ -20,9 +17,9 @@ export default function ObjectiveScreen({ navigation }) {
     };
 
     return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginTop:10}}>
             <FlatList
-                data={items}
+                data={objectItems}
                 renderItem={renderItem}
                 keyExtractor={item => item.date}    
             />
