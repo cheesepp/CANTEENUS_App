@@ -9,6 +9,7 @@ exports.getAllItems = catchAsyncErrors(async (req, res) => {
       include: [
         {
           model: Ingredient,
+          as:  "ingredient",
           attributes: ['id', 'name', 'quantity'],
           through: {
             model: item_ingredient,
@@ -17,7 +18,7 @@ exports.getAllItems = catchAsyncErrors(async (req, res) => {
         },
       ],
     });
-    res.json({ success:true, items });
+    res.json({ success:true, items:items });
   } catch (error) {
     console.error(error);
     return next(new ErrorHandler('Internal server error!', 500));
@@ -43,7 +44,7 @@ exports.getItemById = catchAsyncErrors(async (req, res, next) => {
       return next(new ErrorHandler('Item not found!', 404));
     }
 
-    res.json({ item: item });
+    res.json({ success:true,item: item });
   } catch (error) {
     console.error(error);
     return next(new ErrorHandler('Internal server error!', 500));

@@ -15,6 +15,9 @@ const  { isAuthenticatedUser } = require("../middleware/auth");
 // /admin/get-staff => GET
 router.get('/get-staff', isAuthenticatedUser, adminControllerStaff.getStaff);
 
+// /admin/get-staff => GET
+router.get('/get-staff/:id',isAuthenticatedUser,adminControllerStaff.getStaffByID)
+
 // /admin/add-staff => POST
 router.post('/add-staff', isAuthenticatedUser, avtUpload.single('image'), adminControllerStaff.addStaff);
 
