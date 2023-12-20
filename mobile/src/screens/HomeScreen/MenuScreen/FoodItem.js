@@ -1,15 +1,14 @@
 import { StyleSheet, Text, View, Image } from 'react-native'
 import React from 'react'
 
-export default function FoodItem({food}) {
+//Hằng số lưu đường dẫn ảnh mặc định cho món ăn
+const defaultImage = require('../../../assets/Images/Default_item.png')
 
-    //Hằng số lưu đường dẫn ảnh mặc định cho món ăn
-    const defaultImage = require('../../../assets/Images/Default_item.png')
-   
+export default function FoodItem({food}) {
     return (
         <View style={styles.container}>
         <Text style={[styles.text,{fontSize:15}]}>{food.name}</Text>
-        <Image source={(food.image!='')?food.image:defaultImage} style={styles.imageStyle}/>
+        <Image source={(food.image == '')?food.image:defaultImage} style={styles.imageStyle}/>
         <Text style={[styles.text,{fontSize:13}]}>đ {food.price}</Text>
         </View>
     )

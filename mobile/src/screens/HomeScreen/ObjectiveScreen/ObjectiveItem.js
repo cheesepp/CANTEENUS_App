@@ -1,8 +1,7 @@
-import { StyleSheet, Text, View, FlatList } from 'react-native'
+import { StyleSheet, Text, View} from 'react-native'
 import * as React from 'react';
 
 export default function ObjectiveItem({objective}) {
-    
     //Hàm format lại chuỗi ngày tháng năm lấy ra từ database
     const formatDate = (input) => {
         var datePart = input.match(/\d+/g),

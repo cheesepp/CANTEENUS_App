@@ -1,25 +1,24 @@
 import { StyleSheet, Text, View,Image } from 'react-native'
-import React from 'react'
+import * as React from 'react'
 
 export default function IngredientItem({ingredient}) {
-
     //Hằng số lưu đường dẫn ảnh mặc định cho nguyên liệu
     const defaultImage = require('../../../assets/Images/Default_item.png')
     
-    //Hàm format lại chuỗi ngày tháng năm lấy ra từ database
+    //viết hàm formar lại chuỗi có dạng 2024-12-11T11:07:13.000Z thành 11/12/2024
     const formatDate = (input) => {
-        var datePart = input.match(/\d+/g),
-        year = datePart[0].substring(0), // get only two digits
-        month = datePart[1], day = datePart[2];
-      
+        var date = input.split('T')[0];
+        var year = date.split('-')[0];
+        var month = date.split('-')[1];
+        var day = date.split('-')[2];
         return day+'/'+month+'/'+year;
     }
 
     return (
         <View style={styles.container}>
         <Text style={[styles.text,{fontSize:15}]}>{ingredient.name}</Text>
-        <Image source={(ingredient.image!='')?food.image:defaultImage} style={styles.imageStyle}/>
-        <Text style={[styles.text,{fontSize:13}]}>{formatDate(ingredient.expirationDate)}</Text>
+        <Image source={(ingredient.image=='')?ingredient.image:defaultImage} style={styles.imageStyle}/>
+        <Text style={[styles.text,{fontSize:13}]}>{formatDate(ingredient.expirationdate)}</Text>
         </View>
     )
 }
