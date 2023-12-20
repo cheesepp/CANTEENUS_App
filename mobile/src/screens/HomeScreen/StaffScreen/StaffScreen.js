@@ -53,10 +53,10 @@ const styles = StyleSheet.create({
         marginVertical: 5,
         padding: 15,
         borderRadius: 15,
-        justifyContent: 'top',
+        justifyContent: 'center',
         alignItems: 'left',
-        height: 80,
-        width: 330,
+        height: 90,
+        width: 380,
     },
     textButton: {
         color: '#ffffff',

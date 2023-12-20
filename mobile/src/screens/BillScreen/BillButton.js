@@ -13,11 +13,11 @@ export default BillButton = ({ navigation, bill, isNavigate=false }) => {
     return (
         <TouchableOpacity style={styles.button} onPress={handleButtonPress}>
             <Text style={styles.textIdPrintDate}>ID: {bill.id}</Text>
-            <Text style={styles.textIdPrintDate}>Ngày in: {bill.date}</Text>
+            <Text style={styles.textIdPrintDate}>Ngày in: {bill.createdAt}</Text>
             {isNavigate === true ?
-                <Text style={styles.textPrice}>{bill.price}</Text>
+                <Text style={styles.textPrice}>{bill.totalPrice}</Text>
             :
-                <Text style={{fontSize: 15, color: 'white', marginTop: 10, fontWeight: 'bold'}}>Phương thức thanh toán: {bill.payment}</Text>}
+                <Text style={{fontSize: 15, color: 'white', marginTop: 10, fontWeight: 'bold'}}>Phương thức thanh toán: {bill.paymentMethod}</Text>}
         
         </TouchableOpacity>
     );

@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import React, {Component, useEffect} from 'react';
+import { NavigationContainer, useIsFocused } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -68,6 +68,14 @@ const homeHeaderBarStyle = StyleSheet.create(
 )
 
 function BillStackNavigator() {
+  // const isFocused = useIsFocused();
+  // useEffect(() => {
+  //   if (isFocused) {
+  //     // Perform actions you want when the screen is focused.
+  //     // This could be fetching data, re-rendering components, or any other refresh logic.
+  //     // alert('Home screen is on focus');
+  //   }
+  // }, [isFocused]);
   return (
     <Stack.Navigator
 

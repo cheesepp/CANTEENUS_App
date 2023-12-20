@@ -11,10 +11,11 @@ import ForgetPasswordScreen from './src/screens/ForgetPasswordScreen/ForgetPassw
 
 function App() {
   return (
-    <View >
-      <LoginScreen/>
-      {/* <ForgetPasswordScreen/> */}
-    </View>
+    // <View >
+    //   <LoginScreen/>
+    //   {/* <ForgetPasswordScreen/> */}
+    // </View>
+    <MainContainer/>
   )
 }
 

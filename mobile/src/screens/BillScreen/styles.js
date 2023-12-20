@@ -14,12 +14,12 @@ export default styles = StyleSheet.create({
         borderRadius: 15,
         justifyContent: 'top',
         alignItems: 'left',
-        height: 100,
-        width: 330,
+        height: 110,
+        width: 380,
     },
     textIdPrintDate: {
         color: '#ffffff',
-        fontSize: 10,
+        fontSize: 15,
         fontWeight: 'bold',
         textAlign: 'left',
         marginVertical: 3, // Add spacing between text components
