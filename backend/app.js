@@ -7,7 +7,7 @@ const ErrorHandler = require("./middleware/error");
 require('dotenv').config()
 const app = express();
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 
 const authRoutes = require('./routes/authenticate');
 const adminRoutes = require('./routes/admin')
