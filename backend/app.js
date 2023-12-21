@@ -1,24 +1,65 @@
 // app.js
 const express = require('express');
+const app = express();
 const bodyParser = require('body-parser');
 const sequelize = require('./util/database');
 const path = require('path')
+const mongoose = require('mongoose');
 const ErrorHandler = require("./middleware/error");
 require('dotenv').config()
-const app = express();
 var cors = require('cors');
-// app.use(cors({origin: ['http://localhost:3000'],
-// credentials: true,
-// methods: ["GET", "POST", "PUT", "DELETE"],}));
-// app.use(function(req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-//   res.header("Access-Control-Allow-Headers", "x-access-token, Origin, X-Requested-With, Content-Type, Accept");
-//   next();
-// });
+const http = require('http');
+
+const initSocketIO = require('./controllers/socket'); // Adjust the path based on your project structure
+
 app.options("*", cors({ origin: 'http://localhost:8080', optionsSuccessStatus: 200 }));
 
 app.use(cors({ origin: "http://localhost:8080", optionsSuccessStatus: 200 }));
+
+const uri = 'mongodb+srv://canteenus:canteenus123@cluster0.oafqocm.mongodb.net/canteenus?retryWrites=true&w=majority'
+
+mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+
+const server = http.createServer(app);
+
+// ... (define your mongoose schema and model here)
+
+// // Initialize Socket.IO
+// initSocketIO(server);
+const socketIO = require('socket.io');
+const Chat = require('./models/chat'); // Make sure to adjust the path based on your project structure
+
+const io = socketIO(server);
+io.on('connection', (socket) => {
+  console.log('vào đây')
+  console.log('A user connected');
+
+  // Send existing messages when a user connects
+  Chat.find().sort({ timestamp: 1 }).exec().then((messages) => {
+    socket.emit('initialMessages', messages);
+  })
+  .catch((err) => {throw err})
+
+  // Listen for new messages
+  socket.on('sendMessage', async (data) => {
+    try {
+      console.log(data)
+      const { sender, receiver, message } = data;
+      const newChatMessage = new Chat({ sender, receiver, message });
+      const savedMessage = await newChatMessage.save();
+
+      // Broadcast the new message to all connected clients
+      io.emit('newMessage', savedMessage);
+    } catch (error) {
+      console.error('Error saving message:', error);
+    }
+  });
+
+  socket.on('disconnect', () => {
+    console.log('A user disconnected');
+  });
+});
+
 const PORT = process.env.PORT || 8080;
 
 const authRoutes = require('./routes/authenticate');
@@ -27,7 +68,7 @@ const billRoutes = require('./routes/bill');
 const userRoutes = require('./routes/user')
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true}))
+app.use(bodyParser.urlencoded({ extended: true }))
 
 //app.use(express.json())
 //app.use(express.urlencoded({ extended: true }));
@@ -53,10 +94,10 @@ sequelize.sync().then(() => {
 app.use('/auth', authRoutes);
 app.use('/admin', adminRoutes)
 app.use('/bill', billRoutes)
-app.use('/user',userRoutes)
+app.use('/user', userRoutes)
 // it's for errorHandeling
 app.use(ErrorHandler);
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });

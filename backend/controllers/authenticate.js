@@ -58,6 +58,7 @@ async function login(req, res) {
         const token = jwt.sign({ id: user.id }, 'secret_key');
         res.status(200).json({ 
             success: true,
+            userId: user.id,
             jwt: token });
     } catch (error) {
         console.error(error);

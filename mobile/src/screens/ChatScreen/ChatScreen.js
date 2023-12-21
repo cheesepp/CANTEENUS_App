@@ -3,7 +3,7 @@ import { View, Text, TextInput, Button, FlatList, TouchableOpacity } from 'react
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import axios from 'axios';
 
-accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkFEMDJkNTgyMTAtOWYyNC0xMWVlLWE2MjQtM2Q5ZTE4ODk5YWViIiwiaWF0IjoxNzAzMTI0NTEwfQ.4ys8hcset_Qetvos0Gdu71aMlVXQLIRwRb5CqQKoqd0';
+accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkFEMDJkNTgyMTAtOWYyNC0xMWVlLWE2MjQtM2Q5ZTE4ODk5YWViIiwiaWF0IjoxNzAzMTQ2MjM4fQ.58KR-y4VTKhkkcnyIE0g6g7b6L6UEMz6dXoiNKNroNM';
 export default function ChatScreen({ navigation }) {
 
     const [staffs, setStaffs] = useState(null);
