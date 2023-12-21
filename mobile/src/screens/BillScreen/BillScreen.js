@@ -5,22 +5,7 @@ import styles from './styles';
 import axios from 'axios';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
-// const BillButton = ({ navigation, onPress, bill }) => {
-//     const handleButtonPress = () => {
-//         // Handle button press
-//         console.log(bill.id)
-//         navigation.navigate('Detail', {bill: bill});
-//     };
-
-//     return (
-//         <TouchableOpacity style={styles.button} onPress={handleButtonPress}>
-//             <Text style={styles.textIdPrintDate}>ID: {bill.id}</Text>
-//             <Text style={styles.textIdPrintDate}>Ngày in: {bill.date}</Text>
-//             <Text style={styles.textPrice}>{bill.price}</Text>
-//         </TouchableOpacity>
-//     );
-// };
-accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkFEMDJkNTgyMTAtOWYyNC0xMWVlLWE2MjQtM2Q5ZTE4ODk5YWViIiwiaWF0IjoxNzAzMDY4NzY0fQ.fW8qjDBOnpotl8SrBDCxEImAeni6HKNAR2zQ1OxQpY4';
+accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkFEMDJkNTgyMTAtOWYyNC0xMWVlLWE2MjQtM2Q5ZTE4ODk5YWViIiwiaWF0IjoxNzAzMTI0NTEwfQ.4ys8hcset_Qetvos0Gdu71aMlVXQLIRwRb5CqQKoqd0';
 export default function BillScreen({ navigation }) {
 
   const [bills, setBills] = useState(null);

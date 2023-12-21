@@ -18,6 +18,7 @@ import StaffScreen from '../screens/HomeScreen/StaffScreen/StaffScreen';
 import ObjectiveScreen from '../screens/HomeScreen/ObjectiveScreen/ObjectiveScreen';
 import MenuScreen from '../screens/HomeScreen/MenuScreen/MenuScreen';
 import StorageScreen from '../screens/HomeScreen/StorageScreen/StorageScreen';
+import ChatDetailScreen from '../screens/ChatScreen/ChatDetailScreen';
 
 //Screen names
 const homeName = "Home";
@@ -31,9 +32,12 @@ const billStack = "BillScreen";
 const billName = "Bill";
 const billDetailName = "Detail";
 
+const chatStack = "ChatScreen";
+const chatName = "Chat";
+const chatDetailName = "ChatDetail";
+
 
 const profileName = "Profile";
-const chatName = "Chat";
 const revenueName = "Revenue";
 
 const Stack = createStackNavigator();
@@ -86,6 +90,18 @@ function BillStackNavigator() {
   );
 }
 
+function ChatStackNavigator() {
+
+  return (
+    <Stack.Navigator
+
+    >
+      <Stack.Screen name={chatName} component={ChatScreen} />
+      <Stack.Screen name={chatDetailName} component={ChatDetailScreen} />
+    </Stack.Navigator>
+  );
+}
+
 function MainContainer() {
   return (
     <NavigationContainer>
@@ -115,7 +131,7 @@ function MainContainer() {
               console.log(iconName)
 
             }
-            else if (rn === chatName) {
+            else if (rn === chatStack) {
               // iconName = focused ? 'settings' : 'settings-outline';
               iconName = Icons.chat;
               console.log(iconName)
@@ -156,7 +172,7 @@ function MainContainer() {
         <Tab.Screen name={homeName} component={HomeStackNavigator} options={{ headerShown: false }} />
         <Tab.Screen name={billStack} component={BillStackNavigator} options={{ headerShown: false }} />
         <Tab.Screen name={revenueName} component={RevenueScreen} />
-        <Tab.Screen name={chatName} component={ChatScreen} />
+        <Tab.Screen name={chatStack} component={ChatStackNavigator} options={{ headerShown: false }}/>
         <Tab.Screen name={profileName} component={ProfileScreen} />
 
       </Tab.Navigator>
