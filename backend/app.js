@@ -7,7 +7,7 @@ const ErrorHandler = require("./middleware/error");
 require('dotenv').config()
 const app = express();
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 
 const authRoutes = require('./routes/authenticate');
 const adminRoutes = require('./routes/admin')
@@ -37,6 +37,14 @@ sequelize.sync().then(() => {
 //     msg: "success"
 //   })
 // });
+
+app.use((_, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  next();
+});
+
 // Routes
 app.use('/auth', authRoutes);
 app.use('/admin', adminRoutes)

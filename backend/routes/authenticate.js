@@ -9,6 +9,9 @@ const router = express.Router();
 router.post('/register', avtUpload.single('image'), authenticateController.register)
 
 router.post('/login', authenticateController.login)
+// Trả token authenticate
+router.get('/token', authenticateController.isAuth);
+
 
 
 module.exports = router;
