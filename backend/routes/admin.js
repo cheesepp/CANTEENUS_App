@@ -75,4 +75,5 @@ router.put('/edit-target/:id', isAuthenticatedUser, adminControllerBusinessTarge
 // Delete a business target by ID
 router.delete('/delete-target/:id', isAuthenticatedUser, adminControllerBusinessTarget.deleteTarget);
 
+
 module.exports = router;
