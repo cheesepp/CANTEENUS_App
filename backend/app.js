@@ -66,7 +66,7 @@ const authRoutes = require('./routes/authenticate');
 const adminRoutes = require('./routes/admin')
 const billRoutes = require('./routes/bill');
 const userRoutes = require('./routes/user')
-
+const testRoutes = require('./routes/testing')
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }))
 
@@ -102,7 +102,8 @@ app.use((_, res, next) => {
 app.use('/auth', authRoutes);
 app.use('/admin', adminRoutes)
 app.use('/bill', billRoutes)
-app.use('/user', userRoutes)
+app.use('/user',userRoutes)
+app.use('/test',testRoutes)
 // it's for errorHandeling
 app.use(ErrorHandler);
 

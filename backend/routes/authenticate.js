@@ -2,7 +2,8 @@ const path = require('path');
 const express = require('express');
 const { avtUpload } = require('../util/multer');
 
-const authenticateController = require('../controllers/authenticate');
+const { isAuthenticatedUser } = require("../middleware/auth");
+const  authenticateController  = require('../controllers/authenticate');
 
 const router = express.Router();
 
@@ -13,5 +14,6 @@ router.post('/login', authenticateController.login)
 router.get('/token', authenticateController.isAuth);
 
 
+router.post('/signout',isAuthenticatedUser, authenticateController.signout)
 
 module.exports = router;

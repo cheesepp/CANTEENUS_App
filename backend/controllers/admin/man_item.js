@@ -44,7 +44,7 @@ exports.getItemById = catchAsyncErrors(async (req, res, next) => {
       return next(new ErrorHandler('Item not found!', 404));
     }
 
-    res.json({ item: item });
+    res.json({ success:true,item: item });
   } catch (error) {
     console.error(error);
     return next(new ErrorHandler('Internal server error!', 500));

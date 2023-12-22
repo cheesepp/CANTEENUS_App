@@ -12,6 +12,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 // Import user context để truy cập user
 import { UserProvider } from './src/models/userContext';
 
+
+
 //File App.tsx chính của ứng dụng mobile
 //Ở đây chỉ cần gọi màn hình LoginScreen
 const Stack = createNativeStackNavigator(); //Tạo Stack navigator. 
@@ -59,6 +61,14 @@ function App() {
 
   )
 }
+// function App() {
+//   return (
+//     <View >
+//       <LoginScreen/>
+//       {/* <ForgetPasswordScreen/> */}
+//     </View>
+//   )
+// }
 
 
 

@@ -10,7 +10,7 @@ const ErrorHandler = require('../../util/ErrorHandler')
 exports.getAllIngredients = catchAsyncErrors(async (req, res) => {
   try {
     const ingredients = await Ingredient.findAll();
-    res.status(200).json({ success:true,  ingredients });
+    res.status(200).json({ success:true,  ingredients: ingredients });
   } catch (error) {
     console.error(error);
     return next(new ErrorHandler('Internal server error!', 500));
@@ -27,7 +27,7 @@ exports.getIngredientByID = catchAsyncErrors(async (req, res) => {
       return next(new ErrorHandler('Ingredient not found!', 404));
     }
 
-    res.json({ success:true, ingredient });
+    res.json({ success:true, ingredient: ingredient });
   } catch (error) {
     console.error(error);
     return next(new ErrorHandler('Internal server error!', 500));
