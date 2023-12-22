@@ -9,6 +9,8 @@ import ProfileScreen from './src/screens/ProfileScreen/ProfileScreen';
 import SigninTab from './src/components/SigninTab';
 import SignupTab from './src/components/SignupTab';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+// Import user context để truy cập user
+import { UserProvider } from './src/models/userContext';
 
 //File App.tsx chính của ứng dụng mobile
 //Ở đây chỉ cần gọi màn hình LoginScreen
@@ -37,21 +39,24 @@ function App() {
     //   {/* <ForgetPasswordScreen/> */}
 
     // </View>
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
-        {/* <Stack.Screen name="SignIn" component={LoginScreen} /> */}
-        <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }}/>
-        <Stack.Screen name="SignIn" component={SigninTab} options={{ headerShown: false }}/>
-        <Stack.Screen name="SignUp" component={SignupTab} options={{ headerShown: false }}/>
+    <UserProvider>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Login">
+          {/* <Stack.Screen name="SignIn" component={LoginScreen} /> */}
+          <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="SignIn" component={SigninTab} options={{ headerShown: false }} />
+          <Stack.Screen name="SignUp" component={SignupTab} options={{ headerShown: false }} />
 
-        <Stack.Screen name="ForgetPassword" component={ForgetPasswordScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="ForgetPassword" component={ForgetPasswordScreen} options={{ headerShown: false }} />
 
-        <Stack.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }}/>
+          <Stack.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }} />
 
-        {/*Copy lại y chang, thay name với component = cái import để test */}
-        {/* Add other screens as needed */}
-      </Stack.Navigator>
-    </NavigationContainer>
+          {/*Copy lại y chang, thay name với component = cái import để test */}
+          {/* Add other screens as needed */}
+        </Stack.Navigator>
+      </NavigationContainer>
+    </UserProvider>
+
   )
 }
 

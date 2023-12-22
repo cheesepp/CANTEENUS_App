@@ -1,7 +1,20 @@
 import * as React from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import { useState } from 'react'
+
+// Thêm useUser để lấy data
+import { useUser } from '../../models/userContext';
 
 export default function ProfileScreen({ navigation }) {
+    // Lấy user từ context
+    const { user } = useUser();
+
+    const [showPassword, setShowPassword] = useState(false);
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
+
     const logoutHandle = () => {
         console.log('Logging out'); //TODO: Add logic
     };
@@ -13,25 +26,26 @@ export default function ProfileScreen({ navigation }) {
                 <View style={styles.textRow}>
                     <Text style={styles.label}>Email</Text>
                     <Text style={styles.value} id='profile-email'>
-                        tuandeptrai@gmail.com
+                        {user ? user.email : ''}
                     </Text>
                 </View>
                 <View style={styles.textRow}>
                     <Text style={styles.label}>Mật khẩu</Text>
-                    <Text style={styles.value} id='profile-password'>
-                        *********
+                    <Text style={styles.value} id='profile-password' onPress={togglePasswordVisibility}>
+                        {showPassword ? user?.password : '**********'}
                     </Text>
                 </View>
                 <View style={styles.textRow}>
                     <Text style={styles.label}>Họ tên</Text>
                     <Text style={styles.value} id='profile-name'>
-                        Lê Hoài Trung
+                        {user ? user.name : ''}
                     </Text>
                 </View>
                 <View style={styles.textRow}>
                     <Text style={styles.label}>SĐT</Text>
                     <Text style={styles.value} id='profile-contact'>
-                        0373893503
+                        {user ? user.phone : ''}
+
                     </Text>
                 </View>
                 <View style={styles.textRow}>

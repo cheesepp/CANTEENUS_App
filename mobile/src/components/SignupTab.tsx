@@ -130,7 +130,7 @@ export default function RegisterTab() {
                     navigation.dispatch(CommonActions.navigate({ name: 'SignIn' })); //Chuyển tạm sang trang đăng nhập, hơi xấu
                 }
             } catch (error) {
-                console.log('Fetch or login error: ', error);
+                console.log('Fetch or register error: ', error);
                 
                 // Handle the error here or use Alert.alert to display an error message
                 if (error instanceof Error) {

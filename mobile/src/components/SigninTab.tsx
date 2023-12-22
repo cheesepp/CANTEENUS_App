@@ -3,6 +3,9 @@ import React, { useState } from 'react'
 import { Picker } from '@react-native-picker/picker'
 import ForgetPasswordModal from '../screens/LoginScreen/OTPAuthenticationModal'
 
+// import user
+import { UserModel } from '../models/user.m';
+import { useUser } from '../models/userContext';
 // Cho navigate về trang home
 import { CommonActions, useNavigation } from '@react-navigation/native';
 
@@ -16,6 +19,11 @@ const SERVER_URL = 'http://10.0.2.2:8080' //Android dùng localhost thì phải 
 export default function LoginTab() {
     // Tạo navigation về trang chủ
     const navigation = useNavigation();
+
+    //Cập nhật user
+    const { updateUser } = useUser();
+
+
 
 
     //khai báo các state để lưu thông tin người dùng nhập vào
@@ -61,7 +69,7 @@ export default function LoginTab() {
                 })
                 .catch(error => {
                     console.log(error);
-                     // Handle the error here or use Alert.alert to display an error message
+                    // Handle the error here or use Alert.alert to display an error message
                     if (error instanceof Error) {
                         Alert.alert('Error', error.message);
                     } else {
@@ -95,17 +103,25 @@ export default function LoginTab() {
             });
 
             const jsonRes = await response.json();
+            const jsonUser = jsonRes.user;
 
             if (response.status !== 200) {
                 console.log('Error in login mobile:', jsonRes.message);
             } else {
                 onLoggedIn(jsonRes.token);
-                console.log('Success in login mobile:', jsonRes);
+                // console.log('Success in login mobile:', jsonRes);
+                // Khởi tạo user
+                const loggedInUser = new UserModel(jsonUser.id, jsonUser.email, jsonUser.name, jsonUser.role, jsonUser.password, jsonUser.avatar, jsonUser.phone);
+                console.log('User: ', loggedInUser);
+
+                
+                updateUser(loggedInUser);
+
                 navigation.dispatch(CommonActions.navigate({ name: 'Profile' }));
             }
         } catch (error) {
             console.log('Fetch or login error: ', error);
-            
+
             // Handle the error here or use Alert.alert to display an error message
             if (error instanceof Error) {
                 Alert.alert('Error', error.message);

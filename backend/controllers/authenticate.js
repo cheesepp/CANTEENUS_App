@@ -70,10 +70,14 @@ async function login(req, res) {
         }
 
         const token = jwt.sign({ id: user.id }, 'secret_key');
+        // Decode mật khẩu lại để gửi
+        user.password = password;
 
+        // Thành công, trả về token và user
         res.status(200).json({
             success: true,
-            jwt: token
+            jwt: token,
+            user: user
         });
     } catch (error) {
         console.error(error);
