@@ -8,7 +8,7 @@ export default function ProfileScreen({ navigation }) {
 
     return (
         <View style={styles.container}>
-            <Image style={styles.img} source={require('../../assets/images/User_cicrle_duotone.png')} id='profile-pic' />
+            <Image style={styles.img} source={require('../../assets/Images/User_cicrle_duotone.png')} id='profile-pic' />
             <View>
                 <View style={styles.textRow}>
                     <Text style={styles.label}>Email</Text>
