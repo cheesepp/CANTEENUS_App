@@ -3,24 +3,19 @@ import {Text, TouchableOpacity, View} from 'react-native';
 import styles from './styles';
 
 
-// import * as React from 'react';
-// import { View, Text } from 'react-native';
-
-// export default function ChatScreen({ navigation }) {
-//     return (
-//         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-//             <Text
-//                 onPress={() => alert('This is the "Home" screen.')}
-//                 style={{ fontSize: 26, fontWeight: 'bold' }}>ChatScreen Screen</Text>
-//         </View>
-//     );
-// }
-
 export default function HomeScreen({ navigation }) {
     const handleButtonPress = (screenName) => {
         // Handle button press based on buttonNumber
         navigation.navigate(screenName)
       };
+      navigation.setOptions({
+        title: 'Canteen US',
+        headerStyle: { 
+          backgroundColor: '#4554DC' 
+        },
+        headerTintColor: 'white',
+        headerTitleAlign: 'left', 
+      });
     
       return (
         <View style={styles.container}>

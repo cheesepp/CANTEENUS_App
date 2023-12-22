@@ -108,16 +108,22 @@ export default function LoginTab() {
             if (response.status !== 200) {
                 console.log('Error in login mobile:', jsonRes.message);
             } else {
-                onLoggedIn(jsonRes.token);
+                onLoggedIn(jsonRes.jwt);
                 // console.log('Success in login mobile:', jsonRes);
                 // Khởi tạo user
-                const loggedInUser = new UserModel(jsonUser.id, jsonUser.email, jsonUser.name, jsonUser.role, jsonUser.password, jsonUser.avatar, jsonUser.phone);
+                const loggedInUser = new UserModel(jsonUser.id, jsonUser.email, jsonUser.name, jsonUser.role, jsonUser.password, jsonUser.avatar, jsonUser.phone, jsonRes.jwt);
                 console.log('User: ', loggedInUser);
 
-                
+
                 updateUser(loggedInUser);
 
-                navigation.dispatch(CommonActions.navigate({ name: 'Profile' }));
+                // Reset the navigation stack and navigate to the NewStackScreen
+                navigation.dispatch(
+                    CommonActions.reset({
+                        index: 0,
+                        routes: [{ name: 'MainScreen' }],
+                    })
+                );
             }
         } catch (error) {
             console.log('Fetch or login error: ', error);

@@ -2,19 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, Button, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
 import Iconicons from 'react-native-vector-icons/Ionicons';
 import io from 'socket.io-client';
-
-const ChatBubble = ({ sender, message }) => (
-    <View style={sender === 'AD02d58210-9f24-11ee-a624-3d9e18899aeb' ? styles.sentBubble : styles.receivedBubble}>
+import { useUser } from '../../models/userContext';
+const ChatBubble = ({ sender, message, user }) => (
+    <View style={sender === user.id ? styles.sentBubble : styles.receivedBubble}>
         <Text style={styles.messageText}>{message}</Text>
     </View>
 );
 
 export default function ChatDetailScreen({ navigation, route }) {
     const [message, setMessage] = useState('');
-    const { user } = route.params
+    const { chatUser } = route.params
     const [socket, setSocket] = useState(null);
     const [messages, setMessages] = useState([]);
 
+    const { user } = useUser() 
 
     useEffect(() => {
         const newSocket = io('http://10.0.2.2:8080'); // Replace with your server URL
@@ -45,7 +46,7 @@ export default function ChatDetailScreen({ navigation, route }) {
         // Emit a 'sendMessage' event to the server
         if (socket) {
 
-            socket.emit('sendMessage', { sender: 'AD02d58210-9f24-11ee-a624-3d9e18899aeb', receiver: user.id, message });
+            socket.emit('sendMessage', { sender: user.id, receiver: chatUser.id, message });
             setMessage('');
         }
     };
@@ -62,7 +63,7 @@ export default function ChatDetailScreen({ navigation, route }) {
     });
 
     const renderMessageItem = ({ item }) => (
-        <ChatBubble sender={item.sender} message={item.message} />
+        <ChatBubble sender={item.sender} message={item.message} user={user} />
     );
 
     return (

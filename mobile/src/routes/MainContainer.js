@@ -6,7 +6,10 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Icons } from '../constants/index'
 import { Image, StyleSheet } from 'react-native';
-
+import LoginScreen from '../screens/LoginScreen/LoginScreen'
+import ForgetPasswordScreen from '../screens/ForgetPasswordScreen/ForgetPasswordScreen'
+import SigninTab from '../components/SigninTab';
+import SignupTab from '../components/SignupTab';
 // Screens
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import BillScreen from '../screens/BillScreen/BillScreen';
@@ -105,79 +108,97 @@ function ChatStackNavigator() {
 function MainContainer() {
   return (
     <NavigationContainer>
-      <Tab.Navigator
-        initialRouteName={homeName}
-        screenOptions={({ route }) => ({
-          tabBarStyle: {
-            backgroundColor: '#4554DC'
-          },
-          tabBarIcon: ({ focused, color, size }) => {
-            let iconName;
-            let rn = route.name;
+      <Stack.Navigator initialRouteName="Login">
+          {/* <Stack.Screen name="SignIn" component={LoginScreen} /> */}
+          <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="SignIn" component={SigninTab} options={{ headerShown: false }} />
+          <Stack.Screen name="SignUp" component={SignupTab} options={{ headerShown: false }} />
 
-            if (rn === homeName) {
-              // iconName = focused ? 'home' : 'home-outline';
-              iconName = Icons.home;
-              console.log(iconName)
+          <Stack.Screen name="ForgetPassword" component={ForgetPasswordScreen} options={{ headerShown: false }} />
 
-            } else if (rn === billStack) {
-              // iconName = focused ? 'list' : 'list-outline';
-              iconName = Icons.bill;
-              console.log(iconName)
+          <Stack.Screen name="MainScreen" component={MainScreen} options={{ headerShown: false }} />
 
-            } else if (rn === revenueName) {
-              // iconName = focused ? 'settings' : 'settings-outline';
-              iconName = Icons.revenue;
-              console.log(iconName)
-
-            }
-            else if (rn === chatStack) {
-              // iconName = focused ? 'settings' : 'settings-outline';
-              iconName = Icons.chat;
-              console.log(iconName)
-
-            }
-
-            else if (rn === profileName) {
-              // iconName = focused ? 'person' : 'person-outline';
-              iconName = Icons.profile;
-              console.log(iconName)
-
-            }
-
-
-            // You can return any component that you like here!
-            // return <Ionicons name={iconName} size={size} color={color} />;
-            return (
-              <Image
-                source={iconName}
-                style={{ height: size, width: size, tintColor: color }}
-              />
-            );
-          },
-        })}
-        tabBarOptions={{
-          style: {
-            height: 60,
-            with: 100,
-            backgroundColor: '#ffffffff',
-          },
-          activeTintColor: 'white',
-          inactiveTintColor: 'lightgrey',
-          showLabel: false,
-          // labelStyle: { paddingBottom: 10, fontSize: 10 },
-        }}
-      >
-
-        <Tab.Screen name={homeName} component={HomeStackNavigator} options={{ headerShown: false }} />
-        <Tab.Screen name={billStack} component={BillStackNavigator} options={{ headerShown: false }} />
-        <Tab.Screen name={revenueName} component={RevenueScreen} />
-        <Tab.Screen name={chatStack} component={ChatStackNavigator} options={{ headerShown: false }}/>
-        <Tab.Screen name={profileName} component={ProfileScreen} />
-
-      </Tab.Navigator>
+          {/*Copy lại y chang, thay name với component = cái import để test */}
+          {/* Add other screens as needed */}
+        </Stack.Navigator>
     </NavigationContainer>
   );
+}
+
+function MainScreen() {
+  return (
+    <Tab.Navigator
+    // initialRouteName={homeName}
+    screenOptions={({ route }) => ({
+      tabBarStyle: {
+        backgroundColor: '#4554DC'
+      },
+      tabBarIcon: ({ focused, color, size }) => {
+        let iconName;
+        let rn = route.name;
+
+        if (rn === homeName) {
+          // iconName = focused ? 'home' : 'home-outline';
+          iconName = Icons.home;
+          console.log(iconName)
+
+        } else if (rn === billStack) {
+          // iconName = focused ? 'list' : 'list-outline';
+          iconName = Icons.bill;
+          console.log(iconName)
+
+        } else if (rn === revenueName) {
+          // iconName = focused ? 'settings' : 'settings-outline';
+          iconName = Icons.revenue;
+          console.log(iconName)
+
+        }
+        else if (rn === chatStack) {
+          // iconName = focused ? 'settings' : 'settings-outline';
+          iconName = Icons.chat;
+          console.log(iconName)
+
+        }
+
+        else if (rn === profileName) {
+          // iconName = focused ? 'person' : 'person-outline';
+          iconName = Icons.profile;
+          console.log(iconName)
+
+        }
+
+
+        // You can return any component that you like here!
+        // return <Ionicons name={iconName} size={size} color={color} />;
+        return (
+          <Image
+            source={iconName}
+            style={{ height: size, width: size, tintColor: color }}
+          />
+        );
+      },
+    })}
+    tabBarOptions={{
+      style: {
+        height: 60,
+        with: 100,
+        backgroundColor: '#ffffffff',
+      },
+      activeTintColor: 'white',
+      inactiveTintColor: 'lightgrey',
+      showLabel: false,
+      // labelStyle: { paddingBottom: 10, fontSize: 10 },
+    }}
+  >
+
+    <Tab.Screen name={homeName} component={HomeStackNavigator} options={{ headerShown: false }} />
+    <Tab.Screen name={billStack} component={BillStackNavigator} options={{ headerShown: false }} />
+    <Tab.Screen name={revenueName} component={RevenueScreen} />
+    <Tab.Screen name={chatStack} component={ChatStackNavigator} options={{ headerShown: false }}/>
+    <Tab.Screen name={profileName} component={ProfileScreen} />
+
+  </Tab.Navigator>
+  )
 }
 
 export default MainContainer;

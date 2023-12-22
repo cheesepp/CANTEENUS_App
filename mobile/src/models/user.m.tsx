@@ -6,6 +6,7 @@ export interface User {
     password: string;
     avatar: string;
     phone: string;
+    jwt: string,
 }
 
 export class UserModel implements User {
@@ -16,8 +17,9 @@ export class UserModel implements User {
     password: string;
     avatar: string;
     phone: string;
+    jwt: string;
 
-    constructor(id: string, email: string, name: string, role: string, password: string, avatar: string, phone: string) {
+    constructor(id: string, email: string, name: string, role: string, password: string, avatar: string, phone: string, jwt: string) {
         this.id = id;
         this.email = email;
         this.name = name;
@@ -25,5 +27,6 @@ export class UserModel implements User {
         this.password = password;
         this.avatar = avatar;
         this.phone = phone;
+        this.jwt = jwt;
     }
 }

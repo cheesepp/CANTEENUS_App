@@ -4,9 +4,12 @@ import BillButton from './BillButton'
 import styles from './styles';
 import axios from 'axios';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import { useUser } from '../../models/userContext';
+import { api } from '../../constants/api';
 
-accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkFEMDJkNTgyMTAtOWYyNC0xMWVlLWE2MjQtM2Q5ZTE4ODk5YWViIiwiaWF0IjoxNzAzMTQ2MjM4fQ.58KR-y4VTKhkkcnyIE0g6g7b6L6UEMz6dXoiNKNroNM';
 export default function BillScreen({ navigation }) {
+
+  const { user } = useUser()
 
   const [bills, setBills] = useState(null);
 
@@ -17,9 +20,9 @@ export default function BillScreen({ navigation }) {
     const fetchData = async () => {
       try {
         // Make an Axios GET request to your API endpoint
-        const response = await axios.get('http://10.0.2.2:8080/bill/get-bill', {
+        const response = await axios.get(api.getBills, {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${user.jwt}`,
           },
         });
         
@@ -61,9 +64,9 @@ export default function BillScreen({ navigation }) {
     const fetchData = async () => {
       try { 
         // Make an Axios GET request to your API endpoint
-        const response = await axios.get('http://10.0.2.2:8080/bill/get-bill', {
+        const response = await axios.get(api.getBills, {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${user.jwt}`,
           },
         });
         
