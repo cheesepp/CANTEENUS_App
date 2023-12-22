@@ -113,4 +113,6 @@ router.post('/get-profit-by-month', adminControllerFinance.getProfitByMonth);
 
 router.post('/get-profit-by-year', adminControllerFinance.getProfitByYear);
 
+router.post('/get-profit-of-a-year', adminControllerFinance.getProfitOfAYear);
+
 module.exports = router;

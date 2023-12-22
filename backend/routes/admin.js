@@ -7,6 +7,8 @@ const adminControllerIngredient = require('../controllers/admin/man_ingredients'
 const adminControllerItem = require('../controllers/admin/man_item')
 const adminControllerBusinessTarget = require('../controllers/admin/man_target')
 
+const adminControllerFinance = require('../controllers/admin/man_finance')
+
 const { avtUpload, ingredientUpload, itemUpload } = require('../util/multer');
 
 const router = express.Router();
@@ -76,4 +78,9 @@ router.put('/edit-target/:id', isAuthenticatedUser, adminControllerBusinessTarge
 router.delete('/delete-target/:id', isAuthenticatedUser, adminControllerBusinessTarget.deleteTarget);
 
 
+router.post('/get-profit-by-month', isAuthenticatedUser, adminControllerFinance.getProfitByMonth);
+
+router.post('/get-profit-by-year', isAuthenticatedUser, adminControllerFinance.getProfitByYear);
+
+router.post('/get-profit-of-a-year', isAuthenticatedUser, adminControllerFinance.getProfitOfAYear);
 module.exports = router;

@@ -10,8 +10,8 @@ function getPreviousMonthAndYear(month, year) {
     const previousYear = currentDate.getFullYear();
   
     return {
-      month: previousMonth,
-      year: previousYear
+        previousMonth: previousMonth,
+        previousYear: previousYear
     };
   }
   
