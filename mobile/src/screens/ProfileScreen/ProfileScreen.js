@@ -19,7 +19,18 @@ export default function ProfileScreen({ navigation }) {
         console.log('Logging out'); //TODO: Add logic
     };
 
+    React.useLayoutEffect(() => {
+        navigation.setOptions({
+            title: 'Doanh Thu',
+            headerStyle: {
+                backgroundColor: '#4554DC',
+            },
+            headerTintColor: 'white',
+            headerTitleAlign: 'left',
+        });
+    }, [navigation]);
     return (
+
         <View style={styles.container}>
             <Image style={styles.img} source={require('../../assets/Images/User_cicrle_duotone.png')} id='profile-pic' />
             <View>

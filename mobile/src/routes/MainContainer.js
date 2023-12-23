@@ -1,4 +1,4 @@
-import React, {Component, useEffect} from 'react';
+import React, { Component, useEffect } from 'react';
 import { NavigationContainer, useIsFocused } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -59,18 +59,18 @@ function HomeStackNavigator() {
 }
 
 const homeHeaderBarStyle = StyleSheet.create(
-  { 
-    headerStyle: { 
-    backgroundColor: '#4554DC' 
+  {
+    headerStyle: {
+      backgroundColor: '#4554DC'
     },
-    headerTitleStyle: { 
+    headerTitleStyle: {
       fontWeight: 'bold', color: 'white'
     },
-    headerTintColor: 'white', 
+    headerTintColor: 'white',
     headerTitleAlign: 'center',
     headerRight: () => (
       <AntDesign size={20} name='plus' color={'white'} />
-  )
+    )
   }
 )
 
@@ -108,19 +108,20 @@ function ChatStackNavigator() {
 function MainContainer() {
   return (
     <NavigationContainer>
+      {/* <Stack.Navigator> */}
       <Stack.Navigator initialRouteName="Login">
-          {/* <Stack.Screen name="SignIn" component={LoginScreen} /> */}
-          <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
-          <Stack.Screen name="SignIn" component={SigninTab} options={{ headerShown: false }} />
-          <Stack.Screen name="SignUp" component={SignupTab} options={{ headerShown: false }} />
+        {/* <Stack.Screen name="SignIn" component={LoginScreen} /> */}
+        <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="SignIn" component={SigninTab} options={{ headerShown: false }} />
+        <Stack.Screen name="SignUp" component={SignupTab} options={{ headerShown: false }} />
 
-          <Stack.Screen name="ForgetPassword" component={ForgetPasswordScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="ForgetPassword" component={ForgetPasswordScreen} options={{ headerShown: false }} />
 
-          <Stack.Screen name="MainScreen" component={MainScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="MainScreen" component={MainScreen} options={{ headerShown: false }} />
 
-          {/*Copy lại y chang, thay name với component = cái import để test */}
-          {/* Add other screens as needed */}
-        </Stack.Navigator>
+        {/*Copy lại y chang, thay name với component = cái import để test */}
+        {/* Add other screens as needed */}
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }
@@ -128,76 +129,76 @@ function MainContainer() {
 function MainScreen() {
   return (
     <Tab.Navigator
-    // initialRouteName={homeName}
-    screenOptions={({ route }) => ({
-      tabBarStyle: {
-        backgroundColor: '#4554DC'
-      },
-      tabBarIcon: ({ focused, color, size }) => {
-        let iconName;
-        let rn = route.name;
+      // initialRouteName={homeName}
+      screenOptions={({ route }) => ({
+        tabBarStyle: {
+          backgroundColor: '#4554DC'
+        },
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+          let rn = route.name;
 
-        if (rn === homeName) {
-          // iconName = focused ? 'home' : 'home-outline';
-          iconName = Icons.home;
-          console.log(iconName)
+          if (rn === homeName) {
+            // iconName = focused ? 'home' : 'home-outline';
+            iconName = Icons.home;
+            console.log(iconName)
 
-        } else if (rn === billStack) {
-          // iconName = focused ? 'list' : 'list-outline';
-          iconName = Icons.bill;
-          console.log(iconName)
+          } else if (rn === billStack) {
+            // iconName = focused ? 'list' : 'list-outline';
+            iconName = Icons.bill;
+            console.log(iconName)
 
-        } else if (rn === revenueName) {
-          // iconName = focused ? 'settings' : 'settings-outline';
-          iconName = Icons.revenue;
-          console.log(iconName)
+          } else if (rn === revenueName) {
+            // iconName = focused ? 'settings' : 'settings-outline';
+            iconName = Icons.revenue;
+            console.log(iconName)
 
-        }
-        else if (rn === chatStack) {
-          // iconName = focused ? 'settings' : 'settings-outline';
-          iconName = Icons.chat;
-          console.log(iconName)
+          }
+          else if (rn === chatStack) {
+            // iconName = focused ? 'settings' : 'settings-outline';
+            iconName = Icons.chat;
+            console.log(iconName)
 
-        }
+          }
 
-        else if (rn === profileName) {
-          // iconName = focused ? 'person' : 'person-outline';
-          iconName = Icons.profile;
-          console.log(iconName)
+          else if (rn === profileName) {
+            // iconName = focused ? 'person' : 'person-outline';
+            iconName = Icons.profile;
+            console.log(iconName)
 
-        }
+          }
 
 
-        // You can return any component that you like here!
-        // return <Ionicons name={iconName} size={size} color={color} />;
-        return (
-          <Image
-            source={iconName}
-            style={{ height: size, width: size, tintColor: color }}
-          />
-        );
-      },
-    })}
-    tabBarOptions={{
-      style: {
-        height: 60,
-        with: 100,
-        backgroundColor: '#ffffffff',
-      },
-      activeTintColor: 'white',
-      inactiveTintColor: 'lightgrey',
-      showLabel: false,
-      // labelStyle: { paddingBottom: 10, fontSize: 10 },
-    }}
-  >
+          // You can return any component that you like here!
+          // return <Ionicons name={iconName} size={size} color={color} />;
+          return (
+            <Image
+              source={iconName}
+              style={{ height: size, width: size, tintColor: color }}
+            />
+          );
+        },
+      })}
+      tabBarOptions={{
+        style: {
+          height: 60,
+          with: 100,
+          backgroundColor: '#ffffffff',
+        },
+        activeTintColor: 'white',
+        inactiveTintColor: 'lightgrey',
+        showLabel: false,
+        // labelStyle: { paddingBottom: 10, fontSize: 10 },
+      }}
+    >
 
-    <Tab.Screen name={homeName} component={HomeStackNavigator} options={{ headerShown: false }} />
-    <Tab.Screen name={billStack} component={BillStackNavigator} options={{ headerShown: false }} />
-    <Tab.Screen name={revenueName} component={RevenueScreen} />
-    <Tab.Screen name={chatStack} component={ChatStackNavigator} options={{ headerShown: false }}/>
-    <Tab.Screen name={profileName} component={ProfileScreen} />
+      <Tab.Screen name={homeName} component={HomeStackNavigator} options={{ headerShown: false }} />
+      <Tab.Screen name={billStack} component={BillStackNavigator} options={{ headerShown: false }} />
+      <Tab.Screen name={revenueName} component={RevenueScreen} />
+      <Tab.Screen name={chatStack} component={ChatStackNavigator} options={{ headerShown: false }} />
+      <Tab.Screen name={profileName} component={ProfileScreen} />
 
-  </Tab.Navigator>
+    </Tab.Navigator>
   )
 }
 
