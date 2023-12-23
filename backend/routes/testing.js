@@ -6,6 +6,7 @@ const adminControllerStaff = require('../controllers/admin/man_staff');
 const adminControllerIngredient = require('../controllers/admin/man_ingredients');
 const adminControllerItem = require('../controllers/admin/man_item')
 const adminControllerBusinessTarget = require('../controllers/admin/man_target')
+const adminControllerFinance = require('../controllers/admin/man_finance')
 
 const billController = require('../controllers/bill');
 const { avtUpload, ingredientUpload, itemUpload } = require('../util/multer');
@@ -91,5 +92,27 @@ router.put('/edit-bill/:id',    billController.updateBill);
 
 // /bill/delete-bill => DELETE
 router.delete('/delete-bill/:id',    billController.deleteBill);
+
+
+// /bill/get-bill => GET
+router.get('/get-bill',   billController.getAllBills);
+
+// /bill/get-bill/:id => GET
+router.get('/get-bill/:id',   billController.getBillById);
+
+// /bill/add-bill => POST
+router.post('/add-bill',   billController.addBill);
+
+// /bill/edit-bill => PUT
+router.put('/edit-bill/:id',   billController.updateBill);
+
+// /bill/delete-bill => DELETE
+router.delete('/delete-bill/:id',   billController.deleteBill);
+
+router.post('/get-profit-by-month', adminControllerFinance.getProfitByMonth);
+
+router.post('/get-profit-by-year', adminControllerFinance.getProfitByYear);
+
+router.post('/get-profit-of-a-year', adminControllerFinance.getProfitOfAYear);
 
 module.exports = router;
