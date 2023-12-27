@@ -10,7 +10,7 @@ export const api = {
     addStaff: IPaddress + '/admin/add-staff',
     editStaff: IPaddress + '/admin/edit-staff',
     deleteStaff: IPaddress + '/admin/delete-staff',
-    getIngredients: IPaddress + 'admin/get-ingredient',
+    getIngredients: IPaddress + '/admin/get-ingredient',
     addIngredient: IPaddress + '/admin/add-ingredient',
     editIngredient: IPaddress + '/admin/edit-ingredient',
     deleteIngredient: IPaddress + '/admin/delete-ingredient',
@@ -20,5 +20,7 @@ export const api = {
     getBills: IPaddress + '/bill/get-bill',
     addBill: IPaddress + '/bill/add-bill',
     editBill: IPaddress + '/bill/edit-bill',
-    deleteBill: IPaddress + '/bill/delete-bill'
+    deleteBill: IPaddress + '/bill/delete-bill',
+    getTargets: IPaddress + '/admin/get-target',
+    addTarget: IPaddress + '/admin/add-target',
 }

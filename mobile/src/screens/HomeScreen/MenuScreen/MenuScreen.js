@@ -3,14 +3,13 @@ import { View} from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import FoodItem from './FoodItem';
 import axios from 'axios';
+import { useUser } from '../../../models/userContext';
+import { api } from '../../../constants/api';
 
-//Token để xác thực người dùng
-const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkFEMDJkNTgyMTAtOWYyNC0xMWVlLWE2MjQtM2Q5ZTE4ODk5YWViIiwiaWF0IjoxNzAzMDY4NzY0fQ.fW8qjDBOnpotl8SrBDCxEImAeni6HKNAR2zQ1OxQpY4';
-
-//API để lấy dữ liệu từ database
-const api ='http://10.0.2.2:8080/test/get-item'
 
 export default function MenuScreen({ navigation }) {
+    //Biến user để lấy dữ liệu người dùng đã đăng nhập (trong đó có jwt để xác thực quyền sử dụng API)
+    const { user } = useUser();
 
     //Tạo state để lưu trữ dữ liệu lấy về từ database
     const [foodItems, setFoodItems] = useState(null);
@@ -21,10 +20,10 @@ export default function MenuScreen({ navigation }) {
         const fetchData = async () => {
             try { 
                 //dùng axios để lấy dữ liệu từ database
-                const response = await axios.get(api, {
+                const response = await axios.get(api.getItems, {
                     //headers để xác thực người dùng
                     headers: {
-                        Authorization: `Bearer ${accessToken}`,
+                        Authorization: `Bearer ${user.jwt}`,
                     },
                 });
                 
@@ -69,7 +68,7 @@ export default function MenuScreen({ navigation }) {
            <FlatList
                 data={foodItems}
                 renderItem={renderItem}
-                keyExtractor={item => item.name}
+                keyExtractor={item => item.id}
                 numColumns={3}
             />
         </View>

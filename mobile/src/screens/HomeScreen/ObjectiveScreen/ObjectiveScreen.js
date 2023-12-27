@@ -2,14 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { View, FlatList } from 'react-native';
 import ObjectiveItem from './ObjectiveItem';
 import axios from 'axios';
+import { useUser } from '../../../models/userContext';
+import { api } from '../../../constants/api';
 
-//Token để xác thực người dùng
-const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkFEMDJkNTgyMTAtOWYyNC0xMWVlLWE2MjQtM2Q5ZTE4ODk5YWViIiwiaWF0IjoxNzAzMDY4NzY0fQ.fW8qjDBOnpotl8SrBDCxEImAeni6HKNAR2zQ1OxQpY4';
-
-//API để lấy dữ liệu từ database
-const api ='http://10.0.2.2:8080/test/get-target'
 
 export default function ObjectiveScreen({ navigation }) {
+    //Biến user để lấy dữ liệu người dùng đã đăng nhập (trong đó có jwt để xác thực quyền sử dụng API)
+    const { user } = useUser();
 
     //Tạo state để lưu trữ dữ liệu lấy về từ database
     const [objectItems, setObjectItems] = useState(null);
@@ -20,10 +19,10 @@ export default function ObjectiveScreen({ navigation }) {
     const fetchData = async () => {
         try { 
             //dùng axios để lấy dữ liệu từ database
-            const response = await axios.get(api, {
+            const response = await axios.get(api.getTargets, {
                 //headers để xác thực người dùng
                 headers: {
-                    Authorization: `Bearer ${accessToken}`,
+                    Authorization: `Bearer ${user.jwt}`,
                 },
             });
             
@@ -71,7 +70,7 @@ export default function ObjectiveScreen({ navigation }) {
                 //gọi hàm renderItem để hiển thị dữ liệu theo từng item custom trong Flatlist
                 renderItem={renderItem}
                 //keyExtractor để xác định key cho từng item trong Flatlist
-                keyExtractor={item => item.date}    
+                keyExtractor={item => item.id}    
             />
         </View>
     );
