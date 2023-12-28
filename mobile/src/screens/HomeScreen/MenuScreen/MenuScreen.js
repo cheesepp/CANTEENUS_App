@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { View} from 'react-native';
-import { FlatList } from 'react-native-gesture-handler';
+import { View, TouchableOpacity, FlatList} from 'react-native';
 import FoodItem from './FoodItem';
 import axios from 'axios';
 import { useUser } from '../../../models/userContext';
 import { api } from '../../../constants/api';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 
 export default function MenuScreen({ navigation }) {
@@ -13,6 +13,61 @@ export default function MenuScreen({ navigation }) {
 
     //Tạo state để lưu trữ dữ liệu lấy về từ database
     const [foodItems, setFoodItems] = useState(null);
+
+    //Tạo state để lưu trữ trạng thái của header
+    const [isHeaderClicked, setHeaderClicked] = useState(false);
+
+    //Hàm xử lý khi header được click
+    const handleHeaderClick = () => {
+        //Thay đổi trạng thái của header khi được click
+        const fetchData = async () => {
+            try {
+                // Gọi API để lấy dữ liệu từ database
+                const response = await axios.get(api.getItems, {
+                    headers: {
+                        Authorization: `Bearer ${user.jwt}`,
+                    },
+                });
+                //Lưu dữ liệu lấy được vào state
+                setFoodItems(response.data.items);
+                    
+                //In ra màn hình console từng item lấy được để kiểm tra
+                console.log('-------- Refresh Items ----------')
+                response.data.items.map((item) => {
+                    console.log(item);
+                });
+                console.log('---------------------------');
+
+            } catch (error) {
+                // Xử lý và báo lỗi
+                if (error.request) {
+                    console.log(error.request);
+                }
+            }
+        };
+        // Gọi hàm fetchData khi header được click
+        fetchData();
+        setHeaderClicked(!isHeaderClicked);
+    };
+
+    //Sử dụng useLayoutEffect để tạo header
+    React.useLayoutEffect(() => {
+        //Tạo header
+        navigation.setOptions({
+            title: 'Menu',
+            headerStyle: { 
+                backgroundColor: '#4554DC' 
+            },
+            headerTintColor: 'white',
+            headerTitleAlign: 'left', 
+            //Tạo nút để reload dữ liệu từ database khi được click
+            headerRight: () => (
+                <TouchableOpacity style={{ marginRight: 15 }} onPress={handleHeaderClick}>
+                <AntDesign size={20} name='reload1' color={'white'} />
+                </TouchableOpacity>
+            ),
+        });
+    }, [navigation, isHeaderClicked]);
 
     //sử dụng useEffect để lấy dữ liệu từ database
     useEffect(() => {
