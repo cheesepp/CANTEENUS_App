@@ -20,8 +20,11 @@ import ChatScreen from '../screens/ChatScreen/ChatScreen';
 import StaffScreen from '../screens/HomeScreen/StaffScreen/StaffScreen';
 import ObjectiveScreen from '../screens/HomeScreen/ObjectiveScreen/ObjectiveScreen';
 import MenuScreen from '../screens/HomeScreen/MenuScreen/MenuScreen';
+import FoodDetailScreen from '../screens/HomeScreen/MenuScreen/FoodDetailScreen';
 import StorageScreen from '../screens/HomeScreen/StorageScreen/StorageScreen';
+import IngredientDetailScreen from '../screens/HomeScreen/StorageScreen/IngredientDetailScreen';
 import ChatDetailScreen from '../screens/ChatScreen/ChatDetailScreen';
+
 
 //Screen names
 const homeName = "Home";
@@ -53,7 +56,9 @@ function HomeStackNavigator() {
       <Stack.Screen name={staffName} component={StaffScreen} options={homeHeaderBarStyle}></Stack.Screen>
       <Stack.Screen name={objectiveName} component={ObjectiveScreen} options={homeHeaderBarStyle}></Stack.Screen>
       <Stack.Screen name={menuName} component={MenuScreen} options={homeHeaderBarStyle}></Stack.Screen>
+      <Stack.Screen name={'FoodDetail'} component={FoodDetailScreen} />
       <Stack.Screen name={storageName} component={StorageScreen} options={homeHeaderBarStyle}></Stack.Screen>
+      <Stack.Screen name={'IngredientDetail'} component={IngredientDetailScreen} />
     </Stack.Navigator >
   )
 }
@@ -118,7 +123,6 @@ function MainContainer() {
         <Stack.Screen name="ForgetPassword" component={ForgetPasswordScreen} options={{ headerShown: false }} />
 
         <Stack.Screen name="MainScreen" component={MainScreen} options={{ headerShown: false }} />
-
         {/*Copy lại y chang, thay name với component = cái import để test */}
         {/* Add other screens as needed */}
       </Stack.Navigator>

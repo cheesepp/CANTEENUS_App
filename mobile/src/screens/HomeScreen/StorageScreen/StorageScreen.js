@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, TouchableOpacity, FlatList} from 'react-native';
+import { View, TouchableOpacity, FlatList, Text, StyleSheet} from 'react-native';
 import IngredientItem from './IngredientItem';
 import axios from 'axios';
 import { useUser } from '../../../models/userContext';
@@ -48,6 +48,11 @@ export default function StorageScreen({ navigation }) {
         fetchData();
         setHeaderClicked(!isHeaderClicked);
     };
+
+    //Hàm xử lý khi nút thêm món ăn được click
+    const handleFloatingButtonPress = () => {
+        console.log('Floating button pressed');
+    }
 
     //Sử dụng useLayoutEffect để tạo header
     React.useLayoutEffect(() => {
@@ -113,9 +118,10 @@ export default function StorageScreen({ navigation }) {
 
     //Hàm renderItem để hiển thị từng item trong danh sách nguyên liệu
     const renderItem = ({ item }) => {
-        return <IngredientItem ingredient={item} />;
+        return <IngredientItem navigation={navigation} ingredient={item} isNavigate={true} />;
     }
 
+    //Trả về giao diện của component
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginTop:10 }}>
            <FlatList
@@ -124,6 +130,27 @@ export default function StorageScreen({ navigation }) {
                 keyExtractor={item => item.id}
                 numColumns={3}
             />
+            <TouchableOpacity style={styles.floatingButton} onPress = {handleFloatingButtonPress}>
+                <Text style={styles.floatingButtonIcon}>+</Text>
+            </TouchableOpacity>
         </View>
     );
 }
+
+const styles = StyleSheet.create({
+    floatingButton: {
+        position: 'absolute',
+        bottom: 20,
+        right: 20,
+        width: 60,
+        height: 60,
+        borderRadius: 30,
+        backgroundColor: '#289CD2',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    floatingButtonIcon: {
+        fontSize: 35,
+        color: 'white',
+    },
+})

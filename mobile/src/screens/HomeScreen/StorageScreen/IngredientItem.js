@@ -1,10 +1,10 @@
-import { StyleSheet, Text, View,Image } from 'react-native'
+import { StyleSheet, Text, View,Image, TouchableOpacity } from 'react-native'
 import * as React from 'react'
 
-export default function IngredientItem({ingredient}) {
-    //Hằng số lưu đường dẫn ảnh mặc định cho nguyên liệu
-    const defaultImage = require('../../../assets/Images/Default_item.png')
-    
+//Hằng số lưu đường dẫn ảnh mặc định cho nguyên liệu
+const defaultImage = require('../../../assets/Images/Default_item.png')
+
+export default function IngredientItem({navigation,ingredient, isNavigate=false}) {
     //viết hàm formar lại chuỗi có dạng 2024-12-11T11:07:13.000Z thành 11/12/2024
     const formatDate = (input) => {
         var date = input.split('T')[0];
@@ -14,12 +14,23 @@ export default function IngredientItem({ingredient}) {
         return day+'/'+month+'/'+year;
     }
 
+    //Hàm xử lý khi component được nhấn
+    const handleFoodPress = () => {
+        if(isNavigate){
+            navigation.navigate('IngredientDetail', { ingredient: ingredient });
+        }  
+    }
+
+    //Trả về giao diện của component
     return (
-        <View style={styles.container}>
-        <Text style={[styles.text,{fontSize:15}]}>{ingredient.name}</Text>
-        <Image source={(ingredient.image=='')?ingredient.image:defaultImage} style={styles.imageStyle}/>
-        <Text style={[styles.text,{fontSize:13}]}>{formatDate(ingredient.expirationdate)}</Text>
-        </View>
+        <TouchableOpacity onPress={handleFoodPress}>
+            <View style={styles.container}>
+                <Text style={[styles.text,{fontSize:15}]}>{ingredient.name}</Text>
+                <Image source={(ingredient.image=='')?ingredient.image:defaultImage} style={styles.imageStyle}/>
+                <Text style={[styles.text,{fontSize:13}]}>{formatDate(ingredient.expirationdate)}</Text>
+            </View>
+        </TouchableOpacity>
+        
     )
 }
 

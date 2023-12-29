@@ -1,16 +1,26 @@
-import { StyleSheet, Text, View, Image } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 
 //Hằng số lưu đường dẫn ảnh mặc định cho món ăn
 const defaultImage = require('../../../assets/Images/Default_item.png')
 
-export default function FoodItem({food}) {
+export default function FoodItem({navigation,food, isNavigate=false}) {
+    //Hàm xử lý khi component được nhấn: chuyển sang màn hình chi tiết món ăn
+    const handleFoodPress = () => {
+        if(isNavigate){
+            navigation.navigate('FoodDetail', { food: food });
+        }  
+    }
+
+    //Trả về giao diện của component
     return (
-        <View style={styles.container}>
-        <Text style={[styles.text,{fontSize:15}]}>{food.name}</Text>
-        <Image source={(food.image == '')?food.image:defaultImage} style={styles.imageStyle}/>
-        <Text style={[styles.text,{fontSize:13}]}>đ {food.price}</Text>
-        </View>
+        <TouchableOpacity onPress={handleFoodPress}>
+            <View style={styles.container}>
+                <Text style={[styles.text,{fontSize:15}]}>{food.name}</Text>
+                <Image source={(food.image == '')?food.image:defaultImage} style={styles.imageStyle}/>
+                <Text style={[styles.text,{fontSize:13}]}>đ {food.price}</Text>
+            </View>
+        </TouchableOpacity>
     )
 }
 
