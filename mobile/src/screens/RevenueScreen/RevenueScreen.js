@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Modal, Button, FlatList, SafeAreaView } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import RevenueItem from './RevenueItem';
@@ -40,29 +40,6 @@ const getRevenue = async (token, year) => {
 
 }
 
-const getYear = async (token) => {
-
-    try {
-        const res = await fetch(`${api.getYears}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`,
-            },
-        });
-        const jsonRes = await res.json();
-        if (jsonRes.success !== 200) {
-            console.log('Error in getting years', jsonRes.message);
-        }
-        console.log('Success years', jsonRes.years);
-        // Nó sẽ trả về list [2021, 2022, 2023]
-        setYears(jsonRes.years);
-
-    } catch (error) {
-        console.log('Error when get years for modal: ', error);
-        throw (error);
-    }
-}
 
 const Revenue = ({ navigation }) => {
     const [filterColor, setFilterColor] = useState('#B2B2B2');
@@ -72,6 +49,7 @@ const Revenue = ({ navigation }) => {
     const [appliedFilters, setAppliedFilters] = useState([]);
     const [modalVisible, setModalVisible] = useState(false);
     const [years, setYears] = useState([]); // [2021, 2022, 2023
+    const [isMounted, setIsMounted] = useState(true); // Track component mounted state
 
     const { user } = useUser();
     const [data, setData] = useState([]);
@@ -80,32 +58,40 @@ const Revenue = ({ navigation }) => {
 
     const months = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
     // const years = ['2022', '2023']; // Tạm thời lấy cứng
-    const getYear = async (token) => {
+    useEffect(() => {
+        const getYear = async (token) => {
+            try {
+                const res = await fetch(`${api.getYears}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
 
-        try {
-            const res = await fetch(`${api.getYears}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`,
-                },
-            });
-            const jsonRes = await res.json();
-            if (jsonRes.success !== 200) {
-                console.log('Error in getting years', jsonRes.message);
+                // Check if the component is still mounted before updating state
+                if (isMounted) {
+                    const jsonRes = await res.json();
+                    if (jsonRes.success !== 200) {
+                        console.log('Error in getting years', jsonRes.message);
+                    }
+                    console.log('Success years', jsonRes.years);
+                    setYears(jsonRes.years);
+                }
+            } catch (error) {
+                console.log('Error when get years for modal: ', error);
+                throw (error);
             }
-            console.log('Success years', jsonRes.years);
-            // Nó sẽ trả về list [2021, 2022, 2023]
-            setYears(jsonRes.years);
-    
-        } catch (error) {
-            console.log('Error when get years for modal: ', error);
-            throw (error);
         }
-    }
-    getYear(user.jwt);
 
-    console.log('Res years', years);
+        getYear();
+
+        // Cleanup function to set isMounted to false when the component unmounts
+        return () => {
+            setIsMounted(false);
+        };
+    }, [isMounted]);
+
+    // console.log('Res years', years);
     const applyFilter = async () => {
         if (selectedYear) {
             setFilterColor('#279CD2');
@@ -115,7 +101,7 @@ const Revenue = ({ navigation }) => {
             // Lấy profit theo năm và tháng
             try {
                 const dataFromDB = await getRevenue(user.jwt, selectedYear);
-                console.log('Revenue: ', dataFromDB);
+                // console.log('Revenue: ', dataFromDB);
                 setData(dataFromDB);
             } catch (error) {
                 console.log('Error in revenue: ', error);
@@ -192,7 +178,7 @@ const Revenue = ({ navigation }) => {
                 <FlatList
                     data={data}
                     renderItem={renderItem}
-                    keyExtractor={(item) => item.name}
+                    keyExtractor={(item) => item.month}
                 // numColumns={3}
                 />
             </View>

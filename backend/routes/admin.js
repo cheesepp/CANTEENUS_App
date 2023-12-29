@@ -83,5 +83,5 @@ router.post('/get-profit-by-month', isAuthenticatedUser, adminControllerFinance.
 router.post('/get-profit-by-year', isAuthenticatedUser, adminControllerFinance.getProfitByYear);
 
 router.post('/get-profit-of-a-year', isAuthenticatedUser, adminControllerFinance.getProfitOfAYear);
-router.post('/get-years', isAuthenticatedUser, adminControllerFinance.getNumberOfYear);
+router.post('/get-years', adminControllerFinance.getNumberOfYear);
 module.exports = router;
