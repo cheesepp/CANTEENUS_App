@@ -12,12 +12,19 @@ export default function RevenueItem({ item }) {
         });
     };
 
+    const getProfitColor = (profit) => {
+        return profit < 0 ? '#FF5B5B' : '#28D62F';
+    };
+
     return (
         <View style={styles.container}>
-            <Text style={styles.text}>{item.time}</Text>
-            <Text style={styles.text}>Tổng thu: {formatCurrency(item.totalRevenue)}</Text>
-            <Text style={styles.text}>Tổng chi: {formatCurrency(item.totalSpending)}</Text>
-            <Text style={styles.profit}>{formatCurrency(item.profit)}</Text>
+            <Text style={styles.text}>{item.month}/{item.year}</Text>
+            <Text style={styles.text}>Tổng thu: {formatCurrency(item.monthProfit.expense)}</Text>
+            <Text style={styles.text}>Tổng chi: {formatCurrency(item.monthProfit.income)}</Text>
+            <Text style={[styles.profit, { color: getProfitColor(item.monthProfit.profit) }]}>
+                {formatCurrency(item.monthProfit.profit)}
+            </Text>
+
         </View>
     );
 }
@@ -45,7 +52,7 @@ const styles = StyleSheet.create({
         marginBottom: 2,
     },
     profit: {
-        color: '#28D62F',
+        // color: '#28D62F',
         textAlign: 'right',
         fontFamily: 'Monsterrat',
         fontWeight: 'bold',

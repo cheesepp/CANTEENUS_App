@@ -20,5 +20,9 @@ export const api = {
     getBills: IPaddress + '/bill/get-bill',
     addBill: IPaddress + '/bill/add-bill',
     editBill: IPaddress + '/bill/edit-bill',
-    deleteBill: IPaddress + '/bill/delete-bill'
+    deleteBill: IPaddress + '/bill/delete-bill',
+    getProfitOfaYear: IPaddress + '/admin/get-profit-of-a-year',
+    getProfitByMonth: IPaddress + '/admin/get-profit-by-month',
+    getProfitByYear: IPaddress + '/admin/get-profit-by-year',
+    getYears: IPaddress + '/admin/get-years',
 }

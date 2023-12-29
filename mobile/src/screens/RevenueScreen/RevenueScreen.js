@@ -3,54 +3,132 @@ import { StyleSheet, View, Text, TouchableOpacity, Modal, Button, FlatList, Safe
 import { Picker } from '@react-native-picker/picker';
 import RevenueItem from './RevenueItem';
 
-// Tạm thời
-const data = [
-    {
-        time: 'Tháng 1',
-        totalRevenue: 1000000,
-        totalSpending: 500000,
-        profit: 500000,
-    },
-    {
-        time: 'Tháng 2',
-        totalRevenue: 1200000,
-        totalSpending: 600000,
-        profit: 600000,
-    },
-    {
-        time: 'Tháng 3',
-        totalRevenue: 900000,
-        totalSpending: 400000,
-        profit: 500000,
-    },
-    {
-        time: 'Tháng 4',
-        totalRevenue: 1100000,
-        totalSpending: 550000,
-        profit: 550000,
-    },
-];
+import { useUser } from '../../models/userContext';
+import { api } from '../../constants/api';
+
+
+// import {} from '../../constants/api';
+
+
+const getRevenue = async (token, year) => {
+    year = parseInt(year);
+
+
+    // nếu không nhập tháng thì lấy profit 1 năm
+    try {
+        // Lấy profit 1 năm
+        const res = await fetch(`${api.getProfitOfaYear}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+            body: JSON.stringify({ year }),
+        });
+        const jsonRes = await res.json();
+        if (jsonRes.success !== 200) {
+            console.log('Error in getting profit of a year: ', jsonRes.message);
+        }
+
+        return jsonRes.list;
+
+    } catch (error) {
+        console.log('Error when get revenue: ', error);
+        throw (error);
+    }
+
+
+}
+
+const getYear = async (token) => {
+
+    try {
+        const res = await fetch(`${api.getYears}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+        });
+        const jsonRes = await res.json();
+        if (jsonRes.success !== 200) {
+            console.log('Error in getting years', jsonRes.message);
+        }
+        console.log('Success years', jsonRes.years);
+        // Nó sẽ trả về list [2021, 2022, 2023]
+        setYears(jsonRes.years);
+
+    } catch (error) {
+        console.log('Error when get years for modal: ', error);
+        throw (error);
+    }
+}
 
 const Revenue = ({ navigation }) => {
     const [filterColor, setFilterColor] = useState('#B2B2B2');
     const [showOptions, setShowOptions] = useState(false);
-    const [selectedMonth, setSelectedMonth] = useState('');
+    // const [selectedMonth, setSelectedMonth] = useState('');
     const [selectedYear, setSelectedYear] = useState('');
     const [appliedFilters, setAppliedFilters] = useState([]);
     const [modalVisible, setModalVisible] = useState(false);
+    const [years, setYears] = useState([]); // [2021, 2022, 2023
 
-    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    const years = ['2022', '2023'];
+    const { user } = useUser();
+    const [data, setData] = useState([]);
 
-    const applyFilter = () => {
-        if (selectedMonth && selectedYear) {
+    // console.log('user context token: ', user.jwt);
+
+    const months = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
+    // const years = ['2022', '2023']; // Tạm thời lấy cứng
+    const getYear = async (token) => {
+
+        try {
+            const res = await fetch(`${api.getYears}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+            const jsonRes = await res.json();
+            if (jsonRes.success !== 200) {
+                console.log('Error in getting years', jsonRes.message);
+            }
+            console.log('Success years', jsonRes.years);
+            // Nó sẽ trả về list [2021, 2022, 2023]
+            setYears(jsonRes.years);
+    
+        } catch (error) {
+            console.log('Error when get years for modal: ', error);
+            throw (error);
+        }
+    }
+    getYear(user.jwt);
+
+    console.log('Res years', years);
+    const applyFilter = async () => {
+        if (selectedYear) {
             setFilterColor('#279CD2');
-            setAppliedFilters([{ month: selectedMonth, year: selectedYear }]);
+            setAppliedFilters([{ year: selectedYear }]);
 
-            // Thêm cái hàm lấy dữ liệu ở đây fetch data
+            // console.log('Month, year', selectedMonth, selectedYear);
+            // Lấy profit theo năm và tháng
+            try {
+                const dataFromDB = await getRevenue(user.jwt, selectedYear);
+                console.log('Revenue: ', dataFromDB);
+                setData(dataFromDB);
+            } catch (error) {
+                console.log('Error in revenue: ', error);
+                throw (error);
+            }
+
+
         }
         setModalVisible(false);
     };
+
+
+
 
     React.useLayoutEffect(() => {
         navigation.setOptions({
@@ -80,9 +158,9 @@ const Revenue = ({ navigation }) => {
                 <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
                     {appliedFilters.map((filter, index) => (
                         <View key={index} style={{ flexDirection: 'row', marginRight: 10, marginLeft: 20 }}>
-                            <View style={[styles.filterResult, { backgroundColor: '#279CD2' }]}>
+                            {/* <View style={[styles.filterResult, { backgroundColor: '#279CD2' }]}>
                                 <Text style={styles.text}>{`${filter.month}`}</Text>
-                            </View>
+                            </View> */}
                             <View style={[styles.filterResult, { backgroundColor: '#279CD2' }]}>
                                 <Text style={styles.text}>{`${filter.year}`}</Text>
                             </View>
@@ -93,22 +171,12 @@ const Revenue = ({ navigation }) => {
                     <View style={styles.modalContainer}>
                         <View style={styles.modalContent}>
                             <Picker
-                                selectedValue={selectedMonth}
-                                onValueChange={(itemValue) => setSelectedMonth(itemValue)}
-                            >
-                                <Picker.Item label="Chọn tháng" value="" />
-                                {months.map((month, index) => (
-                                    <Picker.Item key={index} label={month} value={month} />
-                                ))}
-                            </Picker>
-
-                            <Picker
                                 selectedValue={selectedYear}
                                 onValueChange={(itemValue) => setSelectedYear(itemValue)}
                             >
                                 <Picker.Item label="Chọn năm" value="" />
                                 {years.map((year, index) => (
-                                    <Picker.Item key={index} label={year} value={year} />
+                                    <Picker.Item key={index} label={year.toString()} value={year.toString()} />
                                 ))}
                             </Picker>
 

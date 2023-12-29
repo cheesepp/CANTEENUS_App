@@ -280,6 +280,8 @@ const getProfitOfAYear = catchAsyncErrors(async (req, res, next) => {
     }
 })
 
+
+
 const getProfitByYear = catchAsyncErrors(async (req, res, next) => {
     try {
         const { year } = req.body;
@@ -355,9 +357,32 @@ const getProfitByYear = catchAsyncErrors(async (req, res, next) => {
     }
 })
 
+const getNumberOfYear = catchAsyncErrors(async (req, res, next) => {
+    try {
+        const years = await Bill.findAll({
+            attributes: [
+                [Sequelize.literal('DISTINCT YEAR(createdAt)'), 'year'],
+            ],
+            raw: true,
+            order: Sequelize.literal('year ASC'),
+
+
+        });
+        const yearList = years.map((item) => item.year);
+
+        console.log('BE years', yearList);
+        res.status(200).json({ success: true, years: yearList });
+
+    } catch (error) {
+        console.error(error);
+        return next(new ErrorHandler('Internal server error!', 500));
+
+    }
+})
+
 module.exports = {
     getProfitByMonth: getProfitByMonth,
     getProfitByYear: getProfitByYear,
     getProfitOfAYear: getProfitOfAYear,
-
+    getNumberOfYear: getNumberOfYear
 }
