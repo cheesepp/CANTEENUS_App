@@ -21,26 +21,26 @@ router.get('/get-staff', isAuthenticatedUser, adminControllerStaff.getStaff);
 router.get('/get-staff/:id',isAuthenticatedUser,adminControllerStaff.getStaffByID)
 
 // /admin/add-staff => POST
-router.post('/add-staff', isAuthenticatedUser, avtUpload.single('image'), adminControllerStaff.addStaff);
+router.post('/add-staff', isAuthenticatedUser, avtUpload.array('photos',1), adminControllerStaff.addStaff);
 
 // /admin/edit-staff => POST
-router.put('/edit-staff/:id', isAuthenticatedUser, adminControllerStaff.editStaff);
+router.put('/edit-staff/:id', isAuthenticatedUser, avtUpload.array('photos',1), adminControllerStaff.editStaff);
 
 // /admin/delete-staff => POST
 router.delete('/delete-staff/:id', isAuthenticatedUser, adminControllerStaff.deleteStaff);
 
 
 // Get all ingredients
-router.get('/get-ingredient', isAuthenticatedUser, adminControllerIngredient.getAllIngredients);
+router.get('/get-ingredient', isAuthenticatedUser,  adminControllerIngredient.getAllIngredients);
 
 // Get a single ingredient by ID
 router.get('/get-ingredient/:id', isAuthenticatedUser, adminControllerIngredient.getIngredientByID);
 
 // Add a new ingredient
-router.post('/add-ingredient', isAuthenticatedUser, ingredientUpload.single('image'), adminControllerIngredient.addIngredient);
+router.post('/add-ingredient', isAuthenticatedUser, ingredientUpload.array('photos',1), adminControllerIngredient.addIngredient);
 
 // Update a ingredient by ID
-router.put('/edit-ingredient/:id', isAuthenticatedUser, adminControllerIngredient.updateIngredient);
+router.put('/edit-ingredient/:id', isAuthenticatedUser, ingredientUpload.array('photos',1), adminControllerIngredient.updateIngredient);
 
 // Delete a ingredient by ID
 router.delete('/delete-ingredient/:id', isAuthenticatedUser, adminControllerIngredient.deleteIngredient);
@@ -53,10 +53,10 @@ router.get('/get-item', isAuthenticatedUser, adminControllerItem.getAllItems);
 router.get('/get-item/:id', isAuthenticatedUser, adminControllerItem.getItemById);
 
 // Add a new food
-router.post('/add-item', isAuthenticatedUser, itemUpload.single('image'), adminControllerItem.addItem);
+router.post('/add-item', isAuthenticatedUser, itemUpload.array('photos',1), adminControllerItem.addItem);
 
 // Update a food by ID
-router.put('/update-item/:id', isAuthenticatedUser, adminControllerItem.updateItem);
+router.put('/update-item/:id', isAuthenticatedUser, itemUpload.array('photos',1), adminControllerItem.updateItem);
 
 // Delete a food by ID
 router.delete('/delete-item/:id', isAuthenticatedUser, adminControllerItem.deleteItem);
