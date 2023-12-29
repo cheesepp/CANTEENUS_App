@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View} from 'react-native'
-import * as React from 'react';
+//import * as React from 'react';
 
 export default function ObjectiveItem({objective}) {
     //Hàm format lại chuỗi ngày tháng năm lấy ra từ database
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
         gap:5,
     },
     button: {
-        backgroundColor: '#4554DC',
+        backgroundColor: '#289CD2',
         marginVertical: 5,
         padding: 5,
         borderRadius: 15,
