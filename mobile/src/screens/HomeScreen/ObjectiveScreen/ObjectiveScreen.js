@@ -53,7 +53,7 @@ export default function ObjectiveScreen({ navigation }) {
       React.useLayoutEffect(() => {
             //Tạo header
             navigation.setOptions({
-                title: 'Menu',
+                title: 'Chỉ tiêu',
                 headerStyle: { 
                 backgroundColor: '#4554DC' 
                 },
