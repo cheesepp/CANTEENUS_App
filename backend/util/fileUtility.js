@@ -1,4 +1,4 @@
-
+const fs = require('fs')
 function moveImageFile(sourcePath, destinationPath, callback) {
     fs.rename(sourcePath, destinationPath, (err) => {
       if (err) {

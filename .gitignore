@@ -1,4 +1,3 @@
 backend/node_modules/
 mobile/android/local.properties
 mobile/node_modules/local.properties
-backend/.env

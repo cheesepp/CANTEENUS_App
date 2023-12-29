@@ -123,6 +123,7 @@ exports.updateIngredient = catchAsyncErrors( async (req, res,next) => {
     });
 
     const files = req.files;
+    console.log("files: ", files)
     const destinationPath =   'uploads\\ingredients\\'+ingredient.id+'\\'
 
     createFolderIfNotExists(destinationPath);
