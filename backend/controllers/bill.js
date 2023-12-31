@@ -50,7 +50,7 @@ exports.getAllBills = catchAsyncErrors(async (req, res, next) => {
   exports.addBill = catchAsyncErrors(async (req, res,next) => {
     try {
       const { items, payment } = req.body;
-  
+      console.log(req.body)
       // Calculate total price
       const totalPrice = items.reduce((acc, items) => {
         return acc + items.price * items.quantity
@@ -71,10 +71,10 @@ exports.getAllBills = catchAsyncErrors(async (req, res, next) => {
       // Create associations with foods including the quantity
       await Promise.all(
         items.map(async (item) => {
-          const { item_id, quantity } = item;
+          const { id, quantity } = item;
           await bill_item.create({
             bill_id: bill.id,
-            item_id:item_id ,
+            item_id:id ,
             quantity: quantity,
           });
         })

@@ -12,7 +12,7 @@ export default function DetailScreen({ navigation, route }) {
         headerTitleAlign: 'left', 
       });
     const { bill } = route.params
-    console.log(bill.item[0].bill_item.quantity)
+    // console.log(bill.item[0].bill_item.quantity)
     const renderItem = ({ item }) => (
         <View style={{ flexDirection: 'column' , marginBottom: 20}}>
             <View style={{ flexDirection: 'row'}}>

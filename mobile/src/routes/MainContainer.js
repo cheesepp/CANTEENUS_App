@@ -10,6 +10,8 @@ import LoginScreen from '../screens/LoginScreen/LoginScreen'
 import ForgetPasswordScreen from '../screens/ForgetPasswordScreen/ForgetPasswordScreen'
 import SigninTab from '../components/SigninTab';
 import SignupTab from '../components/SignupTab';
+import { useUser } from '../models/userContext';
+
 // Screens
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import BillScreen from '../screens/BillScreen/BillScreen';
@@ -25,6 +27,8 @@ import StorageScreen from '../screens/HomeScreen/StorageScreen/StorageScreen';
 import IngredientDetailScreen from '../screens/HomeScreen/StorageScreen/IngredientDetailScreen';
 import ChatDetailScreen from '../screens/ChatScreen/ChatDetailScreen';
 
+import CustomerHomeScreen from '../screens/CustomerRole/CustomerHomeScreen/CustomerHomeScreen';
+import CustomerCartScreen from '../screens/CustomerRole/CustomerCartScreen/CustomerCartScreen';
 
 //Screen names
 const homeName = "Home";
@@ -60,6 +64,30 @@ function HomeStackNavigator() {
       <Stack.Screen name={storageName} component={StorageScreen} options={homeHeaderBarStyle}></Stack.Screen>
       <Stack.Screen name={'IngredientDetail'} component={IngredientDetailScreen} />
     </Stack.Navigator >
+  )
+}
+
+const staffMainPage = 'staffMainPage'
+const staffCartName = 'staffCartName'
+
+function StaffHomeNavigator() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name={staffMainPage} component={StaffHomeScreen}></Stack.Screen>
+      <Stack.Screen name={staffCartName} component={StaffCartScreen}></Stack.Screen>
+    </Stack.Navigator>
+  )
+}
+
+const customerMainPage = 'customerMainPage'
+const customerCartName = 'customerCartName'
+
+function CustomerHomeNavigator() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name={customerMainPage} component={CustomerHomeScreen}></Stack.Screen>
+      <Stack.Screen name={customerCartName} component={CustomerCartScreen}></Stack.Screen>
+    </Stack.Navigator>
   )
 }
 
@@ -111,6 +139,7 @@ function ChatStackNavigator() {
 }
 
 function MainContainer() {
+
   return (
     <NavigationContainer>
       {/* <Stack.Navigator> */}
@@ -121,8 +150,8 @@ function MainContainer() {
         <Stack.Screen name="SignUp" component={SignupTab} options={{ headerShown: false }} />
 
         <Stack.Screen name="ForgetPassword" component={ForgetPasswordScreen} options={{ headerShown: false }} />
-
         <Stack.Screen name="MainScreen" component={MainScreen} options={{ headerShown: false }} />
+
         {/*Copy lại y chang, thay name với component = cái import để test */}
         {/* Add other screens as needed */}
       </Stack.Navigator>
@@ -130,7 +159,22 @@ function MainContainer() {
   );
 }
 
+function RoleNavigator({ role }) {
+
+  let content = HomeStackNavigator
+  if (role === 'customer') {
+    console.log('customer')
+    content = CustomerHomeNavigator
+  } else if (role === 'staff') {
+    content = StaffHomeNavigator
+  }
+  return content
+}
+
 function MainScreen() {
+  
+  const { user } = useUser()
+
   return (
     <Tab.Navigator
       // initialRouteName={homeName}
@@ -196,9 +240,11 @@ function MainScreen() {
       }}
     >
 
-      <Tab.Screen name={homeName} component={HomeStackNavigator} options={{ headerShown: false }} />
+      <Tab.Screen name={homeName} component={RoleNavigator({role: user.role})} options={{ headerShown: false }} />
       <Tab.Screen name={billStack} component={BillStackNavigator} options={{ headerShown: false }} />
-      <Tab.Screen name={revenueName} component={RevenueScreen} />
+      {
+       user.role === 'admin' ? <Tab.Screen name={revenueName} component={RevenueScreen} /> : null
+      }
       <Tab.Screen name={chatStack} component={ChatStackNavigator} options={{ headerShown: false }} />
       <Tab.Screen name={profileName} component={ProfileScreen} />
 

@@ -27,7 +27,7 @@ export default function RegisterTab() {
     const [phone, setPhone] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
-    const [role, setRole] = useState('Khách Hàng') //Loại đăng nhập: ['Sinh viên', 'Giảng viên'
+    const [role, setRole] = useState('customer') //Loại đăng nhập: ['Sinh viên', 'Giảng viên'
 
     //usestate gọi lỗi
     const [error, setError] = useState<ErrorState>({});
@@ -166,8 +166,8 @@ export default function RegisterTab() {
                             style={[styles.picker, {textAlign:'right'}]}
                             onValueChange={(itemValue, itemIndex) => setRole(itemValue)}
                         >
-                            <Picker.Item label="Khách Hàng" value="Khách Hàng" />
-                            <Picker.Item label="Quản Lý" value="Quản Lý" />
+                            <Picker.Item label="Khách Hàng" value="customer" />
+                            <Picker.Item label="Quản Lý" value="admin" />
                         </Picker>
                     </View>
 
