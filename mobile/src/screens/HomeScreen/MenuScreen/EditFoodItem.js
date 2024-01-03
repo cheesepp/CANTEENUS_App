@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, FlatList } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, FlatList, Modal, Button } from 'react-native';
 const defaultImage = require('../../../assets/Images/Default_item.png')
 import { Table, Row, Rows } from 'react-native-table-component';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -17,29 +17,31 @@ export default function EditFoodItem({ navigation, route }) {
     const [name, setName] = useState('');
     const [price, setPrice] = useState('');
     const [ingredients, setIngredients] = useState(food.ingredient);
+    const [modalVisible, setModalVisible] = useState(false);
+    const [newIngredientName, setNewIngredientName] = useState('');
+    const [newIngredientQuantity, setNewIngredientQuantity] = useState('');
+
+    const addIngredient = () => {
+        setModalVisible(true);
+    };
 
     const handleSave = () => {
         console.log('Save called');
     };
-    const formatCurrency = (value) => {
-        return value.toLocaleString('en-US', {
-            style: 'currency',
-            currency: 'VND',
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 0,
-        });
-    };
-    const addIngredient = () => {
-        const newIngredient = {
-            id: ingredients.length + 1, // Lấy từ db
-            item_ingredient: { quantity: 0 }, // Set your default quantity here
-            name: "new ingredient",
-            quantity: 0 // Set your default quantity here
-        };
 
-        setIngredients([...ingredients, newIngredient]);
-    };
-    const tableHead = ['Tên', 'Số lượng', ''];
+
+    const saveIngredient = () => {
+        if (newIngredientName.trim() !== '' && newIngredientQuantity.trim() !== '') {
+            const newIngredient = {
+                name: newIngredientName,
+                quantity: newIngredientQuantity,
+            };
+            setIngredients([...ingredients, newIngredient]);
+            setModalVisible(false);
+            setNewIngredientName('');
+            setNewIngredientQuantity('');
+        }
+    }
 
     const removeIngredient = (id) => {
         const updatedIngredients = ingredients.filter(ingredient => ingredient.id !== id);
@@ -52,41 +54,87 @@ export default function EditFoodItem({ navigation, route }) {
             <View>
                 <View style={styles.textRow}>
                     <Text style={styles.label}>Tên món</Text>
-                    <TextInput style={styles.value} id='menu-detail-name'>
-                    </TextInput>
+
+                    <TextInput style={styles.value} id='menu-input-name'
+                        placeholder='Tên món'
+                        value={food.name}
+                        onChangeText={(text) => setName(text)}
+                    ></TextInput>
                 </View>
                 <View style={styles.textRow}>
-                    <Text style={styles.label}>Giá</Text>
-                    <TextInput style={styles.value} id='menu-detail-price'>
+                    <Text style={styles.label}>Giá tiền</Text>
 
-                    </TextInput>
+                    <TextInput style={styles.value} id='menu-input-price'
+                        placeholder='Giá tiền'
+                        value={food.price.toString()}
+                        onChangeText={(text) => setPrice(text)}
+                    ></TextInput>
                 </View>
-                {/* <View style={styles.textRow}>
+
+
+
+                <View style={styles.textRow}>
                     <Text style={styles.label}>Nguyên liệu</Text>
+                    <TouchableOpacity style={[styles.button_small]} onPress={addIngredient}>
+                        <Text style={{ fontSize: 18, fontWeight: 'bold', color: 'white' }}>+</Text>
+                    </TouchableOpacity>
+                </View>
+
+                <View style={styles.textRow}>
+                    <Text style={styles.label}></Text>
 
                     <View style={styles.value}>
-                        <Table borderStyle={{ borderWidth: 1, borderColor: '#C1C0B9' }}>
-                            <Row data={tableHead} style={styles.header_text}/>
-                            {ingredients.map(ingredient => (
-                                <Row
-                                    key={ingredient.id}
-                                    data={[
-                                        ingredient.name,
-                                        ingredient.quantity,
-                                        <TouchableOpacity onPress={() => removeIngredient(ingredient.id)}>
-                                            <Icon name="trash" size={20} color="red" />
-                                        </TouchableOpacity>
-                                    ]}
-                                    style={styles.data_text}
-                                />
-                            ))}
-                        </Table>
+                        <FlatList
+                            data={ingredients ? ingredients : []}
+                            keyExtractor={(item, index) => index.toString()}
+                            renderItem={({ item }) => (
+                                <View>
+                                    <Text style={[styles.value]} id='menu-detail-ingredients'>
+                                        + {item.quantity} {item.name}
+                                    </Text>
+                                    {/* <TouchableOpacity style={[styles.button_small]} onPress={addIngredient}>
+                                        <Text style={{ fontSize: 18, fontWeight: 'bold', color: 'white' }}>-</Text>
+                                    </TouchableOpacity> */}
+                                </View>
+
+                            )}
+                        />
+                    </View>
+                </View>
+
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={modalVisible}
+                    onRequestClose={() => setModalVisible(false)}
+                >
+                    <View style={styles.modalContainer}>
+                        <View style={styles.modalContent}>
+                            <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 20, textAlign: 'center' }}>Nhập nguyên liệu</Text>
+                            <TextInput
+                                placeholder="Tên nguyên liệu"
+                                value={newIngredientName}
+                                onChangeText={(text) => setNewIngredientName(text)}
+                                style={styles.input}
+                            />
+                            <TextInput
+                                placeholder="Số lượng"
+                                value={newIngredientQuantity}
+                                onChangeText={(text) => setNewIngredientQuantity(text)}
+                                keyboardType="numeric"
+                                style={styles.input}
+                            />
+                            <TouchableOpacity title="Thêm" onPress={saveIngredient} style={[styles.button, { backgroundColor: '#28D62F' }]}>
+                                <Text style={{ fontSize: 18, fontWeight: 'bold', color: 'white' }}>Thêm</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity title="Hủy" onPress={() => setModalVisible(false)} style={[styles.button, { backgroundColor: '#FF5B5B' }]}>
+                                <Text style={{ fontSize: 18, fontWeight: 'bold', color: 'white' }}>Hủy</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
 
-                    <TouchableOpacity style={styles.button} onPress={addIngredient}>
-                        <Text style={{ fontSize: 18, fontWeight: 'bold', color: 'white' }}>Add Ingredient</Text>
-                    </TouchableOpacity>
-                </View> */}
+
+                </Modal>
 
 
             </View>
@@ -104,7 +152,6 @@ export default function EditFoodItem({ navigation, route }) {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 0.7,
         height: 'auto',
         width: '90%',
         justifyContent: 'space-between',
@@ -144,6 +191,7 @@ const styles = StyleSheet.create({
         fontSize: 15,
         fontWeight: 'bold',
         flexWrap: 'wrap',
+        alignSelf: 'center',
     },
     value: {
         fontFamily: 'Montserrat',
@@ -175,5 +223,15 @@ const styles = StyleSheet.create({
         fontFamily: 'Montserrat',
         fontSize: 5,
         textAlign: 'left',
-    }
+    },
+    button_small: {
+        backgroundColor: '#279CD2',
+        fontFamily: 'Montserrat',
+        borderRadius: 20,
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: 36,
+        width: 50,
+        alignSelf: 'center',
+    },
 });

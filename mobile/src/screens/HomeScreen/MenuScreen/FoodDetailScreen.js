@@ -31,14 +31,10 @@ export default function FoodDetailScreen({ navigation, route }) {
     console.log('FoodDetailScreen', food.ingredient);
 
     const editHandle = () => {
-        // navigation.navigate('EditFood', { food: food });
-        console.log('Edit called');
         navigation.navigate('EditFood', { food: food });
     };
 
     const deleteHandle = () => {
-        // navigation.navigate('EditFood', { food: food });
-        console.log('Delete called');
         setModalVisible(false);
     }
     return (
