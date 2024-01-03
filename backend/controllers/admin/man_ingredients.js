@@ -48,7 +48,7 @@ exports.addIngredient = catchAsyncErrors(async (req, res) => {
       unit,
       quantity,
       price,
-      expirationDate,
+      expirationdate: expirationDate,
     });
 
     res.status(201).json({ success: true, message: 'Ingredient added successfully', ingredient: ingredient });
@@ -76,7 +76,7 @@ exports.updateIngredient = catchAsyncErrors( async (req, res,next) => {
       unit,
       quantity,
       price,
-      expirationDate,
+      expirationdate: expirationDate,
     });
 
     res.json({ success:true, message: 'Ingredient updated successfully', ingredient: ingredient});
