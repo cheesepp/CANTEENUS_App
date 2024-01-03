@@ -20,10 +20,10 @@ router.get('/get-staff',    adminControllerStaff.getStaff);
 router.get('/get-staff/:id',  adminControllerStaff.getStaffByID)
 
 // /admin/add-staff => POST
-router.post('/add-staff',    avtUpload.single('image'), adminControllerStaff.addStaff);
+router.post('/add-staff',   avtUpload.array('photos',1), adminControllerStaff.addStaff);
 
 // /admin/edit-staff => POST
-router.put('/edit-staff/:id',    adminControllerStaff.editStaff);
+router.put('/edit-staff/:id',   avtUpload.array('photos',1), adminControllerStaff.editStaff);
 
 // /admin/delete-staff => POST
 router.delete('/delete-staff/:id',    adminControllerStaff.deleteStaff);
@@ -36,10 +36,10 @@ router.get('/get-ingredient',    adminControllerIngredient.getAllIngredients);
 router.get('/get-ingredient/:id',    adminControllerIngredient.getIngredientByID);
 
 // Add a new ingredient
-router.post('/add-ingredient',    ingredientUpload.single('image'), adminControllerIngredient.addIngredient);
+router.post('/add-ingredient',   ingredientUpload.array('photos',1), adminControllerIngredient.addIngredient);
 
 // Update a ingredient by ID
-router.put('/edit-ingredient/:id',    adminControllerIngredient.updateIngredient);
+router.put('/edit-ingredient/:id',   ingredientUpload.array('photos',1), adminControllerIngredient.updateIngredient);
 
 // Delete a ingredient by ID
 router.delete('/delete-ingredient/:id',    adminControllerIngredient.deleteIngredient);
@@ -52,10 +52,10 @@ router.get('/get-item',    adminControllerItem.getAllItems);
 router.get('/get-item/:id',    adminControllerItem.getItemById);
 
 // Add a new food
-router.post('/add-item',    itemUpload.single('image'), adminControllerItem.addItem);
+router.post('/add-item',  itemUpload.array('photos',1), adminControllerItem.addItem);
 
 // Update a food by ID
-router.put('/update-item/:id',    adminControllerItem.updateItem);
+router.put('/update-item/:id',   itemUpload.array('photos',1), adminControllerItem.updateItem);
 
 // Delete a food by ID
 router.delete('/delete-item/:id',    adminControllerItem.deleteItem);

@@ -6,7 +6,9 @@ const {
   } = require('uuid');
 const User = require('../models/user');
 const catchAsyncErrors = require('../middleware/catchAsyncErrors');
-const {Item, item_ingredient, Ingredient} = require('../models/relationship')
+const {Item, item_ingredient, Ingredient} = require('../models/relationship');
+const ErrorHandler = require('../util/ErrorHandler');
+const { get } = require('mongoose');
 const getUser = catchAsyncErrors(async (req, res, next) => {
 
     try {
@@ -119,9 +121,26 @@ const getMenu = catchAsyncErrors(async (req,res, next)=> {
 
   }
 })
+
+const getAllChatOfUser = catchAsyncErrors(async (req, res, next)=> {
+  try {
+    const id = req.userId;
+    const record = await User.findAll({
+        where: {
+            id: id
+          },
+        }
+    );
+    
+  } catch (error) {
+    console.error(error);
+    return next(new ErrorHandler('Internal server error!', 500));
+  }
+})
 module.exports ={
     getUser: getUser,
     editUser: editUser,
     userChangePassword: userChangePassword,
     getMenu: getMenu,
+    getAllChatOfUser: getAllChatOfUser,
 }

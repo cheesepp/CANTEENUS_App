@@ -14,7 +14,7 @@ const avtUpload = multer({ storage: avtStorage })
 
 const itemStorage = multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, 'uploads/foods/'); // Set the destination folder for uploaded files
+      cb(null, 'uploads/items/'); // Set the destination folder for uploaded files
     },
     filename: (req, file, cb) => {
       const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
@@ -27,7 +27,7 @@ const itemUpload = multer({ storage: itemStorage });
 
 const ingredientStorage = multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, 'uploads/materials/'); // Set the destination folder for uploaded files
+      cb(null, 'uploads/ingredients/'); // Set the destination folder for uploaded files
     },
     filename: (req, file, cb) => {
       const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
