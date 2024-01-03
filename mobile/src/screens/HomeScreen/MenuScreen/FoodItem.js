@@ -11,6 +11,14 @@ export default function FoodItem({navigation,food, isNavigate=false}) {
             navigation.navigate('FoodDetail', { food: food });
         }  
     }
+    const formatCurrency = (value) => {
+        return value.toLocaleString('en-US', {
+            style: 'currency',
+            currency: 'VND',
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0,
+        });
+    };
 
     //Trả về giao diện của component
     return (
@@ -18,7 +26,7 @@ export default function FoodItem({navigation,food, isNavigate=false}) {
             <View style={styles.container}>
                 <Text style={[styles.text,{fontSize:15}]}>{food.name}</Text>
                 <Image source={(food.image == '')?food.image:defaultImage} style={styles.imageStyle}/>
-                <Text style={[styles.text,{fontSize:13}]}>đ {food.price}</Text>
+                <Text style={[styles.text,{fontSize:13}]}>{formatCurrency(food.price)}</Text>
             </View>
         </TouchableOpacity>
     )

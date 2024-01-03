@@ -21,13 +21,17 @@ import RevenueScreen from '../screens/RevenueScreen/RevenueScreen';
 import ChatScreen from '../screens/ChatScreen/ChatScreen';
 import StaffScreen from '../screens/HomeScreen/StaffScreen/StaffScreen';
 import ObjectiveScreen from '../screens/HomeScreen/ObjectiveScreen/ObjectiveScreen';
+// Menu
 import MenuScreen from '../screens/HomeScreen/MenuScreen/MenuScreen';
 import FoodDetailScreen from '../screens/HomeScreen/MenuScreen/FoodDetailScreen';
+import EditFoodItem from '../screens/HomeScreen/MenuScreen/EditFoodItem';
+import AddFoodItem from '../screens/HomeScreen/MenuScreen/AddFoodItem';
+//Storage
 import StorageScreen from '../screens/HomeScreen/StorageScreen/StorageScreen';
 import IngredientDetailScreen from '../screens/HomeScreen/StorageScreen/IngredientDetailScreen';
+
 import ChatDetailScreen from '../screens/ChatScreen/ChatDetailScreen';
 import RatingScreen from '../screens/BillScreen/RatingScreen/RatingScreen';
-
 import CustomerHomeScreen from '../screens/CustomerRole/CustomerHomeScreen/CustomerHomeScreen';
 import CustomerCartScreen from '../screens/CustomerRole/CustomerCartScreen/CustomerCartScreen';
 
@@ -63,6 +67,8 @@ function HomeStackNavigator() {
       <Stack.Screen name={objectiveName} component={ObjectiveScreen} options={homeHeaderBarStyle}></Stack.Screen>
       <Stack.Screen name={menuName} component={MenuScreen} options={homeHeaderBarStyle}></Stack.Screen>
       <Stack.Screen name={'FoodDetail'} component={FoodDetailScreen} />
+      <Stack.Screen name={'EditFood'} component={EditFoodItem} />
+      <Stack.Screen name={'AddFood'} component={AddFoodItem} />
       <Stack.Screen name={storageName} component={StorageScreen} options={homeHeaderBarStyle}></Stack.Screen>
       <Stack.Screen name={'IngredientDetail'} component={IngredientDetailScreen} />
     </Stack.Navigator >

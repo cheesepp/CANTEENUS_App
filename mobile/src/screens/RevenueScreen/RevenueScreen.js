@@ -59,7 +59,7 @@ const Revenue = ({ navigation }) => {
     const months = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
     // const years = ['2022', '2023']; // Tạm thời lấy cứng
     useEffect(() => {
-        const getYear = async (token) => {
+        const getYear = async () => {
             try {
                 const res = await fetch(`${api.getYears}`, {
                     method: 'POST',

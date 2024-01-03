@@ -51,8 +51,9 @@ export default function MenuScreen({ navigation }) {
     };
 
     //Hàm xử lý khi nút thêm món ăn được click
-    const handleFloatingButtonPress = () => {
-        console.log('Floating button pressed');
+    const handleAddItem = () => {
+        navigation.navigate('AddFood');
+
     }
 
     //Sử dụng useLayoutEffect để tạo header
@@ -132,7 +133,7 @@ export default function MenuScreen({ navigation }) {
                 keyExtractor={item => item.id}
                 numColumns={3}
             />
-            <TouchableOpacity style={styles.floatingButton} onPress = {handleFloatingButtonPress}>
+            <TouchableOpacity style={styles.floatingButton} onPress = {handleAddItem}>
                 <Text style={styles.floatingButtonIcon}>+</Text>
             </TouchableOpacity>
         </View>
