@@ -7,18 +7,6 @@ import { api } from '../../../constants/api';
 //Hằng số lưu đường dẫn ảnh mặc định cho nguyên liệu
 const defaultImage = require('../../../assets/Images/Default_item.png')
 
-//viết hàm formar lại chuỗi có dạng 2024-12-11T11:07:13.000Z thành 11/12/2024
-const formatDate = (input) => {
-    if(input != null){
-        var date = input.split('T')[0];
-        var year = date.split('-')[0];
-        var month = date.split('-')[1];
-        var day = date.split('-')[2];
-        return day+'-'+month+'-'+year;
-    }
-    return null;
-}
-
 //Hàm chuyển chuỗi có định dạng 'dd-MM-yyyy' sang 'yyyy-MM-dd'
 //Vì API chỉ nhận định dạng 'yyyy-MM-dd', nhưng khi nhập vào thì người dùng nhập theo định dạng 'dd-MM-yyyy' nên cần chuyển đổi
 const convertDate = (inputDate) => {
@@ -63,6 +51,7 @@ export default function AddIngredientScreen({navigation}) {
 
     //Hàm xử lý chọn ảnh
     const handleChooseImage = () => {
+        //Hiện chưa xử lý gì, chỉ in ra console là đã chọn ảnh
         console.log('choose image')
     };
     
@@ -76,7 +65,7 @@ export default function AddIngredientScreen({navigation}) {
         unit: unit,
         quantity: quantity,
         price: price,
-        expirationdate: expirationDate,
+        expirationDate: expirationDate,
         //image: image,
         };
         try {
@@ -96,7 +85,7 @@ export default function AddIngredientScreen({navigation}) {
     };
  
      
- 
+    //Render màn hình
     return (
         <View style={styles.mainContainer}>
             <Image source={image} style={styles.imageStyle}/>

@@ -67,12 +67,13 @@ export default function EditIngredientScreen({ navigation, route }) {
 
     //Hàm xử lý chọn ảnh
     const handleChooseImage = () => {
+        //Hiện chưa xử lý gì, chỉ in ra console là đã chọn ảnh
         console.log('choose image')
     };
 
     //Hàm xử lý sửa nguyên liệu
     const handleEditIngredient = async () => {
-        console.log(expirationDate)
+        //console.log(expirationDate)
         //data chứa thông tin nguyên liệu cần sửa
         const data = {
             calories: calories,
@@ -80,7 +81,7 @@ export default function EditIngredientScreen({ navigation, route }) {
             unit: unit,
             quantity: quantity,
             price: price,
-            expirationdate: expirationDate,
+            expirationDate: expirationDate,
             //image: image,
         };
         try {
@@ -100,7 +101,7 @@ export default function EditIngredientScreen({ navigation, route }) {
     };
 
     
-
+    //Render màn hình
     return (
         <View style={styles.mainContainer}>
             <Image source={(ingredient.image=='')?ingredient.image:defaultImage} style={styles.imageStyle}/>

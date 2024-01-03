@@ -113,10 +113,8 @@ export default function StorageScreen({ navigation }) {
                 }
             };
             
-            //Gọi hàm fetchData khi component được render
+            //Hai dòng dưới đây là để StorageScreen tự động gọi hàm fetchData khi component được render (từ màn hình khác quay về màn hình này)
             const unsubscribe = navigation.addListener('focus', fetchData);
-
-            //Hàm unsubscribe để ngăn không cho component gọi hàm fetchData khi component bị hủy
             return unsubscribe;
     }, [navigation]);
 
