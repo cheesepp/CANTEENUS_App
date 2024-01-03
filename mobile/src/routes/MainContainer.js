@@ -25,6 +25,7 @@ import MenuScreen from '../screens/HomeScreen/MenuScreen/MenuScreen';
 import FoodDetailScreen from '../screens/HomeScreen/MenuScreen/FoodDetailScreen';
 import StorageScreen from '../screens/HomeScreen/StorageScreen/StorageScreen';
 import IngredientDetailScreen from '../screens/HomeScreen/StorageScreen/IngredientDetailScreen';
+import AddIngredientScreen from '../screens/HomeScreen/StorageScreen/AddIngredientScreen';
 import ChatDetailScreen from '../screens/ChatScreen/ChatDetailScreen';
 import RatingScreen from '../screens/BillScreen/RatingScreen/RatingScreen';
 
@@ -65,6 +66,7 @@ function HomeStackNavigator() {
       <Stack.Screen name={'FoodDetail'} component={FoodDetailScreen} />
       <Stack.Screen name={storageName} component={StorageScreen} options={homeHeaderBarStyle}></Stack.Screen>
       <Stack.Screen name={'IngredientDetail'} component={IngredientDetailScreen} />
+      <Stack.Screen name={'AddIngredient'} component={AddIngredientScreen} />
     </Stack.Navigator >
   )
 }

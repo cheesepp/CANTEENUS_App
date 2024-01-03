@@ -115,8 +115,8 @@ export default function ObjectiveScreen({ navigation }) {
                 }
             }
         };
-    //Gọi hàm fetchData để lấy dữ liệu từ database
-    fetchData();
+        //Gọi hàm fetchData để lấy dữ liệu từ database
+        fetchData();
     }, []);
 
     //Hàm render item trong Flatlist để hiển thị dữ liệu lên màn hình

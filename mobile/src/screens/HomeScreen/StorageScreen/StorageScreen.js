@@ -51,7 +51,7 @@ export default function StorageScreen({ navigation }) {
 
     //Hàm xử lý khi nút thêm món ăn được click
     const handleFloatingButtonPress = () => {
-        console.log('Floating button pressed');
+        navigation.navigate('AddIngredient');
     }
 
     //Sử dụng useLayoutEffect để tạo header
@@ -112,9 +112,13 @@ export default function StorageScreen({ navigation }) {
                     }
                 }
             };
-        //Gọi hàm fetchData để lấy dữ liệu từ database
-        fetchData();
-    }, []);
+            
+            //Gọi hàm fetchData khi component được render
+            const unsubscribe = navigation.addListener('focus', fetchData);
+
+            //Hàm unsubscribe để ngăn không cho component gọi hàm fetchData khi component bị hủy
+            return unsubscribe;
+    }, [navigation]);
 
     //Hàm renderItem để hiển thị từng item trong danh sách nguyên liệu
     const renderItem = ({ item }) => {
