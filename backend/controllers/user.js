@@ -5,6 +5,7 @@ const {
     v4: uuidv4,
   } = require('uuid');
 const User = require('../models/user');
+const { Op } = require('sequelize');
 const catchAsyncErrors = require('../middleware/catchAsyncErrors');
 const {Item, item_ingredient, Ingredient} = require('../models/relationship');
 const ErrorHandler = require('../util/ErrorHandler');
@@ -127,11 +128,25 @@ const getAllChatOfUser = catchAsyncErrors(async (req, res, next)=> {
     const id = req.userId;
     const record = await User.findAll({
         where: {
-            id: id
+            id: {
+              [Op.ne]: id,
+            },
+            [Op.or]: [
+              { role: 'admin' },
+              { role: 'staff' },
+            ],
           },
         }
     );
-    
+    //console.log("list user in chat: ",record)
+    const listUser = record.map(user=> ({
+      id: user.dataValues.id,
+      email:user.dataValues.email,
+      role:user.dataValues.role,
+      name:user.dataValues.name,
+      phone:user.dataValues.phone,
+    }))
+    res.json({listUser: listUser})
   } catch (error) {
     console.error(error);
     return next(new ErrorHandler('Internal server error!', 500));

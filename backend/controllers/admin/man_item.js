@@ -57,21 +57,21 @@ exports.addItem = catchAsyncErrors( async (req, res) => {
 
     const item = await Item.create({ name: name, price:price , rating: 5});//trigger 
 
-    ingredients.map(ingredient =>{
-      console.log("id: ",ingredient.id)
-      console.log("quantity: ",ingredient.quantity)
-    })
+    // ingredients.map(ingredient =>{
+    //   console.log("id: ",ingredient.id)
+    //   console.log("quantity: ",ingredient.quantity)
+    // })
 
     const ingredientAssociations = ingredients.map(ingredient => ({
       ingredient_id: ingredient.id,
       quantity: ingredient.quantity
     }));
     console.log("ingredientAssociations: ",ingredientAssociations)
-    const record = await Ingredient.findAll({
-      where: {
-        id:1
-      }
-    })
+    // const record = await Ingredient.findAll({
+    //   where: {
+    //     id:1
+    //   }
+    // })
    // console.log(record[0].dataValues)
     //console.log(ingredientAssociations[0].ingredient_id)
     await Promise.all(ingredients.map(async (ingredient) => {
