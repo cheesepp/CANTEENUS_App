@@ -26,6 +26,7 @@ import FoodDetailScreen from '../screens/HomeScreen/MenuScreen/FoodDetailScreen'
 import StorageScreen from '../screens/HomeScreen/StorageScreen/StorageScreen';
 import IngredientDetailScreen from '../screens/HomeScreen/StorageScreen/IngredientDetailScreen';
 import ChatDetailScreen from '../screens/ChatScreen/ChatDetailScreen';
+import RatingScreen from '../screens/BillScreen/RatingScreen/RatingScreen';
 
 import CustomerHomeScreen from '../screens/CustomerRole/CustomerHomeScreen/CustomerHomeScreen';
 import CustomerCartScreen from '../screens/CustomerRole/CustomerCartScreen/CustomerCartScreen';
@@ -41,6 +42,7 @@ const storageName = "Kho";
 const billStack = "BillScreen";
 const billName = "Bill";
 const billDetailName = "Detail";
+const billRatingName = "Rating";
 
 const chatStack = "ChatScreen";
 const chatName = "Chat";
@@ -122,6 +124,7 @@ function BillStackNavigator() {
     >
       <Stack.Screen name={billName} component={BillScreen} />
       <Stack.Screen name={billDetailName} component={DetailsScreen} />
+      <Stack.Screen name={billRatingName} component={RatingScreen}></Stack.Screen>
     </Stack.Navigator>
   );
 }
@@ -162,11 +165,9 @@ function MainContainer() {
 function RoleNavigator({ role }) {
 
   let content = HomeStackNavigator
-  if (role === 'customer') {
-    console.log('customer')
+  if (role === 'customer' || role === 'staff') {
+    console.log(role)
     content = CustomerHomeNavigator
-  } else if (role === 'staff') {
-    content = StaffHomeNavigator
   }
   return content
 }

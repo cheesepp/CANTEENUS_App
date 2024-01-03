@@ -209,7 +209,7 @@ export default function CustomerCartScreen({ navigation }) {
         </TouchableOpacity>
       </View>
       <PaymentModal isVisible={isModalVisible} onClose={closeModal} onConfirm={onConfirm}></PaymentModal>
-      <SuccessfulModal isVisible={isSuccessfulModalVisible} onClose={onConfirmOrder}></SuccessfulModal>
+      <SuccessfulModal isVisible={isSuccessfulModalVisible} onClose={onConfirmOrder} text={'Thanh toán thành công!'}></SuccessfulModal>
     </View>
   );
 

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, Modal, TouchableOpacity, StyleSheet } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
-const SuccessfulModal = ({ isVisible, onClose }) => {
+const SuccessfulModal = ({ isVisible, onClose, text }) => {
 
 
     return (
@@ -14,7 +14,7 @@ const SuccessfulModal = ({ isVisible, onClose }) => {
             <View style={styles.modalContainer}>
                 <View style={styles.modalContent}>
                     <AntDesign name='checkcircleo' color={'green'} size={50} />
-                    <Text style={styles.successText}>Thanh toán thành công!</Text>
+                    <Text style={styles.successText}>{text}</Text>
                     <TouchableOpacity style={styles.closeButton} onPress={onClose}>
                         <Text style={styles.closeButtonText}>Đóng</Text>
                     </TouchableOpacity>

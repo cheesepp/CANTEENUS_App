@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { View, Text, TouchableOpacity, FlatList, StyleSheet, Button, Image } from 'react-native';
 import FoodItem from './FoodItem';
 import axios from 'axios';
@@ -30,7 +30,7 @@ export default function CustomerHomeScreen({ navigation }) {
         setModalVisible(false);
         
         let getLength = cartRepository.getLength()
-        setNumOfItems((numOfItems) => numOfItems = getLength)
+        setNumOfItems(getLength)
         setSelectedItem(null);
     };
 
@@ -191,7 +191,7 @@ export default function CustomerHomeScreen({ navigation }) {
 const styles = StyleSheet.create({
     badgeContainer: {
         position: 'absolute',
-        top: -6,
+        top: -5,
         right: -6,
         minWidth: 15,
         height: 15,
