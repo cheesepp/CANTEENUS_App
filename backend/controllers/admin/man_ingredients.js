@@ -6,6 +6,7 @@ const {
   v4: uuidv4,
 } = require('uuid');
 const ErrorHandler = require('../../util/ErrorHandler')
+const { formatLocaleTimezone } = require('../../util/DateTime')
 // Get all ingredients
 exports.getAllIngredients = catchAsyncErrors(async (req, res) => {
   try {
@@ -48,7 +49,7 @@ exports.addIngredient = catchAsyncErrors(async (req, res) => {
       unit,
       quantity,
       price,
-      expirationdate: expirationDate,
+      expirationdate: formatLocaleTimezone(expirationDate),
     });
 
     res.status(201).json({ success: true, message: 'Ingredient added successfully', ingredient: ingredient });
@@ -76,7 +77,7 @@ exports.updateIngredient = catchAsyncErrors( async (req, res,next) => {
       unit,
       quantity,
       price,
-      expirationdate: expirationDate,
+      expirationdate: formatLocaleTimezone(expirationDate),
     });
 
     res.json({ success:true, message: 'Ingredient updated successfully', ingredient: ingredient});

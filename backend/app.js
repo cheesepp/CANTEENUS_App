@@ -9,7 +9,10 @@ const ErrorHandler = require("./middleware/error");
 require('dotenv').config()
 var cors = require('cors');
 const http = require('http');
+const moment = require('moment-timezone');
 
+// Set the default timezone to GMT+7
+moment.tz.setDefault('Asia/Ho_Chi_Minh');
 const initSocketIO = require('./controllers/socket'); // Adjust the path based on your project structure
 
 app.options("*", cors({ origin: 'http://localhost:8080', optionsSuccessStatus: 200 }));
