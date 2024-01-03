@@ -27,84 +27,88 @@ const convertDate = (inputDate) => {
     return newDate;
 }
 
-export default function AddIngredientScreen({navigation}) {
+export default function EditIngredientScreen({ navigation, route }) {
+    //Sử dụng useLayoutEffect để tạo header
     navigation.setOptions({
-        title: 'Thêm Nguyên Liệu',
+        title: 'Sửa Nguyên Liệu',
         headerStyle: { 
-        backgroundColor: '#4554DC' 
+          backgroundColor: '#4554DC' 
         },
         headerTintColor: 'white',
         headerTitleAlign: 'left', 
     });
 
+    //Lấy dữ liệu nguyên liệu từ route
+    const { ingredient } = route.params;
+
     //Lấy thông tin người dùng từ context
     const { user } = useUser();
 
     //state để lưu thông tin ảnh nguyên liệu
-    const [image, setImage] = useState(defaultImage);
+    const [image, setImage] = useState(ingredient.image);
 
     //state để lưu thông tin tên nguyên liệu
-    const [name, setName] = useState(null);
+    const [name, setName] = useState(ingredient.name);
 
     //state để lưu thông tin calories nguyên liệu
-    const [calories, setCalories] = useState(0);
+    const [calories, setCalories] = useState(ingredient.calories.toString());
 
     //state để lưu thông tin đơn vị tính nguyên liệu
-    const [unit, setUnit] = useState(0);
+    const [unit, setUnit] = useState(ingredient.unit);
 
     //state để lưu thông tin số lượng nguyên liệu
-    const [quantity, setQuantity] = useState(null);
+    const [quantity, setQuantity] = useState(ingredient.quantity.toString());
 
     //state để lưu thông tin giá nguyên liệu
-    const [price, setPrice] = useState(null);
+    const [price, setPrice] = useState(ingredient.price.toString());
 
     //state để lưu thông tin ngày hết hạn nguyên liệu
-    const [expirationDate, setExpirationDate] = useState(null);
+    const [expirationDate, setExpirationDate] = useState(ingredient.expirationDate);
 
     //Hàm xử lý chọn ảnh
     const handleChooseImage = () => {
         console.log('choose image')
     };
-    
-    //Hàm xử lý thêm nguyên liệu
-    const handleAddIngredient = async () => {
+
+    //Hàm xử lý sửa nguyên liệu
+    const handleEditIngredient = async () => {
         console.log(expirationDate)
-        //data chứa thông tin nguyên liệu muốn thêm
+        //data chứa thông tin nguyên liệu cần sửa
         const data = {
-        calories: calories,
-        name: name,
-        unit: unit,
-        quantity: quantity,
-        price: price,
-        expirationdate: expirationDate,
-        //image: image,
+            calories: calories,
+            name: name,
+            unit: unit,
+            quantity: quantity,
+            price: price,
+            expirationdate: expirationDate,
+            //image: image,
         };
         try {
-        const response = await axios.post(api.addIngredient, data, {
-            //headers để xác thực người dùng
-            headers: {
-            Authorization: `Bearer ${user.jwt}`,
-            },
-        });
-        console.log(response.data);
+            const response = await axios.put(api.editIngredient + '/' + ingredient.id, data, {
+                //headers để xác thực người dùng
+                headers: {
+                    Authorization: `Bearer ${user.jwt}`,
+                },
+            });
+            console.log(response.data);
         } catch (error) {
-        console.error("Error sending data: ", error);
+            console.error("Error sending data: ", error);
         }
 
         //Chuyển về màn hình StorageScreen
         navigation.navigate('Kho');
     };
- 
-     
- 
+
+    
+
     return (
         <View style={styles.mainContainer}>
-            <Image source={image} style={styles.imageStyle}/>
+            <Image source={(ingredient.image=='')?ingredient.image:defaultImage} style={styles.imageStyle}/>
 
             <TouchableOpacity style={[styles.buttonStyle,{width:100, marginBottom:10}]} onPress={handleChooseImage} >
-                <Text style={styles.buttonTextStyle}>
-                    Chọn ảnh
-                </Text>
+                    <Text style={styles.buttonTextStyle}>
+                        Chọn ảnh
+                    </Text>
             </TouchableOpacity>
 
             <View style={styles.textContainer}>
@@ -113,6 +117,7 @@ export default function AddIngredientScreen({navigation}) {
                 </Text>
                 <TextInput
                     style={[{borderBottomColor: '#747474',borderBottomWidth: 0.5,flex:1,fontSize:18,marginRight:10},styles.textInputStyle]}
+                    placeholder={ingredient.name}
                     onChangeText={text => setName(text)}
                 />
             </View>
@@ -123,6 +128,7 @@ export default function AddIngredientScreen({navigation}) {
                 </Text>
                 <TextInput
                     style={[{borderBottomColor: '#747474',borderBottomWidth: 0.5,flex:1,fontSize:18,marginRight:10},styles.textInputStyle]}
+                    placeholder={ingredient.calories.toString()}
                     onChangeText={text => setCalories(text)}
                 />
             </View>
@@ -133,6 +139,7 @@ export default function AddIngredientScreen({navigation}) {
                 </Text>
                 <TextInput
                     style={[{borderBottomColor: '#747474',borderBottomWidth: 0.5,flex:1,fontSize:18,marginRight:10},styles.textInputStyle]}
+                    placeholder={ingredient.unit}
                     onChangeText={text => setUnit(text)}
                 />
             </View>
@@ -143,6 +150,7 @@ export default function AddIngredientScreen({navigation}) {
                 </Text>
                 <TextInput
                     style={[{borderBottomColor: '#747474',borderBottomWidth: 0.5,flex:1,fontSize:18,marginRight:10},styles.textInputStyle]}
+                    placeholder={ingredient.quantity.toString()}
                     onChangeText={text => setQuantity(text)}
                 />
             </View>
@@ -153,6 +161,7 @@ export default function AddIngredientScreen({navigation}) {
                 </Text>
                 <TextInput
                     style={[{borderBottomColor: '#747474',borderBottomWidth: 0.5,flex:1,fontSize:18,marginRight:10},styles.textInputStyle]}
+                    placeholder={ingredient.price.toString()}
                     onChangeText={text => setPrice(text)}
                 />
             </View>
@@ -163,21 +172,22 @@ export default function AddIngredientScreen({navigation}) {
                 </Text>
                 <TextInput
                     style={[{borderBottomColor: '#747474',borderBottomWidth: 0.5,flex:1,fontSize:18,marginRight:10},styles.textInputStyle]}
-                    placeholder={'dd-MM-yyyy'}
+                    placeholder={formatDate(ingredient.expirationdate)}
                     onChangeText={text => setExpirationDate(convertDate(text))}
                 />
             </View>
 
-            <TouchableOpacity style={[styles.buttonStyle,{width:100,height:40, marginBottom:10}]} onPress={handleAddIngredient} >
+            <TouchableOpacity style={[styles.buttonStyle,{width:100,height:40, marginBottom:10}]} onPress={handleEditIngredient} >
                     <Text style={styles.buttonTextStyle}>
-                        Thêm
+                        Sửa
                     </Text>
             </TouchableOpacity>
+
         </View>
     )
- }
- 
- const styles = StyleSheet.create({
+}
+
+const styles = StyleSheet.create({
     mainContainer:{
         width:'90%', height:'98%', marginTop:5, alignSelf:'center',backgroundColor:'white', borderRadius:15
     },
@@ -207,4 +217,4 @@ export default function AddIngredientScreen({navigation}) {
         color:'#747474',
         fontSize:15,
     }
- })
+})

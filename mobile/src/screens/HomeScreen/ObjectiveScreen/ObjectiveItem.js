@@ -8,7 +8,7 @@ export default function ObjectiveItem({objective}) {
         year = datePart[0].substring(0), // get only two digits
         month = datePart[1], day = datePart[2];
       
-        return day+'/'+month+'/'+year;
+        return day+'-'+month+'-'+year;
     }
 
     return (

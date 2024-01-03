@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity, Modal, Image,TextInput } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, Modal, Image} from 'react-native'
 import React,{useState} from 'react'
 import axios from 'axios';
 import { useUser } from '../../../models/userContext';
@@ -10,11 +10,14 @@ const defaultImage = require('../../../assets/Images/Default_item.png')
 
 //viết hàm formar lại chuỗi có dạng 2024-12-11T11:07:13.000Z thành 11/12/2024
 const formatDate = (input) => {
-    var date = input.split('T')[0];
-    var year = date.split('-')[0];
-    var month = date.split('-')[1];
-    var day = date.split('-')[2];
-    return day+'/'+month+'/'+year;
+    if(input != null){
+        var date = input.split('T')[0];
+        var year = date.split('-')[0];
+        var month = date.split('-')[1];
+        var day = date.split('-')[2];
+        return day+'-'+month+'-'+year;
+    }
+    return null;
 }
 
 export default function IngredientDetailScreen({ navigation, route }) {
@@ -39,8 +42,7 @@ export default function IngredientDetailScreen({ navigation, route }) {
 
     //Hàm xử lý khi nút sửa được click
     const handleEditPress = () => {
-        //navigation.navigate('EditIngredient', { ingredient: ingredient });
-        console.log('Edit Ingredient')
+        navigation.navigate('EditIngredient', { ingredient: ingredient });
     }
 
     //Hàm xử lý khi nút xóa được click
@@ -90,8 +92,6 @@ export default function IngredientDetailScreen({ navigation, route }) {
     return (
         <View style={[{width:'100%', height:'100%'}]}>
             <View style={[styles.mainContainer]}>
-            
-
             <Image source={(ingredient.image=='')?ingredient.image:defaultImage} style={styles.imageStyle}/>
             <View>
                 <View style={styles.textContainer}>
@@ -100,6 +100,15 @@ export default function IngredientDetailScreen({ navigation, route }) {
                     </Text>
                     <Text style={styles.textStyle}>
                         {ingredient.name}
+                    </Text>
+                </View>
+
+                <View style={styles.textContainer}>
+                    <Text style={[styles.textStyle,{fontWeight:'bold', marginRight:5}]}>
+                        Calories: 
+                    </Text>
+                    <Text style={styles.textStyle}>
+                        {ingredient.calories}
                     </Text>
                 </View>
 
