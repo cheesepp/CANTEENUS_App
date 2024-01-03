@@ -8,9 +8,13 @@ export const UserProvider = ({ children }) => {
   const updateUser = (newUser) => {
     setUser(newUser);
   };
+  // Function to clear the user (logout)
+  const logout = () => {
+    setUser(null);
+  };
 
   return (
-    <UserContext.Provider value={{ user, updateUser }}>
+    <UserContext.Provider value={{ user, updateUser, logout }}>
       {children}
     </UserContext.Provider>
   );
@@ -23,3 +27,4 @@ export const useUser = () => {
   }
   return context;
 };
+

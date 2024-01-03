@@ -8,6 +8,7 @@ import { useUser } from '../../models/userContext';
 export default function ProfileScreen({ navigation }) {
     // Lấy user từ context
     const { user } = useUser();
+    const {logout} = useUser();
 
     const [showPassword, setShowPassword] = useState(false);
 
@@ -16,7 +17,8 @@ export default function ProfileScreen({ navigation }) {
     };
 
     const logoutHandle = () => {
-        console.log('Logging out'); //TODO: Add logic
+        logout();
+        navigation.navigate('Login');
     };
 
     React.useLayoutEffect(() => {

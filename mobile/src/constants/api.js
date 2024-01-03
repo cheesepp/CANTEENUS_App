@@ -23,4 +23,8 @@ export const api = {
     deleteBill: IPaddress + '/bill/delete-bill',
     getTargets: IPaddress + '/admin/get-target',
     addTarget: IPaddress + '/admin/add-target',
+    getProfitOfaYear: IPaddress + '/admin/get-profit-of-a-year',
+    getProfitByMonth: IPaddress + '/admin/get-profit-by-month',
+    getProfitByYear: IPaddress + '/admin/get-profit-by-year',
+    getYears: IPaddress + '/admin/get-years',
 }
