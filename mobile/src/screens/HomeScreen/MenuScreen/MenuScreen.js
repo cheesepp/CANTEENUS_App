@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View,Text, TouchableOpacity, FlatList, StyleSheet} from 'react-native';
+import { View, Text, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
 import FoodItem from './FoodItem';
 import axios from 'axios';
 import { useUser } from '../../../models/userContext';
@@ -16,6 +16,7 @@ export default function MenuScreen({ navigation }) {
 
     //Tạo state để lưu trữ trạng thái của header
     const [isHeaderClicked, setHeaderClicked] = useState(false);
+    const [allIngredients, setAllIngredients] = useState([]);
 
     //Hàm xử lý khi header được click
     const handleHeaderClick = () => {
@@ -30,7 +31,7 @@ export default function MenuScreen({ navigation }) {
                 });
                 //Lưu dữ liệu lấy được vào state
                 setFoodItems(response.data.items);
-                    
+
                 //In ra màn hình console từng item lấy được để kiểm tra
                 console.log('-------- Refresh Food Items ----------')
                 response.data.items.map((item) => {
@@ -52,7 +53,29 @@ export default function MenuScreen({ navigation }) {
 
     //Hàm xử lý khi nút thêm món ăn được click
     const handleAddItem = () => {
-        navigation.navigate('AddFood');
+        const fetchData = async () => {
+            try {
+                console.log('ADd ingredient called');
+
+                // Gọi API để lấy dữ liệu từ database
+                const response = await axios.get(api.getIngredients, {
+                    headers: {
+                        Authorization: `Bearer ${user.jwt}`,
+                    },
+                });
+                console.log('All ingredients: ', response.data.ingredients);
+                //Lưu dữ liệu lấy được vào state
+                setAllIngredients(response.data.ingredients);
+
+            } catch (error) {
+                // Xử lý và báo lỗi
+                if (error.request) {
+                    console.log(error.request);
+                }
+            }
+        };
+        fetchData();
+        navigation.navigate('AddFood', { allIngredients: allIngredients });
 
     }
 
@@ -61,15 +84,15 @@ export default function MenuScreen({ navigation }) {
         //Tạo header
         navigation.setOptions({
             title: 'Menu',
-            headerStyle: { 
-                backgroundColor: '#4554DC' 
+            headerStyle: {
+                backgroundColor: '#4554DC'
             },
             headerTintColor: 'white',
-            headerTitleAlign: 'left', 
+            headerTitleAlign: 'left',
             //Tạo nút để reload dữ liệu từ database khi được click
             headerRight: () => (
                 <TouchableOpacity style={{ marginRight: 15 }} onPress={handleHeaderClick}>
-                <AntDesign size={20} name='reload1' color={'white'} />
+                    <AntDesign size={20} name='reload1' color={'white'} />
                 </TouchableOpacity>
             ),
         });
@@ -79,7 +102,7 @@ export default function MenuScreen({ navigation }) {
     useEffect(() => {
         //Khởi tạo hàm fetchData để lấy dữ liệu từ database
         const fetchData = async () => {
-            try { 
+            try {
                 //dùng axios để lấy dữ liệu từ database
                 const response = await axios.get(api.getItems, {
                     //headers để xác thực người dùng
@@ -87,53 +110,53 @@ export default function MenuScreen({ navigation }) {
                         Authorization: `Bearer ${user.jwt}`,
                     },
                 });
-                
+
                 //Lưu dữ liệu lấy được vào state
                 setFoodItems(response.data.items);
-                
+
                 //In ra màn hình console từng item lấy được để kiểm tra
                 console.log('-------- Food Items ----------')
                 response.data.items.map((item) => {
                     console.log(item);
                 });
                 console.log('---------------------------')
-    
+
             } catch (error) {
                 // Xử lý và báo lỗi
                 if (error.response) {
-                // Request được gửi đi và server trả về response với status code không phải 2xx
-                console.log(error.response.data);
-                console.log(error.response.status);
-                console.log(error.response.headers);
+                    // Request được gửi đi và server trả về response với status code không phải 2xx
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
                 } else if (error.request) {
-                // Request được gửi đi nhưng không nhận được response nào
-                console.log(error.request);
+                    // Request được gửi đi nhưng không nhận được response nào
+                    console.log(error.request);
                 } else {
-                // Có lỗi xảy ra khi setup request
-                console.log('Error', error.message);
+                    // Có lỗi xảy ra khi setup request
+                    console.log('Error', error.message);
                 }
             }
         };
-    
+
         //Gọi hàm fetchData để lấy dữ liệu từ database
         fetchData();
     }, []);
 
     //Hàm render item trong Flatlist để hiển thị dữ liệu lên màn hình
     const renderItem = ({ item }) => {
-        return <FoodItem navigation={navigation} food={item} isNavigate = {true} />;
+        return <FoodItem navigation={navigation} food={item} isNavigate={true} />;
     }
 
     //Trả về giao diện của màn hình
     return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginTop:10 }}>
-           <FlatList
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginTop: 10 }}>
+            <FlatList
                 data={foodItems}
                 renderItem={renderItem}
                 keyExtractor={item => item.id}
                 numColumns={3}
             />
-            <TouchableOpacity style={styles.floatingButton} onPress = {handleAddItem}>
+            <TouchableOpacity style={styles.floatingButton} onPress={handleAddItem}>
                 <Text style={styles.floatingButtonIcon}>+</Text>
             </TouchableOpacity>
         </View>

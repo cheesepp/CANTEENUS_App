@@ -105,3 +105,24 @@ exports.deleteIngredient = catchAsyncErrors( async (req, res) => {
     return next(new ErrorHandler('Internal server error!', 500));
   }
 })
+
+//Helper for adding ingredient to item
+exports.getIngredientByName = async (inName) => {
+  try {
+    const ingredient = await Ingredient.findOne({
+      where: {
+        name: inName,
+      }
+    });
+
+    if (!ingredient) {
+      console.error('Ingredient not found!');
+      return null;
+    }
+
+    return ingredient;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}

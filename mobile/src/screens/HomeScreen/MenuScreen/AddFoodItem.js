@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, FlatList, Modal, Button } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
 const defaultImage = require('../../../assets/Images/Default_item.png')
 import { Table, Row, Rows } from 'react-native-table-component';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { api } from '../../../constants/api';
+import { useUser } from '../../../models/userContext';
 
 export default function EditFoodItem({ navigation, route }) {
     navigation.setOptions({
@@ -18,17 +21,54 @@ export default function EditFoodItem({ navigation, route }) {
     const [price, setPrice] = useState('');
     const [ingredients, setIngredients] = useState([]);
     const [modalVisible, setModalVisible] = useState(false);
-    const [newIngredientName, setNewIngredientName] = useState('');
     const [newIngredientQuantity, setNewIngredientQuantity] = useState('');
 
+    const [selectedIngredient, setSelectedIngredient] = useState('');
+    const { user } = useUser();
+
+    //Lấy allingredients từ route.params
+    const allIngredients = route.params.allIngredients;
+    // console.log('All ingredients in AddFoodItem: ', allIngredients);
+
+
     const handleSave = () => {
+        if (name.trim() === '' || price.trim() === '') {
+            console.error('Please fill in all required fields');
+            return;
+        }
+        console.log('Saveing ingredient', ingredients);
+        const data = {
+            name: name,
+            price: price,
+            ingredients: ingredients,
+        }
+
+        fetch(api.addItem, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${user.jwt}`,
+            },
+            body: JSON.stringify(data),
+        })
+            .then(response => response.json())
+            .then(result => {
+                // Handle the response from the server (if needed)
+                console.log('Item added successfully:', result);
+
+                // Reset the input fields after successful save
+                clearInput();
+            })
+            .catch(error => {
+                console.error('Error adding item:', error);
+            });
 
 
 
-        console.log('Save called');
     };
 
     const addIngredient = () => {
+
         setModalVisible(true);
     };
     const clearInput = () => {
@@ -39,16 +79,19 @@ export default function EditFoodItem({ navigation, route }) {
 
 
     const saveIngredient = () => {
-        if (newIngredientName.trim() !== '' && newIngredientQuantity.trim() !== '') {
-            const newIngredient = {
-                name: newIngredientName,
-                quantity: newIngredientQuantity,
-            };
-            setIngredients([...ingredients, newIngredient]);
-            setModalVisible(false);
-            setNewIngredientName('');
-            setNewIngredientQuantity('');
-        }
+        const ingredientId = allIngredients.find(ingredient => ingredient.name === selectedIngredient)?.id;
+        
+        const newIngredient = {
+            id: ingredientId,
+            name: selectedIngredient,
+            quantity: newIngredientQuantity,
+        };
+        console.log('New ingredient: ', newIngredient);
+        const updatedIngredients = [...ingredients, newIngredient];
+        setIngredients(updatedIngredients);
+        console.log('Added ingredients', ingredients);
+        setModalVisible(false);
+        setNewIngredientQuantity('');
     }
 
 
@@ -113,12 +156,15 @@ export default function EditFoodItem({ navigation, route }) {
                     <View style={styles.modalContainer}>
                         <View style={styles.modalContent}>
                             <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 20, textAlign: 'center' }}>Nhập nguyên liệu</Text>
-                            <TextInput
-                                placeholder="Tên nguyên liệu"
-                                value={newIngredientName}
-                                onChangeText={(text) => setNewIngredientName(text)}
-                                style={styles.input}
-                            />
+                            <Picker
+                                selectedValue={selectedIngredient}
+                                onValueChange={(itemValue, itemIndex) => setSelectedIngredient(itemValue)}
+                            >
+                                <Picker.Item label="Chọn nguyên liệu" value="" />
+                                {allIngredients.map(ingredient => (
+                                    <Picker.Item key={ingredient.id} label={ingredient.name} value={ingredient.name} />
+                                ))}
+                            </Picker>
                             <TextInput
                                 placeholder="Số lượng"
                                 value={newIngredientQuantity}
@@ -134,8 +180,6 @@ export default function EditFoodItem({ navigation, route }) {
                             </TouchableOpacity>
                         </View>
                     </View>
-
-
                 </Modal>
 
 
