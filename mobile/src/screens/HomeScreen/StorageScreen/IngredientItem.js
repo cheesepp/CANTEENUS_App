@@ -7,11 +7,14 @@ const defaultImage = require('../../../assets/Images/Default_item.png')
 export default function IngredientItem({navigation,ingredient, isNavigate=false}) {
     //viết hàm formar lại chuỗi có dạng 2024-12-11T11:07:13.000Z thành 11/12/2024
     const formatDate = (input) => {
-        var date = input.split('T')[0];
-        var year = date.split('-')[0];
-        var month = date.split('-')[1];
-        var day = date.split('-')[2];
-        return day+'/'+month+'/'+year;
+        if(input != null){
+            var date = input.split('T')[0];
+            var year = date.split('-')[0];
+            var month = date.split('-')[1];
+            var day = date.split('-')[2];
+            return day+'-'+month+'-'+year;
+        }
+        return null;
     }
 
     //Hàm xử lý khi component được nhấn

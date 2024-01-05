@@ -1,3 +1,5 @@
+const moment = require('moment');
+
 function getPreviousMonthAndYear(month, year) {
     // Create a Date object with the given month and year
     const currentDate = new Date(year, month - 1, 1);
@@ -14,9 +16,14 @@ function getPreviousMonthAndYear(month, year) {
         previousYear: previousYear
     };
   }
-  
+  function formatLocaleTimezone(date)
+  {
+    return moment(date).format('YYYY-MM-DD');
+  }
+
   module.exports = {
     getPreviousMonthAndYear: getPreviousMonthAndYear,
+    formatLocaleTimezone: formatLocaleTimezone,
 }
 //   }
 //   // Usage example

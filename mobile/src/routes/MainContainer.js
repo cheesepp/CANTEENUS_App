@@ -30,11 +30,16 @@ import AddFoodItem from '../screens/HomeScreen/MenuScreen/AddFoodItem';
 import StorageScreen from '../screens/HomeScreen/StorageScreen/StorageScreen';
 import IngredientDetailScreen from '../screens/HomeScreen/StorageScreen/IngredientDetailScreen';
 
+import AddIngredientScreen from '../screens/HomeScreen/StorageScreen/AddIngredientScreen';
+import EditIngredientScreen from '../screens/HomeScreen/StorageScreen/EditIngredientScreen';
 import ChatDetailScreen from '../screens/ChatScreen/ChatDetailScreen';
 import RatingScreen from '../screens/BillScreen/RatingScreen/RatingScreen';
 import CustomerHomeScreen from '../screens/CustomerRole/CustomerHomeScreen/CustomerHomeScreen';
 import CustomerCartScreen from '../screens/CustomerRole/CustomerCartScreen/CustomerCartScreen';
 
+import StaffAddScreen from '../screens/HomeScreen/StaffScreen/StaffDetailScreen/StaffAddScreen';
+import StaffDetailtScreen from '../screens/HomeScreen/StaffScreen/StaffDetailScreen/StaffDetailScreen';
+import StaffEditScreen from '../screens/HomeScreen/StaffScreen/StaffDetailScreen/StaffEditScreen';
 //Screen names
 const homeName = "Home";
 const mainPage = "CanteenUS";
@@ -71,6 +76,11 @@ function HomeStackNavigator() {
       <Stack.Screen name={'AddFood'} component={AddFoodItem} />
       <Stack.Screen name={storageName} component={StorageScreen} options={homeHeaderBarStyle}></Stack.Screen>
       <Stack.Screen name={'IngredientDetail'} component={IngredientDetailScreen} />
+      <Stack.Screen name={'AddIngredient'} component={AddIngredientScreen} />
+      <Stack.Screen name={'EditIngredient'} component={EditIngredientScreen} />
+      <Stack.Screen name={'AddStaff'} component={StaffAddScreen}></Stack.Screen>
+      <Stack.Screen name={'DetailStaff'} component={StaffDetailtScreen}></Stack.Screen>
+      <Stack.Screen name={'EditStaff'} component={StaffEditScreen}></Stack.Screen>
     </Stack.Navigator >
   )
 }
