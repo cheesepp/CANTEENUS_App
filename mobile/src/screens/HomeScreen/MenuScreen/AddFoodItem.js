@@ -63,7 +63,7 @@ export default function EditFoodItem({ navigation, route }) {
                 console.error('Error adding item:', error);
             });
 
-
+        navigation.goBack();
 
     };
 

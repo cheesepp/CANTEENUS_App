@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, FlatList, M
 const defaultImage = require('../../../assets/Images/Default_item.png')
 import { Table, Row, Rows } from 'react-native-table-component';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {api} from '../../../constants/api'
 
 export default function EditFoodItem({ navigation, route }) {
     navigation.setOptions({
@@ -26,7 +27,7 @@ export default function EditFoodItem({ navigation, route }) {
     };
 
     const handleSave = () => {
-        console.log('Save called');
+        console.log('Save called TO BE IMPLEMENTED');
     };
 
 

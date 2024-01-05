@@ -4,8 +4,12 @@ import { useState } from 'react'
 import React from 'react'
 const defaultImage = require('../../../assets/Images/Default_item.png')
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {api} from '../../../constants/api'
+import { useUser } from '../../../models/userContext';
+import axios from 'axios';
 
 export default function FoodDetailScreen({ navigation, route }) {
+    const { user } = useUser();
     const [modalVisible, setModalVisible] = useState(false);
 
     navigation.setOptions({
@@ -35,7 +39,30 @@ export default function FoodDetailScreen({ navigation, route }) {
     };
 
     const deleteHandle = () => {
+        const deleteItem = async () => {
+            try {
+                // Gọi API để xóa nguyên liệu
+                const response = await axios.delete(api.deleteItem +'/'+ food.id, {
+                    headers: {
+                        Authorization: `Bearer ${user.jwt}`,
+                    },
+                });
+                //In ra màn hình console để kiểm tra
+                console.log('-------- Delete item ----------')
+                console.log(response.data);
+                console.log('---------------------------')
+            } catch (error) {
+                // Xử lý và báo lỗi
+                if (error.request) {
+                console.log(error.request);
+                }
+            }
+        }
+        //Gọi hàm deleteItem
+        deleteItem();
         setModalVisible(false);
+        navigation.goBack();
+
     }
     return (
         <View style={styles.container}>
