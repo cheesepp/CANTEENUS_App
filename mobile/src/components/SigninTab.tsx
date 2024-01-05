@@ -173,9 +173,9 @@ export default function LoginTab() {
                         style={styles.picker}
                         onValueChange={(itemValue, itemIndex) => setLoginType(itemValue)}
                     >
-                        <Picker.Item label="Khách Hàng" value="Khách Hàng" />
-                        <Picker.Item label="Nhân Viên" value="Nhân Viên" />
-                        <Picker.Item label="Quản Lý" value="Quản Lý" />
+                        <Picker.Item label="Khách Hàng" value="customer" />
+                        <Picker.Item label="Nhân Viên" value="staff" />
+                        <Picker.Item label="Quản Lý" value="admin" />
                     </Picker>
                 </View>
 
