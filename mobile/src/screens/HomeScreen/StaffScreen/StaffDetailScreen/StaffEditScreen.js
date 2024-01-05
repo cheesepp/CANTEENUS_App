@@ -2,11 +2,11 @@ import { StyleSheet, Text, View, TouchableOpacity,Image, TextInput, Button} from
 import React,{useState, useEffect} from 'react';
 import * as ImagePicker from 'react-native-image-picker';
 import axios from 'axios';
-import { useUser } from '../../../models/userContext';
-import { api } from '../../../constants/api';
+import { useUser } from '../../../../models/userContext';
+import { api } from '../../../../constants/api';
 
-//Hằng số lưu đường dẫn ảnh mặc định cho nguyên liệu
-const defaultImage = require('../../../assets/Images/Default_item.png')
+//Hằng số lưu đường dẫn ảnh mặc định cho nhân viên
+const defaultImage = require('../../../../assets/Images/Default_item.png')
 
 //viết hàm formar lại chuỗi có dạng 2024-12-11T11:07:13.000Z thành 11/12/2024
 const formatDate = (input) => {
@@ -28,10 +28,10 @@ const convertDate = (inputDate) => {
     return newDate;
 }
 
-export default function EditIngredientScreen({ navigation, route }) {
+export default function EditStaffScreen({ navigation, route }) {
     //Sử dụng useLayoutEffect để tạo header
     navigation.setOptions({
-        title: 'Sửa Nguyên Liệu',
+        title: 'Sửa Nhân Viên',
         headerStyle: { 
           backgroundColor: '#4554DC' 
         },
@@ -39,33 +39,27 @@ export default function EditIngredientScreen({ navigation, route }) {
         headerTitleAlign: 'left', 
     });
 
-    //Lấy dữ liệu nguyên liệu từ route
-    const { ingredient } = route.params;
+    //Lấy dữ liệu nhân viên từ route
+    const { staff } = route.params;
 
     //Lấy thông tin người dùng từ context
     const { user } = useUser();
 
-    //state để lưu thông tin ảnh nguyên liệu
-    const [image, setImage] = useState(ingredient.image);
+    //state để lưu thông tin ảnh nhân viên
+    const [image, setImage] = useState(staff.image);
     const [imageType, setImageType] = useState(null);
     const [imageName, setImageName] = useState(null);
-    //state để lưu thông tin tên nguyên liệu
-    const [name, setName] = useState(ingredient.name);
+    //state để lưu thông tin tên nhân viên
+    const [name, setName] = useState(staff.name);
+    
+    //state để lưu thông tin password nhân viên
+    const [password, setPassword] = useState(null);
 
-    //state để lưu thông tin calories nguyên liệu
-    const [calories, setCalories] = useState(ingredient.calories.toString());
+    //state để lưu thông tin email nhân viên
+    const [email, setEmail] = useState(staff.email);
 
-    //state để lưu thông tin đơn vị tính nguyên liệu
-    const [unit, setUnit] = useState(ingredient.unit);
-
-    //state để lưu thông tin số lượng nguyên liệu
-    const [quantity, setQuantity] = useState(ingredient.quantity.toString());
-
-    //state để lưu thông tin giá nguyên liệu
-    const [price, setPrice] = useState(ingredient.price.toString());
-
-    //state để lưu thông tin ngày hết hạn nguyên liệu
-    const [expirationDate, setExpirationDate] = useState(ingredient.expirationDate);
+    //state để lưu thông tin số điện thoại nhân viên
+    const [telephone, setTelephone] = useState(staff.phone);
 
     //Hàm xử lý chọn ảnh
     const handleChooseImage = () => {
@@ -85,7 +79,7 @@ export default function EditIngredientScreen({ navigation, route }) {
                 setImageType(assets[0].type)
                 setImageName(ingredient.id)
                 console.log("Image uri1: ",image)
-               // console.log("Image uri2: ",ingredient.image)
+                //console.log("Image uri2: ",ingredient.image)
                 console.log('response', JSON.stringify(response));
         // this.setState({
         //   filePath: response,
@@ -98,7 +92,7 @@ export default function EditIngredientScreen({ navigation, route }) {
     };
 
     //ham upload anh
-    const handleEditIngredient2 = async () => {
+    const handleEditStaff2 = async () => {
         try {
             const formData = new FormData();
             formData.append('file', {
@@ -108,18 +102,17 @@ export default function EditIngredientScreen({ navigation, route }) {
             })
         
             const data = {
-                calories: calories,
+                
                 name: name,
-                unit: unit,
-                quantity: quantity,
-                price: price,
-                expirationDate: expirationDate,
-                //image: image,
+                phone: telephone,
+                email: email,
+                password: password,
+
             };
             formData.append('data',JSON.stringify(data));
 
            
-            const response = await axios.put(api.editIngredient + '/' + ingredient.id, formData, {
+            const response = await axios.put(api.editStaff + '/' + staff.id, formData, {
                 //headers để xác thực người dùng
                 headers: {
                     'Content-Type': 'multipart/form-data',
@@ -130,7 +123,7 @@ export default function EditIngredientScreen({ navigation, route }) {
             console.log(response.data);
 
             //Chuyển về màn hình StorageScreen
-            navigation.navigate('Kho');
+            navigation.navigate('Nhân Viên');
         
           // Handle the response from the server
         } catch (error) {
@@ -138,21 +131,19 @@ export default function EditIngredientScreen({ navigation, route }) {
         }
       };
 
-    //Hàm xử lý sửa nguyên liệu
-    const handleEditIngredient = async () => {
+    //Hàm xử lý sửa nhân viên
+    const handleEditStaff = async () => {
         //console.log(expirationDate)
-        //data chứa thông tin nguyên liệu cần sửa
+        //data chứa thông tin nhân viên cần sửa
         const data = {
-            calories: calories,
             name: name,
-            unit: unit,
-            quantity: quantity,
-            price: price,
-            expirationDate: expirationDate,
-            //image: image,
+            phone: telephone,
+            email: email,
+            password: password,
+
         };
         try {
-            const response = await axios.put(api.editIngredient + '/' + ingredient.id, data, {
+            const response = await axios.put(api.editStaff + '/' + staff.id, data, {
                 //headers để xác thực người dùng
                 headers: {
                     Authorization: `Bearer ${user.jwt}`,
@@ -164,7 +155,7 @@ export default function EditIngredientScreen({ navigation, route }) {
         }
 
         //Chuyển về màn hình StorageScreen
-        navigation.navigate('Kho');
+        navigation.navigate('Nhân Viên');
     };
 
     
@@ -178,75 +169,50 @@ export default function EditIngredientScreen({ navigation, route }) {
                     </Text>
             </TouchableOpacity>
 
-            
-           
             <View style={styles.textContainer}>
                 <Text style={[styles.textStyle,{}]}>
-                    Tên nguyên liệu: 
+                    Tên: 
                 </Text>
                 <TextInput
                     style={[{borderBottomColor: '#747474',borderBottomWidth: 0.5,flex:1,fontSize:18,marginRight:10},styles.textInputStyle]}
-                    placeholder={ingredient.name}
                     onChangeText={text => setName(text)}
+                    placeholder={staff.name}
                 />
             </View>
 
             <View style={styles.textContainer}>
                 <Text style={[styles.textStyle,{}]}>
-                    Calories:
+                    Mật khẩu:
                 </Text>
                 <TextInput
                     style={[{borderBottomColor: '#747474',borderBottomWidth: 0.5,flex:1,fontSize:18,marginRight:10},styles.textInputStyle]}
-                    placeholder={ingredient.calories.toString()}
-                    onChangeText={text => setCalories(text)}
+                    onChangeText={text => setPassword(text)}
                 />
             </View>
 
             <View style={styles.textContainer}>
                 <Text style={[styles.textStyle,{}]}>
-                    Đơn vị tính: 
+                    Email: 
                 </Text>
                 <TextInput
                     style={[{borderBottomColor: '#747474',borderBottomWidth: 0.5,flex:1,fontSize:18,marginRight:10},styles.textInputStyle]}
-                    placeholder={ingredient.unit}
-                    onChangeText={text => setUnit(text)}
+                    onChangeText={text => setEmail(text)}
+                    placeholder={staff.email}
                 />
             </View>
 
             <View style={styles.textContainer}>
                 <Text style={[styles.textStyle,{}]}>
-                    Số lượng: 
+                    SĐT: 
                 </Text>
                 <TextInput
                     style={[{borderBottomColor: '#747474',borderBottomWidth: 0.5,flex:1,fontSize:18,marginRight:10},styles.textInputStyle]}
-                    placeholder={ingredient.quantity.toString()}
-                    onChangeText={text => setQuantity(text)}
+                    onChangeText={text => setTelephone(text)}
+                    placeholder={staff.phone}
                 />
             </View>
 
-            <View style={styles.textContainer}>
-                <Text style={[styles.textStyle,{}]}>
-                    Giá tiền đầu vào (đ): 
-                </Text>
-                <TextInput
-                    style={[{borderBottomColor: '#747474',borderBottomWidth: 0.5,flex:1,fontSize:18,marginRight:10},styles.textInputStyle]}
-                    placeholder={ingredient.price.toString()}
-                    onChangeText={text => setPrice(text)}
-                />
-            </View>
-
-            <View style={styles.textContainer}>
-                <Text style={[styles.textStyle,{}]}>
-                    Ngày hết hạn: 
-                </Text>
-                <TextInput
-                    style={[{borderBottomColor: '#747474',borderBottomWidth: 0.5,flex:1,fontSize:18,marginRight:10},styles.textInputStyle]}
-                    placeholder={formatDate(ingredient.expirationdate)}
-                    onChangeText={text => setExpirationDate(convertDate(text))}
-                />
-            </View>
-
-            <TouchableOpacity style={[styles.buttonStyle,{width:100,height:40, marginBottom:10}]} onPress={handleEditIngredient2} >
+            <TouchableOpacity style={[styles.buttonStyle,{width:100,height:40, marginBottom:10}]} onPress={handleEditStaff} >
                     <Text style={styles.buttonTextStyle}>
                         Sửa
                     </Text>
