@@ -105,8 +105,9 @@ exports.addIngredient = catchAsyncErrors(async (req, res) => {
 // Update a ingredient by ID
 exports.updateIngredient = catchAsyncErrors( async (req, res,next) => {
   try {
+    console.log('update ingredient')
     const { id } = req.params;
-    const { calories, name, unit, quantity, price, expirationDate } = req.body;
+    const { calories, name, unit, quantity, price, expirationDate } = req.body.data;
 
     const ingredient = await Ingredient.findByPk(id);
 
@@ -123,49 +124,50 @@ exports.updateIngredient = catchAsyncErrors( async (req, res,next) => {
       expirationdate: formatLocaleTimezone(expirationDate),
     });
 
-    const files = req.files;
-    console.log("files: ", files)
+    console.log("req.body: ", req.body)
+    const file = req.file;
+    console.log("files: ", file)
     const destinationPath =   'uploads\\ingredients\\'+ingredient.id+'\\'
 
     createFolderIfNotExists(destinationPath);
 
     let count=0;
-    if (files.length!==0) {
-                deleteFilesInFolder(destinationPath, (err) => {
-                    if (err) {
-                        console.error(err);
-                        console.log('Failed to delete files in the folder');
-                    } else {
-                        console.log('Files deleted successfully');
-                    }
+    // if (file) {
+    //             deleteFilesInFolder(destinationPath, (err) => {
+    //                 if (err) {
+    //                     console.error(err);
+    //                     console.log('Failed to delete files in the folder');
+    //                 } else {
+    //                     console.log('Files deleted successfully');
+    //                 }
 
-                    files.forEach(file => {
-                        const sourcePath = file.path; 
-                        let destinationFile = destinationPath+file.filename
-                        if (count == 0 ){
-                            destinationFile = destinationPath+'main.jpg';
-                        } else {
-                            destinationFile = destinationPath+'main_thumbs'+count+'.jpg';
-                        }
-                        moveImageFile(sourcePath, destinationFile, (err) => {
-                        if (err) {
-                            console.error(err);
-                            console.log('Failed to move the image file')
-                            //res.status(500).json({ error: 'Failed to move the image file' });
-                        } else {
-                            console.log('Image file moved successfully')
-                            //res.json({ message: 'Image file moved successfully' });
-                        }
-                        });
-                        count++;
-                    });
-                });
+    //                 files.forEach(file => {
+    //                     const sourcePath = file.path; 
+    //                     let destinationFile = destinationPath+file.filename
+    //                     if (count == 0 ){
+    //                         destinationFile = destinationPath+'main.jpg';
+    //                     } else {
+    //                         destinationFile = destinationPath+'main_thumbs'+count+'.jpg';
+    //                     }
+    //                     moveImageFile(sourcePath, destinationFile, (err) => {
+    //                     if (err) {
+    //                         console.error(err);
+    //                         console.log('Failed to move the image file')
+    //                         //res.status(500).json({ error: 'Failed to move the image file' });
+    //                     } else {
+    //                         console.log('Image file moved successfully')
+    //                         //res.json({ message: 'Image file moved successfully' });
+    //                     }
+    //                     });
+    //                     count++;
+    //                 });
+    //             });
                 
-        }
+    //     }
       
-    await ingredient.update({
-      image: files[0]
-    })
+    // await ingredient.update({
+    //   image: files[0]
+    // })
 
     res.json({ success:true, message: 'Ingredient updated successfully', ingredient: ingredient});
   } catch (error) {

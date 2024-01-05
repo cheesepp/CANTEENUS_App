@@ -40,7 +40,7 @@ router.get('/get-ingredient/:id', isAuthenticatedUser, adminControllerIngredient
 router.post('/add-ingredient', isAuthenticatedUser, ingredientUpload.single('image'), adminControllerIngredient.addIngredient);
 
 // Update a ingredient by ID
-router.put('/edit-ingredient/:id', isAuthenticatedUser, adminControllerIngredient.updateIngredient);
+router.put('/edit-ingredient/:id', isAuthenticatedUser,ingredientUpload.single('image'), adminControllerIngredient.updateIngredient);
 
 // Delete a ingredient by ID
 router.delete('/delete-ingredient/:id', isAuthenticatedUser, adminControllerIngredient.deleteIngredient);

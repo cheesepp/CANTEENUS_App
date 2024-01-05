@@ -1,5 +1,6 @@
-import { StyleSheet, Text, View, TouchableOpacity,Image, TextInput} from 'react-native'
-import React,{useState, useEffect} from 'react'
+import { StyleSheet, Text, View, TouchableOpacity,Image, TextInput, Button} from 'react-native'
+import React,{useState, useEffect} from 'react';
+import * as ImagePicker from 'react-native-image-picker';
 import axios from 'axios';
 import { useUser } from '../../../models/userContext';
 import { api } from '../../../constants/api';
@@ -46,7 +47,8 @@ export default function EditIngredientScreen({ navigation, route }) {
 
     //state để lưu thông tin ảnh nguyên liệu
     const [image, setImage] = useState(ingredient.image);
-
+    const [imageType, setImageType] = useState(null);
+    const [imageName, setImageName] = useState(null);
     //state để lưu thông tin tên nguyên liệu
     const [name, setName] = useState(ingredient.name);
 
@@ -68,8 +70,73 @@ export default function EditIngredientScreen({ navigation, route }) {
     //Hàm xử lý chọn ảnh
     const handleChooseImage = () => {
         //Hiện chưa xử lý gì, chỉ in ra console là đã chọn ảnh
-        console.log('choose image')
+        console.log('choose image: ',)
+        ImagePicker.launchImageLibrary(
+            {
+              title: 'Choose Image',
+              mediaType: 'photo',
+              quality: 1,
+            },
+            (response) => {
+              if (!response.didCancel && !response.error) {
+                const assets = response.assets
+                console.log("first assets:",assets[0])
+                setImage(assets[0].uri);
+                setImageType(assets[0].type)
+                setImageName(ingredient.id)
+                console.log("Image uri1: ",image)
+                console.log("Image uri2: ",ingredient.image)
+                console.log('response', JSON.stringify(response));
+        // this.setState({
+        //   filePath: response,
+        //   fileData: response.data,
+        //   fileUri: response.uri
+        // });
+              }
+            }
+          );
     };
+
+    //ham upload anh
+    const handleEditIngredient2 = async () => {
+        try {
+            const formData = new FormData();
+            formData.append('file', {
+                uri: image,
+                name: imageName, // The name key should match the field name expected by the server
+                type: imageType, // Adjust the file type according to your requirements                });
+            })
+        
+            const data = {
+                calories: calories,
+                name: name,
+                unit: unit,
+                quantity: quantity,
+                price: price,
+                expirationDate: expirationDate,
+                //image: image,
+            };
+            formData.append('data',JSON.stringify(data));
+
+           
+            const response = await axios.put(api.editIngredient + '/' + ingredient.id, formData, {
+                //headers để xác thực người dùng
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${user.jwt}`,
+                },
+            });
+                
+            console.log(response.data);
+
+            //Chuyển về màn hình StorageScreen
+            navigation.navigate('Kho');
+        
+          // Handle the response from the server
+        } catch (error) {
+            console.error("Error sending data: ", error);
+        }
+      };
 
     //Hàm xử lý sửa nguyên liệu
     const handleEditIngredient = async () => {
@@ -104,14 +171,15 @@ export default function EditIngredientScreen({ navigation, route }) {
     //Render màn hình
     return (
         <View style={styles.mainContainer}>
-            <Image source={(ingredient.image=='')?ingredient.image:defaultImage} style={styles.imageStyle}/>
-
+            {(image==''?<Image source={defaultImage} style={styles.imageStyle}/>:<Image source={{uri:image}} style={styles.imageStyle}/>)}
             <TouchableOpacity style={[styles.buttonStyle,{width:100, marginBottom:10}]} onPress={handleChooseImage} >
                     <Text style={styles.buttonTextStyle}>
                         Chọn ảnh
                     </Text>
             </TouchableOpacity>
 
+            
+           
             <View style={styles.textContainer}>
                 <Text style={[styles.textStyle,{}]}>
                     Tên nguyên liệu: 
@@ -178,7 +246,7 @@ export default function EditIngredientScreen({ navigation, route }) {
                 />
             </View>
 
-            <TouchableOpacity style={[styles.buttonStyle,{width:100,height:40, marginBottom:10}]} onPress={handleEditIngredient} >
+            <TouchableOpacity style={[styles.buttonStyle,{width:100,height:40, marginBottom:10}]} onPress={handleEditIngredient2} >
                     <Text style={styles.buttonTextStyle}>
                         Sửa
                     </Text>
