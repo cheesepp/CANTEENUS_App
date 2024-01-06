@@ -251,10 +251,10 @@ function MainScreen() {
       }}
     >
 
-      <Tab.Screen name={homeName} component={RoleNavigator({role: user.role})} options={{ headerShown: false }} />
+      <Tab.Screen name={homeName} component={RoleNavigator({role: user?.role ?? "admin"})} options={{ headerShown: false }} />
       <Tab.Screen name={billStack} component={BillStackNavigator} options={{ headerShown: false }} />
       {
-       user.role === 'admin' ? <Tab.Screen name={revenueName} component={RevenueScreen} /> : null
+       user && user.role === 'admin' ? <Tab.Screen name={revenueName} component={RevenueScreen} /> : null
       }
       <Tab.Screen name={chatStack} component={ChatStackNavigator} options={{ headerShown: false }} />
       <Tab.Screen name={profileName} component={ProfileScreen} />

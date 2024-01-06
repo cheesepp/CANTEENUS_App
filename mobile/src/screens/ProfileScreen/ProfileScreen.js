@@ -19,6 +19,10 @@ export default function ProfileScreen({ navigation }) {
     const logoutHandle = () => {
         logout();
         navigation.navigate('Login');
+        navigation.reset({
+            index: 0,
+            routes: [{ name: 'Login' }],
+        });
     };
 
     React.useLayoutEffect(() => {

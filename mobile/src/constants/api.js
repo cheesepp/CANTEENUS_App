@@ -13,6 +13,7 @@ export const api = {
     getIngredients: IPaddress + '/admin/get-ingredient',
     addIngredient: IPaddress + '/admin/add-ingredient',
     editIngredient: IPaddress + '/admin/edit-ingredient',
+    editIngredientImage: IPaddress+'/admin/edit-ingredient-image',
     deleteIngredient: IPaddress + '/admin/delete-ingredient',
     getItems: IPaddress + '/admin/get-item',
     addItem: IPaddress + '/admin/add-item',

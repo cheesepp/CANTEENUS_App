@@ -103,28 +103,19 @@ exports.addIngredient = catchAsyncErrors(async (req, res) => {
 })
 
 // Update a ingredient by ID
-exports.updateIngredient = catchAsyncErrors( async (req, res,next) => {
+exports.updateIngredientImage = catchAsyncErrors( async (req, res,next) => {
   try {
-    console.log('update ingredient')
-    const { id } = req.params;
-    const { calories, name, unit, quantity, price, expirationDate } = req.body.data;
-
+    console.log('update ingredient image:', req.body)
+    const { id } = req.body.id;
+    
     const ingredient = await Ingredient.findByPk(id);
 
     if (!ingredient) {
       return res.status(404).json({ error: 'Ingredient not found' });
     }
 
-    await ingredient.update({
-      calories,
-      name,
-      unit,
-      quantity,
-      price,
-      expirationdate: formatLocaleTimezone(expirationDate),
-    });
 
-    console.log("req.body: ", req.body)
+    console.log("req.body image: ", req.body)
     const file = req.file;
     console.log("files: ", file)
     const destinationPath =   'uploads\\ingredients\\'+ingredient.id+'\\'
@@ -132,6 +123,82 @@ exports.updateIngredient = catchAsyncErrors( async (req, res,next) => {
     createFolderIfNotExists(destinationPath);
 
     let count=0;
+    // if (file) {
+    //             deleteFilesInFolder(destinationPath, (err) => {
+    //                 if (err) {
+    //                     console.error(err);
+    //                     console.log('Failed to delete files in the folder');
+    //                 } else {
+    //                     console.log('Files deleted successfully');
+    //                 }
+
+    //                 files.forEach(file => {
+    //                     const sourcePath = file.path; 
+    //                     let destinationFile = destinationPath+file.filename
+    //                     if (count == 0 ){
+    //                         destinationFile = destinationPath+'main.jpg';
+    //                     } else {
+    //                         destinationFile = destinationPath+'main_thumbs'+count+'.jpg';
+    //                     }
+    //                     moveImageFile(sourcePath, destinationFile, (err) => {
+    //                     if (err) {
+    //                         console.error(err);
+    //                         console.log('Failed to move the image file')
+    //                         //res.status(500).json({ error: 'Failed to move the image file' });
+    //                     } else {
+    //                         console.log('Image file moved successfully')
+    //                         //res.json({ message: 'Image file moved successfully' });
+    //                     }
+    //                     });
+    //                     count++;
+    //                 });
+    //             });
+                
+    //     }
+      
+    // await ingredient.update({
+    //   image: files[0]
+    // })
+
+    res.json({ success:true, message: 'Ingredient updated successfully', ingredient: ingredient});
+  } catch (error) {
+    console.error(error);
+    return next(new ErrorHandler('Internal server error!', 500));
+  }
+})
+
+// Update a ingredient by ID
+exports.updateIngredient = catchAsyncErrors( async (req, res,next) => {
+  try {
+    console.log('update ingredient')
+    const { id } = req.params;
+    const { calories, name, unit, quantity, price, expirationDate } = req.body;
+console.log("req.body.data: ",calories, name, unit, quantity, price, expirationDate)
+    const ingredient = await Ingredient.findByPk(id);
+
+    if (!ingredient) {
+      return res.status(404).json({ error: 'Ingredient not found' });
+    }
+
+    await ingredient.update({
+      calories: calories,
+      name: name,
+      unit: unit,
+      quantity: quantity,
+      price: price,
+      expirationdate: formatLocaleTimezone(expirationDate),
+    });
+
+    console.log("req.body: ", req.body)
+    // const file = req.file;
+    // console.log("files: ", file)
+
+    // const destinationPath =   'uploads\\ingredients\\'+ingredient.id+'\\'
+
+    // createFolderIfNotExists(destinationPath);
+
+    // let count=0;
+
     // if (file) {
     //             deleteFilesInFolder(destinationPath, (err) => {
     //                 if (err) {
