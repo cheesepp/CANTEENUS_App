@@ -9,6 +9,9 @@ const catchAsyncErrors = require('../middleware/catchAsyncErrors');
 const {Item, item_ingredient, Ingredient} = require('../models/relationship');
 const ErrorHandler = require('../util/ErrorHandler');
 const { get } = require('mongoose');
+
+const { Op } = require('sequelize');
+
 const getUser = catchAsyncErrors(async (req, res, next) => {
 
     try {
@@ -127,10 +130,26 @@ const getAllChatOfUser = catchAsyncErrors(async (req, res, next)=> {
     const id = req.userId;
     const record = await User.findAll({
         where: {
-            id: id
+            id: {
+              [Op.ne]: id,
+            },
+            [Op.or]: [
+              { role: 'admin' },
+              { role: 'staff' },
+              { role: 'customer' },
+            ],
           },
         }
     );
+    //console.log("list user in chat: ",record)
+    const listUser = record.map(user=> ({
+      id: user.dataValues.id,
+      email:user.dataValues.email,
+      role:user.dataValues.role,
+      name:user.dataValues.name,
+      phone:user.dataValues.phone,
+    }))
+    res.json({ success:true, listUser: listUser})
     
   } catch (error) {
     console.error(error);

@@ -13,6 +13,7 @@ const initSocketIO = (server) => {
     // Send existing messages when a user connects
     Chat.find().sort({ timestamp: 1 }).exec((err, messages) => {
       if (err) throw err;
+      //console.log('all msg: ', messages)
       socket.emit('initialMessages', messages);
     });
 

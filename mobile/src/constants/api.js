@@ -28,4 +28,5 @@ export const api = {
     getProfitByMonth: IPaddress + '/admin/get-profit-by-month',
     getProfitByYear: IPaddress + '/admin/get-profit-by-year',
     getYears: IPaddress + '/admin/get-years',
+    getAllChat: IPaddress + '/user/all-chat',
 }
