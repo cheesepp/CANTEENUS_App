@@ -21,7 +21,7 @@ router.get('/get-staff', isAuthenticatedUser, adminControllerStaff.getStaff);
 router.get('/get-staff/:id',isAuthenticatedUser,adminControllerStaff.getStaffByID)
 
 // /admin/add-staff => POST
-router.post('/add-staff', isAuthenticatedUser, avtUpload.single('image'), adminControllerStaff.addStaff);
+router.post('/add-staff', isAuthenticatedUser,  adminControllerStaff.addStaff);//avtUpload.single('image'),
 
 // /admin/edit-staff => POST
 router.put('/edit-staff/:id', isAuthenticatedUser, adminControllerStaff.editStaff);
@@ -37,11 +37,18 @@ router.get('/get-ingredient', isAuthenticatedUser, adminControllerIngredient.get
 router.get('/get-ingredient/:id', isAuthenticatedUser, adminControllerIngredient.getIngredientByID);
 
 // Add a new ingredient
-router.post('/add-ingredient', isAuthenticatedUser, ingredientUpload.single('file'), adminControllerIngredient.addIngredient);
+router.post('/add-ingredient', isAuthenticatedUser,  adminControllerIngredient.addIngredient);//ingredientUpload.single('file'),
 
 // Update a ingredient by ID
 router.put('/edit-ingredient/:id', isAuthenticatedUser,adminControllerIngredient.updateIngredient);
-router.post('/edit-ingredient-image/', isAuthenticatedUser, ingredientUpload.array('photo',1),  adminControllerIngredient.updateIngredientImage)//
+router.post('/edit-ingredient-image/', isAuthenticatedUser, (req,res, next)=> {
+    try {
+        console.log("req.body in route: ", req.body)
+        next()
+    } catch (error) {
+        next(error)
+    }
+},ingredientUpload.array('photo',1),  adminControllerIngredient.updateIngredientImage)//
 // Delete a ingredient by ID
 router.delete('/delete-ingredient/:id', isAuthenticatedUser, adminControllerIngredient.deleteIngredient);
 
@@ -53,10 +60,10 @@ router.get('/get-item', isAuthenticatedUser, adminControllerItem.getAllItems);
 router.get('/get-item/:id', isAuthenticatedUser, adminControllerItem.getItemById);
 
 // Add a new food
-router.post('/add-item', isAuthenticatedUser, itemUpload.single('file'), adminControllerItem.addItem);
+router.post('/add-item', isAuthenticatedUser,  adminControllerItem.addItem);//itemUpload.single('file'),
 
 // Update a food by ID
-router.put('/update-item/:id', isAuthenticatedUser, itemUpload.single('file'),  adminControllerItem.updateItem);
+router.put('/update-item/:id', isAuthenticatedUser,   adminControllerItem.updateItem);//itemUpload.single('file'),
 
 // Delete a food by ID
 router.delete('/delete-item/:id', isAuthenticatedUser, adminControllerItem.deleteItem);
