@@ -21,7 +21,28 @@ export default function ChatDetailScreen({ navigation, route }) {
         const newSocket = io('http://10.0.2.2:8080'); // Replace with your server URL
         // Listen for initial messages
         newSocket.on('initialMessages', (initialMessages) => {
-            setMessages(initialMessages);
+            console.log("all mess:",initialMessages )
+
+            let initialRoomMsg =[];
+            for (let i=0;i< initialMessages.length;i++)
+            {
+                console.log('one msg: ', initialMessages[i])
+                let msg = initialMessages[i]
+                if ((initialMessages[i].sender===user.id && initialMessages[i].receiver === chatUser.id)||
+                ( initialMessages[i].sender === chatUser.id && initialMessages[i].receiver === user.id))
+                {
+                    initialRoomMsg.push(initialMessages[i])
+                }
+            }
+            // initialMessages.foreach(msg => {
+            //     console.log('one msg: ', msg)
+            //     if ((msg.sender===user.id && msg.receiver === chatUser.id)||( msg.sender === chatUser.id && msg.receiver === user.id))
+            //     {
+            //         initialRoomMsg.push(msg)
+            //     }
+            // })
+            setMessages(initialRoomMsg);
+            console.log('after: ', messages)
         });
 
         // Listen for new messages

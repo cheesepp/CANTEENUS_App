@@ -94,7 +94,7 @@ export default function FoodDetailScreen({ navigation, route }) {
                             keyExtractor={(item, index) => index.toString()}
                             renderItem={({ item }) => (
                                 <Text style={styles.value} id='menu-detail-ingredients'>
-                                    + {item.quantity} {item.name}
+                                    + {item.name}
                                 </Text>
                             )}
                         />

@@ -256,7 +256,7 @@ function MainScreen() {
         // labelStyle: { paddingBottom: 10, fontSize: 10 },
       }}
     >
-      {/* Default role là admin */}
+
       <Tab.Screen name={homeName} component={RoleNavigator({role: user?.role ?? "admin"})} options={{ headerShown: false }} />
       <Tab.Screen name={billStack} component={BillStackNavigator} options={{ headerShown: false }} />
       {

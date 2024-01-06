@@ -37,11 +37,11 @@ router.get('/get-ingredient', isAuthenticatedUser, adminControllerIngredient.get
 router.get('/get-ingredient/:id', isAuthenticatedUser, adminControllerIngredient.getIngredientByID);
 
 // Add a new ingredient
-router.post('/add-ingredient', isAuthenticatedUser, ingredientUpload.single('image'), adminControllerIngredient.addIngredient);
+router.post('/add-ingredient', isAuthenticatedUser, ingredientUpload.single('file'), adminControllerIngredient.addIngredient);
 
 // Update a ingredient by ID
-router.put('/edit-ingredient/:id', isAuthenticatedUser,ingredientUpload.single('image'), adminControllerIngredient.updateIngredient);
-
+router.put('/edit-ingredient/:id', isAuthenticatedUser,adminControllerIngredient.updateIngredient);
+router.post('/edit-ingredient-image/', isAuthenticatedUser, ingredientUpload.array('photo',1),  adminControllerIngredient.updateIngredientImage)//
 // Delete a ingredient by ID
 router.delete('/delete-ingredient/:id', isAuthenticatedUser, adminControllerIngredient.deleteIngredient);
 
@@ -53,10 +53,10 @@ router.get('/get-item', isAuthenticatedUser, adminControllerItem.getAllItems);
 router.get('/get-item/:id', isAuthenticatedUser, adminControllerItem.getItemById);
 
 // Add a new food
-router.post('/add-item', isAuthenticatedUser, itemUpload.single('image'), adminControllerItem.addItem);
+router.post('/add-item', isAuthenticatedUser, itemUpload.single('file'), adminControllerItem.addItem);
 
 // Update a food by ID
-router.put('/update-item/:id', isAuthenticatedUser, adminControllerItem.updateItem);
+router.put('/update-item/:id', isAuthenticatedUser, itemUpload.single('file'),  adminControllerItem.updateItem);
 
 // Delete a food by ID
 router.delete('/delete-item/:id', isAuthenticatedUser, adminControllerItem.deleteItem);

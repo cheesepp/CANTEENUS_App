@@ -96,6 +96,59 @@ export default function EditIngredientScreen({ navigation, route }) {
             }
           );
     };
+//ham upload anh
+const createFormData = (body = {}) => {
+    const formData = new FormData();
+  
+    formData.append('photo', {
+        uri: image,
+        name: imageName, // The name key should match the field name expected by the server
+        type: imageType, // Adjust the file type according to your requirements                });
+    })
+  
+    Object.keys(body).forEach((key) => {
+        formData.append(key, body[key]);
+    });
+  
+    return formData;
+  };
+
+    const uploadImageToServer = async () => {
+    try {
+        const formData = new FormData();
+        formData.append('photo', {
+            uri: image,
+            name: imageName, // The name key should match the field name expected by the server
+            type: imageType, // Adjust the file type according to your requirements                });
+        })
+
+        formData.append('id', {
+            id: ingredient.id
+        })
+       
+        //console.log('oke')
+        // const response = await axios.post(api.editIngredientImage , formData, {
+        //     //headers để xác thực người dùng
+        //     headers: {
+        //         accept: 'application/json',
+        //         'Content-Type': 'multipart/form-data;',
+        //         Authorization: `Bearer ${user.jwt}`,
+        //     },
+        // });
+            
+        // console.log('data res:',response.data);
+
+        const response = await fetch(`${api.editIngredientImage}`, {
+            method: 'POST',
+            body: createFormData({ id: ingredient.id }),
+          })
+
+          console.log('data res:',response.data);
+      // Handle the response from the server
+    } catch (error) {
+        console.error("Error sending data: ", error);
+    }
+  };
 
     //ham upload anh
     const handleEditIngredient2 = async () => {
@@ -122,13 +175,14 @@ export default function EditIngredientScreen({ navigation, route }) {
             const response = await axios.put(api.editIngredient + '/' + ingredient.id, formData, {
                 //headers để xác thực người dùng
                 headers: {
-                    'Content-Type': 'multipart/form-data',
+                    'Content-Type': 'multipart/form-data;',
                     Authorization: `Bearer ${user.jwt}`,
                 },
             });
                 
             console.log(response.data);
 
+            await uploadImageToServer();
             //Chuyển về màn hình StorageScreen
             navigation.navigate('Kho');
         
@@ -159,12 +213,16 @@ export default function EditIngredientScreen({ navigation, route }) {
                 },
             });
             console.log(response.data);
+
+            await uploadImageToServer();
+            //Chuyển về màn hình StorageScreen
+            navigation.navigate('Kho');
+            
         } catch (error) {
             console.error("Error sending data: ", error);
         }
 
-        //Chuyển về màn hình StorageScreen
-        navigation.navigate('Kho');
+       
     };
 
     
@@ -246,7 +304,7 @@ export default function EditIngredientScreen({ navigation, route }) {
                 />
             </View>
 
-            <TouchableOpacity style={[styles.buttonStyle,{width:100,height:40, marginBottom:10}]} onPress={handleEditIngredient2} >
+            <TouchableOpacity style={[styles.buttonStyle,{width:100,height:40, marginBottom:10}]} onPress={handleEditIngredient} >
                     <Text style={styles.buttonTextStyle}>
                         Sửa
                     </Text>

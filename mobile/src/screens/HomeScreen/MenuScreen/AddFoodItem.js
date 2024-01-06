@@ -43,6 +43,7 @@ export default function EditFoodItem({ navigation, route }) {
             ingredients: ingredients,
         }
 
+        console.log('Sending data', data);
         fetch(api.addItem, {
             method: 'POST',
             headers: {

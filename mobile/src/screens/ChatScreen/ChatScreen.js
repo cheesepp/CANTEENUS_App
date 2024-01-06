@@ -17,8 +17,9 @@ export default function ChatScreen({ navigation }) {
         // Toggle the state when the header is clicked
         const fetchData = async () => {
             try {
+                
                 // Make an Axios GET request to your API endpoint
-                const response = await axios.get(api.getStaffs, {
+                const response = await axios.get(api.getAllChat, {
                     headers: {
                         Authorization: `Bearer ${user.jwt}`,
                     },
@@ -26,8 +27,8 @@ export default function ChatScreen({ navigation }) {
                 console.log('vào đây')
 
                 // Set the fetched data to the state
-                console.log(response.data.staff);
-                setStaffs(response.data.staff);
+                console.log(response.data);
+                setStaffs(response.data.listUser);
             } catch (error) {
 
                 if (error.request) {
@@ -46,16 +47,16 @@ export default function ChatScreen({ navigation }) {
             try {
                 // Make an Axios GET request to your API endpoint
                 console.log(isHeaderClicked)
-                const response = await axios.get(api.getStaffs, {
+                const response = await axios.get(api.getAllChat, {
                     headers: {
                         Authorization: `Bearer ${user.jwt}`,
                     },
-                }).catch((err) => console.log(err));
+                })//.catch((err) => console.log(err));
                 console.log('vào đây')
 
                 // Set the fetched data to the state
-                // console.log(response.data.staff);
-                setStaffs(response.data.staff);
+                 console.log(response.data);
+                setStaffs(response.data.listUser);
             } catch (error) {
 
                 if (error.response) {
