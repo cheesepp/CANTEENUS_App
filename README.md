@@ -11,7 +11,7 @@
 ## Description
 - This is an application allowing users to management canteen, order food on their Android smartphones.
 - There are 3 roles for users: Admin, Staff, Customer.
-- We split backend and mobile into two 2 folder
+- We split backend and mobile into two folders
 ## Features
 - Chat realtime
 - Managing user's profile
