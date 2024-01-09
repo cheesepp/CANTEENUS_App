@@ -39,7 +39,7 @@
 + DB_USER=root
 + DB_PASSWORD=123456
 + DB_NAME=canteenus
-And you need to create a database name 'canteenus'
+- And you need to create a database name 'canteenus'
 - Next, in the first terminal, run backend with command line 'npm start', it will auto create many necessary tables in database canteenus,
 run the script in source folder to insert mock data
 - Finally, in the second terminal, run mobile with command line 'npx react-native run-android', you completely run the app.
