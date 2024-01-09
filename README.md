@@ -22,7 +22,7 @@
 |------------|------------------------|---------------------------------|
 | 21120542   | Lâm Hoàng Quốc         | 21120542@student.hcmus.edu.vn   |
 | 21120569   | Phạm Đình Tiến         | 21120569@student.hcmus.edu.vn   |
-| 21120572   | Trần Đình Nhật Trí     | 21120572@student.hcmus.edu.vn   |
+| 21120576   | Trần Đình Nhật Trí     | 21120576@student.hcmus.edu.vn   |
 | 21120585   | Lê Anh Tú              | 21120585@student.hcmus.edu.vn   |
 | 21120588   | Nguyễn Phước Anh Tuấn  | 21120588@student.hcmus.edu.vn   |
 
